@@ -1,0 +1,29 @@
+@import "../../Constants"
+    
+.UserNovels
+    background-color: var(--sec-bg-color)
+    padding: .5rem
+
+    &__Title
+        font-size: 1.5rem
+        text-align: center
+
+    &__List
+        display: flex
+        flex-direction: column
+
+        &:not(:last-child)
+            border-bottom: var(--link-color) 1px solid
+            margin-bottom: 1rem
+            padding-bottom: 1rem
+
+        &_Title
+            display: flex
+            font-size: 1.5rem
+            margin-right: 1rem
+
+        &_Novels
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            justify-content: center

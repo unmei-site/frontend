@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap')
+@import "../Constants"
+
+html, body, #root
+  width: 100%
+  height: 100%
+
+
+body
+  margin: 0
+  padding: 0
+  font-family: 'Roboto', sans-serif
+
+  --main-color: #{$mainColor}
+  --sec-color: #{$secondaryColor}
+  --link-color: #{$linkHoverColor}
+
+  --main-bg-color: #{$primaryBackgroundColor}
+  --sec-bg-color: #{$secondaryBackgroundColor}
+  --block-color: #{$blockBackgroundColor}
+  --block-sec-color: #{$blockSecondaryBackgroundColor}
+  --nav-bg-color: #{$navbarBackgroundColor}
+
+  --error-bg-color: #{$errorBackgroundColor}
+  --success-bg-color: #{$successBackgroundColor}
+
+  color: var(--main-color)
+  background: var(--main-bg-color)
+
+pre
+  font-family: 'Roboto', sans-serif
+  margin: 0
+  white-space: pre-wrap
+
+body[theme='red']
+  --main-bg-color: #{$primaryBackgroundColorRed}
+  --sec-bg-color: #{$secondaryBackgroundColorRed}
+  --block-color: #{$blockBackgroundColorRed}
+  --block-sec-color: #{$blockSecondaryBackgroundColorRed}
+  --nav-bg-color: #{$navbarBackgroundColorRed}
+
+body[theme='blue']
+  --main-bg-color: #{$primaryBackgroundColorBlue}
+  --sec-bg-color: #{$secondaryBackgroundColorBlue}
+  --block-color: #{$blockBackgroundColorBlue}
+  --block-sec-color: #{$blockSecondaryBackgroundColorBlue}
+  --nav-bg-color: #{$navbarBackgroundColorBlue}
+
+body[theme='green']
+  --main-bg-color: #{$primaryBackgroundColorGreen}
+  --sec-bg-color: #{$secondaryBackgroundColorGreen}
+  --block-color: #{$blockBackgroundColorGreen}
+  --block-sec-color: #{$blockSecondaryBackgroundColorGreen}
+  --nav-bg-color: #{$navbarBackgroundColorGreen}
+
+body[theme='light']
+  --main-color: #{$mainColorLight}
+  --link-color: #{$linkHoverColorLight}
+  --sec-color: #{$secondaryColorLight}
+
+  --main-bg-color: #{$primaryBackgroundColorLight}
+  --sec-bg-color: #{$secondaryBackgroundColorLight}
+  --block-color: #{$blockBackgroundColorLight}
+  --block-sec-color: #{$blockSecondaryBackgroundColorLight}
+  --nav-bg-color: #{$navbarBackgroundColorLight}
+
+a
+  color: var(--main-color)
+  text-decoration: none
+
+  &:hover
+    color: var(--link-color)
+
+input, button, textarea
+  color: var(--main-color)
+
+button
+  cursor: pointer
+  border-radius: $borderRadius
+  background-color: var(--block-color)
+  border: 1px solid var(--main-color)
+
+  &:hover
+    background-color: var(--block-sec-color)
+    color: var(--link-color)
+    border: 1px solid var(--link-color)
+
+
+input
+  background-color: var(--sec-block-color) !important
+  border: none
+  border-bottom: 1px solid var(--main-color) !important
+
+*
+  scrollbar-color: #eee #222
+  scrollbar-width: thin
+
+.Container
+  max-width: 1200px
+  min-height: calc( 100% - 4rem )
+  margin: .5rem auto
+
+  .Notifications
+    position: fixed
+    bottom: 0
+    left: 0
+    z-index: 100000
+    padding: 1rem
+
+.Error
+  border: var(--link-color) 1px solid
+  padding: 1rem
+  border-radius: 3px
