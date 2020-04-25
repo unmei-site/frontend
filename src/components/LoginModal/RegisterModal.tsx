@@ -74,6 +74,9 @@ class RegisterModal extends React.Component<Props, State> {
                 <form className="RegisterModal__Form" onSubmit={this.submitForm}>
                     <input
                         type="text"
+                        min={4}
+                        max={20}
+                        pattern={'[a-zA-Z0-9_-~[]]+'}
                         name={'login'}
                         placeholder={'Логин'}
                         className={'RegisterModal__Field'}
@@ -83,6 +86,7 @@ class RegisterModal extends React.Component<Props, State> {
                         type="email"
                         name={'email'}
                         placeholder={'E-mail'}
+                        pattern={'.+@\\w{2,6}\\.\\w{2,3}'}
                         className={'RegisterModal__Field'}
                         onChange={this.handleEmailChange}
                         value={email}/>

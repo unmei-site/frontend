@@ -20,6 +20,9 @@ import Footer from '../Footer/Footer';
 import UserNovels from '../User/Novels/UserNovels';
 import ColorTag from "../Tags/ColorTag";
 import ActivateAccount from "../ActivateAccount";
+import AllNews from "../News/AllNews";
+import Post from "../News/Post";
+import AdminPanel from "../AdminPanel/Main/AdminPanel";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -44,7 +47,7 @@ class App extends React.Component<Props, State> {
         };
 
         const { setUser } = this.props;
-        fetchCurrentUser().then(currentUser => setUser(currentUser)).catch(console.log);
+        fetchCurrentUser().then(currentUser => setUser(currentUser)).catch(console.error);
 
         const theme = localStorage.getItem('theme');
         if(theme)
@@ -74,12 +77,21 @@ class App extends React.Component<Props, State> {
                     </div>
                     <Switch>
                         <Route exact path={'/'} component={Main}/>
+
+                        <Route exact path={'/news'} component={AllNews}/>
+                        <Route exact path={'/news/:postId'} component={Post}/>
+
                         <Route exact path={'/novels'} component={Novels}/>
                         <Route exact path={'/novels/:novelId'} component={Novel}/>
+
                         <Route exact path={'/user/:userId'} component={User}/>
                         <Route exact path={'/user/:userId/novels'} component={UserNovels}/>
+
                         <Route exact path={'/character/:charId'} component={Character}/>
+
                         <Route exact path={'/activate/:token'} component={ActivateAccount}/>
+
+                        <Route exact path={'/kawaii__neko'} component={AdminPanel}/>
                         <Route component={NotFoundError}/>
                     </Switch>
 

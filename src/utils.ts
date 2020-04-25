@@ -8,4 +8,9 @@ const getRandomInt: (min: number, max: number) => number = (min: number, max: nu
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export { capitalize, getRandomInt };
+const hasPermission = (user: UserType, permission: string) => {
+    const permissions = user?.group?.permissions.split(',');
+    return permissions?.filter(perm => perm === permission).length > 0;
+}
+
+export { capitalize, getRandomInt, hasPermission };

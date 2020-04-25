@@ -132,12 +132,18 @@ class Novel extends React.Component<Props, State> {
                 });
     }
 
+    updateNovelMark = (mark: number) => {
+        const { match: { params }, currentUser } = this.props;
+        updateUserNovel(currentUser.id, params.novelId, { mark }).then(console.log);
+        fetchNovel(params.novelId).then(novel => this.setState({ novel }));
+    }
+
     render() {
         const { errorCode, novel, comments, characters, genres, userData, statusExpanded, hasMoreComments } = this.state;
         const { currentUser } = this.props;
 
         if(errorCode === 100) return <NotFoundError/>;
-        if(!novel || !genres) return <Loading/>;
+        if(!novel) return <Loading/>;
         return (
             <div className={'Novel'}>
                 <div className="Novel__Main">
@@ -160,6 +166,17 @@ class Novel extends React.Component<Props, State> {
                                 ))}
                                 <div className={"Novel__Main_Status_Element"} style={{ color: 'red' }} onClick={this.deleteNovelStatus}>Удалить из списка</div>
                             </div>}
+                            <div className={'Novel__Main_Status_Mark'}>
+                                {[1,2,3,4,5,6,7,8,9,10].map(mark => (
+                                    <div
+                                        key={mark}
+                                        className={'Novel__Main_Status_Mark_Element'}
+                                        onClick={() => this.updateNovelMark(mark)}
+                                    >
+                                        {mark}
+                                    </div>
+                                ))}
+                            </div>
                         </div>}
                     </div>
                     <div className={'Novel__Info'}>
@@ -167,7 +184,7 @@ class Novel extends React.Component<Props, State> {
                         {novel.localized_name && <div className="Novel__Info_OriginalName">
                             <strong>Оригинальное название</strong>: {novel.original_name}
                         </div>}
-                        {genres.length > 0 &&
+                        {genres && genres.length > 0 &&
                         <div className="Novel__Info_Genres">
                             <strong>Жанры</strong>: {genres.map(genre => <div className={'Genre'} key={genre.id}>{genre.localized_name}</div>)}
                         </div>}

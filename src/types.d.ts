@@ -28,7 +28,9 @@ type UserType = {
     id: number
     username: string
     avatar: string
+    cover: string
     group: UserGroupType
+    is_superuser: boolean
 }
 
 type UserNovelType = {
@@ -40,6 +42,8 @@ type UserGroupType = {
     id: number
     name: string
     color: string
+    is_superuser: boolean
+    permissions: string
 }
 
 type CommentType = {
@@ -53,4 +57,18 @@ type GenreType = {
     id: number
     name: string
     localized_name: string
+}
+
+type PostType = {
+    id: number
+    title: string
+    short_post: string
+    full_post: string
+    date: Date
+    author: string
+}
+
+type StoreState = {
+    currentUser: UserType
+    notifications: React.Component[]
 }

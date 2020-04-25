@@ -1,27 +1,31 @@
 @import "../App/App"
 
 .User
-  .User__Info
+  &__Info
     background-color: var(--sec-bg-color)
     border-radius: $borderRadius
     padding: $primaryPadding
     display: flex
     align-items: flex-end
+    background-position: center
+    background-size: cover
+    background-repeat: no-repeat
 
     @media (max-width: 250px)
       flex-direction: column
 
-    .User__Info_Nick
+    &_Nick
       font-size: 1.5rem
       margin-left: .5rem
+      font-weight: 600
 
-    .User__Info_Group
+    &_Group
       margin-left: .5rem
       border: 1px solid #eeeeee
       border-radius: 5px
       padding: .1rem
 
-    .User__Info_Avatar
+    &_Avatar
       background-size: cover
       background-position: center
       width: 96px
@@ -29,7 +33,7 @@
       border-radius: 50%
       margin-right: .2rem
 
-  .User__Statistic
+  &__Statistic
     background-color: var(--sec-bg-color)
     border-radius: $borderRadius
     padding: $primaryPadding
@@ -38,7 +42,7 @@
     flex-direction: row
     flex-wrap: wrap
 
-    .User__Statistic_Item
+    &_Item
       width: calc(100% / 5 - 1rem)
       @media (max-width: 1060px)
         width: calc(100% / 4 - 1rem)
@@ -69,11 +73,11 @@
           padding: .5rem
           height: 1.2rem !important
 
-        .User__Statistic_Block:first-child
-          border-radius: $borderRadius $borderRadius 0 0
+          &:first-child
+            border-radius: $borderRadius $borderRadius 0 0
 
-        .User__Statistic_Block:last-child
-          border-radius: 0 0 $borderRadius $borderRadius
+          &:last-child
+            border-radius: 0 0 $borderRadius $borderRadius
 
         .Planned
           background: #339999
@@ -95,19 +99,19 @@
           margin-left: 1rem
           height: 1rem
 
-  .User__List
+  &__List
     background-color: var(--sec-bg-color)
     border-radius: $borderRadius
     padding: $primaryPadding
     margin-top: 1rem
 
-    .User__List_Title
+    &_Title
       font-size: 1.2rem
       margin: .3rem 0
       display: flex
       justify-content: space-between
 
-    .User__List_Items
+    &_Items
       padding: $blockPadding * 3
       background-color: var(--block-sec-color)
       border-radius: $borderRadius

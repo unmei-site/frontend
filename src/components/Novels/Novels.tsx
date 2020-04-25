@@ -11,23 +11,18 @@ type State = {
 }
 
 class Novels extends React.Component<{}, State> {
-    constructor(props: {}) {
-        super(props);
-
-        this.state = {
-            novels: null,
-            genres: [], years: []
-        };
-
-        document.title = 'Новелы';
-    }
+    state: State = {
+        novels: null,
+        genres: [], years: []
+    };
 
     componentDidMount = () => {
         fetchNovels('rating').then((novels: NovelType[]) => {
-            novels?.forEach(novel => {
+            novels.forEach(novel => {
                 novel.release_date = new Date(novel.release_date);
             });
             this.setState({ novels });
+            document.title = 'Новелы';
         })
     };
 

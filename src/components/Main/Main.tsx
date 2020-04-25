@@ -1,9 +1,13 @@
 import React from "react";
+import News from "./News";
+import './Main.sass';
 
 class Main extends React.Component {
     render() {
         return (
-            <div>В разработке!</div>
+            <div className={'Main'}>
+                <News/>
+            </div>
         );
     }
 }

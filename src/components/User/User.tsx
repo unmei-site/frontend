@@ -6,19 +6,20 @@ import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import NovelItem from "../NovelItem/NovelItem";
 
+type Props = {
+    match: { params: { userId: number } }
+}
+
 type State = {
     user: UserType | null
     novels: NovelType[]
     errorCode: number | null
 }
 
-class User extends React.Component<any, State> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            user: null, novels: [], errorCode: null
-        };
-    }
+class User extends React.Component<Props, State> {
+    state: State = {
+        user: null, novels: [], errorCode: null
+    };
 
     componentDidMount() {
         const params = this.props.match.params;
@@ -40,9 +41,11 @@ class User extends React.Component<any, State> {
         if(errorCode === 100) return <NotFoundError/>;
         if(!user) return <Loading />;
 
+        const style = user.cover ? { backgroundImage: `url(${user.cover})`, height: '20rem' } : {}
+
         return (
             <div className={'User'}>
-                <div className="User__Info">
+                <div className="User__Info" style={style}>
                     <div className="User__Info_Avatar" style={{ backgroundImage: `url(${user.avatar})` }} />
                     <div>
                         <div className='User__Info_Nick'>{user.username}</div>

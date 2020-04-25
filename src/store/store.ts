@@ -5,4 +5,5 @@ import {composeWithDevTools} from "redux-devtools-extension";
 const composeEnhancers = composeWithDevTools({
     trace: true
 });
-export default createStore(index, composeEnhancers());
+const store = process.env.NODE_ENV === 'development' ? createStore(index, composeEnhancers()) : createStore(index);
+export default store;

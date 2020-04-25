@@ -1,0 +1,31 @@
+.News
+  background-color: var(--sec-bg-color)
+  padding: .5rem
+
+  &__Title
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    font-size: 1.5rem
+    font-weight: 600
+    margin-bottom: .5rem
+
+  .Post
+    background-color: var(--block-color)
+    padding: .5rem
+
+    &__Title
+      font-size: 1.2rem
+
+    &__Content, &__Title
+      border-bottom: var(--link-color) 1px solid
+
+    &__Footer
+      display: flex
+      justify-content: space-between
+
+    *
+      padding: .2rem
+
+    &:not(:last-child)
+      margin-bottom: 1rem
