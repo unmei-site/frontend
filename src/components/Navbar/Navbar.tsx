@@ -4,6 +4,9 @@ import {connect} from "react-redux";
 import {userLogout} from "../../api/users";
 import {Link} from "react-router-dom";
 import {logout} from "../../store/actions";
+import {hasAccessToAdminPanel} from "../../utils";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faBars} from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
     showRegisterModal: () => void
@@ -12,47 +15,70 @@ type Props = {
     currentUser: UserType
 };
 
-class Navbar extends React.Component<Props> {
+type State = {
+    expand: boolean
+}
+
+class Navbar extends React.Component<Props, State> {
+    state: State = {
+        expand: false
+    }
+
     logout = () => {
         this.props.logout();
         localStorage.removeItem('user');
         userLogout().then(console.log).catch(console.error);
     };
 
+    changeSize = () => {
+        this.setState({ expand: !this.state.expand })
+    }
+
     render() {
-        const { currentUser } = this.props;
+        const { currentUser, showRegisterModal, showLoginModal } = this.props;
+        const { expand } = this.state;
+
+        const isMinimized = window.screen.width <= 1000;
+
+        const links = (
+            <div className="Header__Links">
+                <Link to="/" className={'Header_Button'}>
+                    Главная
+                </Link>
+                <Link to="/novels" className={'Header_Button'}>
+                    Новеллы
+                </Link>
+                {expand && isMinimized && (
+                    <div onClick={this.changeSize} className={'Header_Button'} style={{ position: "absolute", right: 0, margin: '.5rem' }}>X</div>
+                )}
+            </div>
+        );
+
         return (
-            <nav className={'Header'}>
-                <div className="Header_Links">
-                    <Link to="/">
-                        <button className={'Header_Button'}>
-                            Главная
-                        </button>
-                    </Link>
-                    <Link to="/novels">
-                        <button className={'Header_Button'}>
-                            Новеллы
-                        </button>
-                    </Link>
-                    <Link to="/">
-                        <button className={'Header_Button'}>
-                            Пользователи
-                        </button>
-                    </Link>
-                </div>
-                {this.props.currentUser &&
-                <div className={'Header_User'}>
-                    {this.props.currentUser.authorized &&
-                    <Link to={`/user/${currentUser.id}`}>
-                        <button className="Header__User_Profile">
-                            <div className={'Header__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar})` }}/>
-                            <div>{this.props.currentUser.username}</div>
-                        </button>
+            <nav className={`Header ${expand ? 'Expanded' : 'Minimized'}`}>
+                {expand || !isMinimized ? links : (
+                    <div className="Header__Links">
+                        <div onClick={this.changeSize} className={'Header_Button'}>
+                            <FontAwesomeIcon icon={faBars}/>
+                        </div>
+                    </div>
+                )}
+                {currentUser &&
+                <div className={'Header__User'}>
+                    {currentUser.authorized &&
+                    <Link to={`/user/${currentUser.id}`} className="Header__User_Profile">
+                        <div className={'Header__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar})` }}/>
+                        <div>{this.props.currentUser.username}</div>
                     </Link>}
-                    {!currentUser.authorized && <button className={'Header_Button'} onClick={this.props.showRegisterModal}>Регистрация</button>}
+                    {currentUser.group && hasAccessToAdminPanel(currentUser) && (
+                        <Link to={'/kawaii__neko'} className={'Header_Button'}>
+                            Админ-панель
+                        </Link>
+                    )}
+                    {!currentUser.authorized && <div className={'Header_Button'} onClick={showRegisterModal}>Регистрация</div>}
                     {!currentUser.authorized
-                        ? <button className={'Header_Button'} onClick={this.props.showLoginModal}>Войти</button>
-                        : <button className={'Header_Button'} onClick={this.logout}>Выйти</button>}
+                        ? <div className={'Header_Button'} onClick={showLoginModal}>Войти</div>
+                        : <div className={'Header_Button'} onClick={this.logout}>Выйти</div>}
                 </div>}
             </nav>
         )

@@ -67,25 +67,23 @@ class Novel extends React.Component<Props, State> {
 
     sendComment = (text: string) => {
         const { match: { params: { novelId } } } = this.props;
-        postNovelComment(novelId, text)
-            .then((comment: CommentType) => {
-                const { comments } = this.state;
-                console.log(Object.assign({}, comments, { comment }));
-                this.setState({ comments: [comment, ...comments] });
-            })
-            .catch(console.error);
+        postNovelComment(novelId, text).then((comment: CommentType) => {
+            const { comments } = this.state;
+            console.log(comment)
+            console.log(Object.assign({}, comments, { comment }));
+            this.setState({ comments: [comment, ...comments] });
+        }).catch(console.error);
     };
 
     loadMoreComments = () => {
         const { match: { params } } = this.props;
         let { comments, commentsOffset } = this.state;
 
-        fetchNovelComments(params.novelId, commentsOffset, 10)
-            .then(r => {
-                const hasMoreComments = r.count <= commentsOffset;
-                commentsOffset += 5;
-                this.setState({ comments: [...r.comments.reverse(), ...comments], hasMoreComments, commentsOffset })
-            });
+        fetchNovelComments(params.novelId, commentsOffset, 10).then(r => {
+            const hasMoreComments = r.count <= commentsOffset;
+            commentsOffset += 5;
+            this.setState({ comments: [...r.comments.reverse(), ...comments], hasMoreComments, commentsOffset })
+        });
     };
 
     componentDidUpdate(prevProps: any) {
@@ -103,39 +101,37 @@ class Novel extends React.Component<Props, State> {
     componentDidMount() {
         const { match: { params }, currentUser } = this.props;
 
-        fetchNovel(params.novelId)
-            .then(novel => {
-                this.setState({ novel });
-                document.title = novel.localized_name ? `${novel.original_name} / ${novel.localized_name}` : novel.original_name;
+        fetchNovel(params.novelId).then((novel: NovelType) => {
+            novel.release_date = new Date(novel.release_date);
+            this.setState({ novel });
+            document.title = novel.localized_name ? `${novel.original_name} / ${novel.localized_name}` : novel.original_name;
 
-                fetchNovelComments(params.novelId)
-                    .then(r => {
-                        const hasMoreComments = r.count > 5;
-                        this.setState({ comments: r.comments.reverse(), hasMoreComments })
-                    });
-                fetchNovelCharacters(params.novelId)
-                    .then(characters => this.setState({ characters }));
-                fetchNovelGenres(params.novelId)
-                    .then(genres => this.setState({ genres }));
-            })
-            .catch((err: ApiError) => {
+            fetchNovelComments(params.novelId).then(r => {
+                    const hasMoreComments = r.count > 5;
+                    this.setState({ comments: r.comments.reverse(), hasMoreComments })
+                });
+                fetchNovelCharacters(params.novelId).then(characters => this.setState({ characters }));
+                fetchNovelGenres(params.novelId).then(genres => this.setState({ genres }));
+            }).catch((err: ApiError) => {
                 this.setState({ errorCode: err.code });
             });
         
         if(currentUser.authorized)
-            fetchUserNovel(currentUser.id, params.novelId)
-                .then((userData: UserNovelType) => {
-                    this.setState({ userData });
-                })
-                .catch((err: ApiError) => {
-                    if(err.code !== 100) console.error(err.text);
-                });
+            fetchUserNovel(currentUser.id, params.novelId).then((userData: UserNovelType) => {
+                this.setState({ userData });
+            }).catch((err: ApiError) => {
+                if(err.code !== 100) console.error(err.text);
+            });
     }
 
     updateNovelMark = (mark: number) => {
         const { match: { params }, currentUser } = this.props;
-        updateUserNovel(currentUser.id, params.novelId, { mark }).then(console.log);
-        fetchNovel(params.novelId).then(novel => this.setState({ novel }));
+        const { userData } = this.state;
+        if(userData?.mark === mark) return;
+        updateUserNovel(currentUser.id, params.novelId, { mark }).then(res => {
+            userData!!.mark = mark;
+            this.setState({ userData })
+        });
     }
 
     render() {
@@ -157,7 +153,15 @@ class Novel extends React.Component<Props, State> {
                                 {!userData
                                     ? <div className={'Novel__Main_Status_Element'} onClick={() => this.updateNovelStatus('planned')}>Добавить в список</div>
                                     : <div className={"Novel__Main_Status_Element"}>{TranslateStatus[userData.status]}</div>}
-                                <div className={'Novel__Main_Status_Element'} onClick={() => this.setState({ statusExpanded: !statusExpanded })}>+</div>
+                                {userData && (
+                                    <div
+                                        className={'Novel__Main_Status_Element'}
+                                        onClick={() => this.setState({ statusExpanded: !statusExpanded })}
+                                        style={{ paddingLeft: 5, borderLeft: '1px solid white' }}
+                                    >
+                                        +
+                                    </div>
+                                )}
                             </div>
                             {statusExpanded &&
                             <div className="Novel__Main_Status_Extended">
@@ -167,10 +171,10 @@ class Novel extends React.Component<Props, State> {
                                 <div className={"Novel__Main_Status_Element"} style={{ color: 'red' }} onClick={this.deleteNovelStatus}>Удалить из списка</div>
                             </div>}
                             <div className={'Novel__Main_Status_Mark'}>
-                                {[1,2,3,4,5,6,7,8,9,10].map(mark => (
+                                {userData && [0,1,2,3,4,5,6,7,8,9,10].map(mark => (
                                     <div
                                         key={mark}
-                                        className={'Novel__Main_Status_Mark_Element'}
+                                        className={mark === userData.mark && userData.mark !== 0 ? 'Novel__Main_Status_Mark_Element Selected' : 'Novel__Main_Status_Mark_Element'}
                                         onClick={() => this.updateNovelMark(mark)}
                                     >
                                         {mark}
@@ -188,6 +192,9 @@ class Novel extends React.Component<Props, State> {
                         <div className="Novel__Info_Genres">
                             <strong>Жанры</strong>: {genres.map(genre => <div className={'Genre'} key={genre.id}>{genre.localized_name}</div>)}
                         </div>}
+                        <div>
+                            <strong>Год выхода</strong>: {novel.release_date.toLocaleDateString()}
+                        </div>
                         <div className="Novel__Info_Rating"><strong>Ср. оценка</strong>: {novel.rating.toFixed(2)}</div>
                         <pre className={'Novel__Info_Description'}>{novel.description}</pre>
                     </div>

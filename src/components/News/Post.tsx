@@ -20,6 +20,7 @@ class Post extends React.Component<Props, State> {
 
     componentDidMount(): void {
         const { match: { params: { postId }} } = this.props;
+
         getPost(postId).then(post => {
             this.setState({ post })
         }).catch((error: ApiError) => {
@@ -39,7 +40,7 @@ class Post extends React.Component<Props, State> {
                     {post.full_post}
                 </div>
                 <div className="Post__Footer">
-                    {post.author}
+                    Автор: {post.author}
                 </div>
             </div>
         )

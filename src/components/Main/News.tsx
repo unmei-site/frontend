@@ -29,9 +29,9 @@ class News extends React.Component<{}, State> {
                     <div>Новости</div>
                     <Link to={'/news'}>Все новости</Link>
                 </div>
-                {news.map(post => (
+                {news.slice(0, 5).map(post => (
                     <div className={'Post'} key={post.id}>
-                        <div className="Post__Title">{post.title}</div>
+                        <div className="Post__Title"><Link to={`/news/${post.id }`}>{post.title}</Link></div>
                         <div className="Post__Content">{post.short_post}</div>
                         <div className="Post__Footer">
                             <div>Автор: {post.author}</div>

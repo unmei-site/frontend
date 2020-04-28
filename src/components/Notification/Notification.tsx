@@ -14,7 +14,7 @@ type State = {
 
 class Notification extends React.Component<Props, State> {
     timer: NodeJS.Timeout | undefined;
-    element: any;
+
     state = {
         time: 5000, paused: false
     };
@@ -34,10 +34,8 @@ class Notification extends React.Component<Props, State> {
 
     interval = (step=50) => {
         const { time, paused } = this.state;
-        if(time <= 0 && this.timer)
-            clearInterval(this.timer);
-        if(!paused)
-            this.setState({ time: time-step })
+        if(time <= 0 && this.timer) clearInterval(this.timer);
+        if(!paused) this.setState({ time: time-step });
     };
 
     componentDidMount(): void {
@@ -45,8 +43,7 @@ class Notification extends React.Component<Props, State> {
     };
 
     componentWillUnmount(): void {
-        if(this.timer)
-            clearTimeout(this.timer);
+        if(this.timer) clearTimeout(this.timer);
     }
 
     render() {
@@ -58,9 +55,14 @@ class Notification extends React.Component<Props, State> {
         const styleClass = level ? `Notification--${capitalize(level)}` : '';
 
         return (
-            <div className={`Notification ${styleClass}`} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} onClick={this.onClick}>
+            <div
+                className={`Notification ${styleClass}`}
+                onMouseOver={this.onMouseOver}
+                onMouseOut={this.onMouseOut}
+                onClick={this.onClick}
+            >
                 {children}
-                <div className="Progress" style={{ width: `${(time / 5000 * 100)}%` }}/>
+                <div className="Progress" style={{ width: `${time / 5000 * 100}%` }}/>
             </div>
         );
     }

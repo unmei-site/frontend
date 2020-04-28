@@ -27,10 +27,12 @@ type UserType = {
     authorized: boolean
     id: number
     username: string
+    email?: string
     avatar: string
     cover: string
     group: UserGroupType
     is_superuser: boolean
+    is_activated: boolean
 }
 
 type UserNovelType = {

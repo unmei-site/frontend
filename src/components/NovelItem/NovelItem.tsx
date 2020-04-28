@@ -9,16 +9,23 @@ type Props = {
     localized_name?: string
     image?: string
     status?: string
+    mark?: number
 }
 
-const NovelItem = ({ id, original_name, localized_name, image, status }: Props) => (
-    <Link to={`/novels/${id}`} className="NovelItem">
-        <div className='NovelItem__Image' style={{ backgroundImage: `url(${image || '/static/img/no-image.png'})` }}/>
-        <div className="NovelItem__Title">
-            {localized_name || original_name}
-        </div>
-        {status && <div className="NovelItem__Status">{TranslateStatus[status]}</div>}
-    </Link>
-);
+const NovelItem = ({ id, original_name, localized_name, image, status, mark }: Props) => {
+    console.log(mark !== undefined && mark > 0 && <div>{mark}</div>)
+
+    return (
+        <Link to={`/novels/${id}`} className="NovelItem">
+            <div className='NovelItem__Image' style={{ backgroundImage: `url(${image || '/static/img/no-image.png'})` }}/>
+            <div className="NovelItem__Title">
+                {localized_name || original_name}
+            </div>
+            {status && <div className="NovelItem__Status">
+                {TranslateStatus[status]} {mark !== undefined && mark > 0 && mark}
+            </div>}
+        </Link>
+    );
+}
 
 export default NovelItem;

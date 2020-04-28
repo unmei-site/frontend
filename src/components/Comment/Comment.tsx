@@ -9,18 +9,10 @@ type Props = {
     user: UserType | undefined
     text: string
 }
-type State = {
-    user: UserType | null
-}
 
-class Comment extends React.Component<Props, State> {
-    state: State = {
-        user: null
-    };
-
+class Comment extends React.Component<Props> {
     render() {
-        const { user } = this.props;
-        const { text } = this.props;
+        const { user, text } = this.props;
         if(!user) return <Loading/>;
 
         return (user &&

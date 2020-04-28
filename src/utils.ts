@@ -11,6 +11,8 @@ const getRandomInt: (min: number, max: number) => number = (min: number, max: nu
 const hasPermission = (user: UserType, permission: string) => {
     const permissions = user?.group?.permissions.split(',');
     return permissions?.filter(perm => perm === permission).length > 0;
-}
+};
 
-export { capitalize, getRandomInt, hasPermission };
+const hasAccessToAdminPanel = (user: UserType) => user.is_superuser || user.group.is_superuser || hasPermission(user, 'admin_panel')
+
+export { capitalize, getRandomInt, hasPermission, hasAccessToAdminPanel };

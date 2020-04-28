@@ -5,6 +5,9 @@ import Comment from './Comment';
 import './Comments.sass';
 import Loading from "../Loading";
 import {fetchUser} from "../../api/users";
+import {connect} from "react-redux";
+import {addNotification} from "../../store/actions";
+import Notification from "../Notification/Notification";
 
 type Props = {
     comments: CommentType[]
@@ -12,6 +15,7 @@ type Props = {
     user: UserType
     loadMore: () => void
     sendComment: (text: string) => void
+    addNotification: (notification: React.ReactNode) => void
 };
 
 type State = {
@@ -41,35 +45,43 @@ class Comments extends React.Component<Props, State> {
 
     sendComment = (event: React.FormEvent) => {
         event.preventDefault();
-        const { sendComment } = this.props;
+        const { sendComment, addNotification } = this.props;
         const { commentText } = this.state;
         
-        if(commentText === '')
-            console.log('empty');
-        else {
+        if(commentText === '') {
+            const notification = (
+                <Notification level={"error"}>
+                    Пустой комментарий
+                </Notification>
+            );
+            addNotification(notification);
+        } else {
             sendComment(commentText);
             this.setState({ commentText: '' });
         }
     };
 
     componentDidUpdate(prevProps: Readonly<Props>) {
-        if(prevProps.comments.length !== this.props.comments.length) {
-            let map: Map<number, UserType> = new Map();
-            this.props.comments.forEach(comment => {
-                if(!map.has(comment.user_id)) {
-                    fetchUser(comment.user_id).then(user => {
-                        map = map.set(comment.user_id, user)
-                    });
+        const { comments } = this.props;
+        const { comments: prevComments } = prevProps;
+
+        if(prevComments.length !== comments.length) {
+            let { users } = this.state;
+
+            comments.forEach(async comment => {
+                if(!users.has(comment.user_id)) {
+                    const user = await fetchUser(comment.user_id);
+                    users = users.set(comment.user_id, user);
+                    this.setState({ users });
                 }
             });
-            console.log(map)
         }
     }
 
     render() {
         const { user, comments, hasMore, loadMore } = this.props;
         const { users } = this.state;
-        if(!user || !comments) return <Loading/>;
+        if(!user) return <Loading/>;
 
         return (            
             <div className="Comments">
@@ -86,15 +98,21 @@ class Comments extends React.Component<Props, State> {
                 <textarea 
                     className={'Comments_TextArea'}
                     placeholder={'Текст комментария'}
-                    value={this.state.commentText} 
+                    value={this.state.commentText}
                     onChange={(event) => this.setState({ commentText: event.target.value })}
                     ref={ref => this.input = ref}
                 />
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <button type="submit" className={'Comments_Submit'}>Написать</button>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <button type="submit" className={'Comments_Submit'}>Написать</button>
+                        <div style={{ marginLeft: '.5rem', color: '#bb3333' }}>Комментарии в разработке!</div>
+                    </div>
                     {hasMore && <button type={"button"} onClick={loadMore}>Загрузить ещё</button>}
                 </div>
             </form>}
+            {!comments && (
+                <Loading/>
+            )}
             {comments && comments.length > 0 ? (
                 comments.map(comment => <Comment text={comment.text} key={comment.id} user={users.get(comment.user_id)} />)
             ) : (
@@ -105,4 +123,10 @@ class Comments extends React.Component<Props, State> {
     }
 }
 
-export default Comments;
+export default connect(null,
+    dispatch => ({
+        addNotification: (notification: React.ReactNode) => {
+            dispatch(addNotification(notification))
+        }
+    })
+)(Comments);

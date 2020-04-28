@@ -1,6 +1,10 @@
-import {get, post} from "./api";
+import {get, post, put} from "./api";
+
+export const fetchUsers = () => get('/users');
 
 export const fetchUser = (id: number) => get(`users/${id}`);
+export const updateUser = (user: UserType) => put(`users/${user.id}`, { user })
+
 export const fetchCurrentUser = () => get('users/current');
 export const fetchUserNovels = (id: number) => get(`users/${id}/novels`);
 

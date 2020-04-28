@@ -5,9 +5,11 @@ import NotFoundError from "../NotFoundError";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import NovelItem from "../NovelItem/NovelItem";
+import {connect} from "react-redux";
 
 type Props = {
-    match: { params: { userId: number } }
+    match: { params: { userId: string } }
+    currentUser: UserType
 }
 
 type State = {
@@ -24,32 +26,52 @@ class User extends React.Component<Props, State> {
     componentDidMount() {
         const params = this.props.match.params;
 
-        fetchUser(params.userId)
-            .then((user: UserType) => {
-                this.setState({ user });
-                document.title = `${user.username} / Unmei`;
-            })
-            .catch((err: ApiError) => this.setState({ errorCode: err.code }));
+        fetchUser(parseInt(params.userId)).then((user: UserType) => {
+            console.log(user)
+            this.setState({ user });
+            document.title = `${user.username} / Unmei`;
 
-        fetchUserNovels(params.userId).then((novels: NovelType[]) => {
+            fetchUserNovels(parseInt(params.userId)).then((novels: NovelType[]) => {
                 this.setState({ novels });
             }).catch((err: ApiError) => console.error(err));
+        }).catch((err: ApiError) => {
+            this.setState({ errorCode: err.code })
+            console.log(err)
+        });
+    }
+
+    sendActivateLink = () => {
+
     }
 
     render() {
+        const { currentUser } = this.props;
         const { errorCode, user, novels } = this.state;
         if(errorCode === 100) return <NotFoundError/>;
         if(!user) return <Loading />;
 
-        const style = user.cover ? { backgroundImage: `url(${user.cover})`, height: '20rem' } : {}
+        const style = !user.is_activated ? { marginTop: '1rem' } : {}
 
         return (
             <div className={'User'}>
+                {!user.is_activated && user.id === currentUser.id && (
+                    <div className={'User__Activate'}>
+                        <h2>Ваш аккаунт не активирован!</h2>
+                        <p>Активируйте аккаунт, для доступа ко многим функциям. Так же актвация аккаунта позволит восстановить пароль.</p>
+                        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                            <button onClick={this.sendActivateLink} style={{ fontSize: '1.2rem' }}>Активировать!</button>
+                        </div>
+                    </div>
+                )}
+
                 <div className="User__Info" style={style}>
-                    <div className="User__Info_Avatar" style={{ backgroundImage: `url(${user.avatar})` }} />
-                    <div>
-                        <div className='User__Info_Nick'>{user.username}</div>
-                        <div className='User__Info_Group' style={{ borderColor: user.group.color, color: user.group.color }}>{user.group.name}</div>
+                    {user.cover && <div className="User__Info_Cover" style={{ backgroundImage: `url(${user.cover})` }}/>}
+                    <div className={'User__Info_Main'}>
+                        <div className="User__Info_Avatar" style={{ backgroundImage: `url(${user.avatar})` }} />
+                        <div>
+                            <div className='User__Info_Nick'>{user.username}</div>
+                            <div className='User__Info_Group' style={{ borderColor: user.group.color, color: user.group.color }}>{user.group.name}</div>
+                        </div>
                     </div>
                 </div>
 
@@ -105,4 +127,8 @@ class User extends React.Component<Props, State> {
     }
 }
 
-export default User;
+export default connect(
+    (state: StoreState) => ({
+        currentUser: state.currentUser
+    })
+)(User);

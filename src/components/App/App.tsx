@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import './App.sass';
 import Navbar from "../Navbar/Navbar";
 import Novel from "../Novel/Novel";
@@ -22,7 +22,7 @@ import ColorTag from "../Tags/ColorTag";
 import ActivateAccount from "../ActivateAccount";
 import AllNews from "../News/AllNews";
 import Post from "../News/Post";
-import AdminPanel from "../AdminPanel/Main/AdminPanel";
+import AdminPanel from "../AdminPanel/AdminPanel";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -47,7 +47,9 @@ class App extends React.Component<Props, State> {
         };
 
         const { setUser } = this.props;
-        fetchCurrentUser().then(currentUser => setUser(currentUser)).catch(console.error);
+        fetchCurrentUser().then(currentUser => setUser(currentUser)).catch((err: ApiError) => {
+            if(err.code !== 3) console.error(err.text);
+        });
 
         const theme = localStorage.getItem('theme');
         if(theme)
@@ -91,7 +93,9 @@ class App extends React.Component<Props, State> {
 
                         <Route exact path={'/activate/:token'} component={ActivateAccount}/>
 
-                        <Route exact path={'/kawaii__neko'} component={AdminPanel}/>
+                        <Route path={'/kawaii__neko'} component={AdminPanel}/>
+                        {/*<Route exact path={'/kawaii__neko/users'} component={AdminPanelUsers}/>*/}
+
                         <Route component={NotFoundError}/>
                     </Switch>
 
@@ -105,7 +109,7 @@ class App extends React.Component<Props, State> {
 }
 
 export default connect(
-    (state: { notifications: React.ReactNode[] }) => ({
+    (state: StoreState) => ({
         notifications: state.notifications
     }),
     dispatch => ({

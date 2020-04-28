@@ -1,3 +1,8 @@
+@import "../Constants"
+
+.Animate-Notification-exit
+  opacity: 0
+
 .Notification
   background-color: var(--block-color)
   border: 1px solid var(--link-color)
@@ -5,6 +10,7 @@
   max-width: 500px
   width: 500px
   cursor: pointer
+  margin-top: 1rem
 
   &--Error
     background: var(--error-bg-color)
@@ -18,4 +24,4 @@
   .Progress
     height: 5px
     background: white
-    transition: width 100ms
+    transition: width 5ms
