@@ -27,17 +27,13 @@ class User extends React.Component<Props, State> {
         const params = this.props.match.params;
 
         fetchUser(parseInt(params.userId)).then((user: UserType) => {
-            console.log(user)
             this.setState({ user });
             document.title = `${user.username} / Unmei`;
 
             fetchUserNovels(parseInt(params.userId)).then((novels: NovelType[]) => {
                 this.setState({ novels });
             }).catch((err: ApiError) => console.error(err));
-        }).catch((err: ApiError) => {
-            this.setState({ errorCode: err.code })
-            console.log(err)
-        });
+        }).catch((err: ApiError) => this.setState({ errorCode: err.code }));
     }
 
     sendActivateLink = () => {

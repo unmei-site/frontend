@@ -27,7 +27,7 @@ class Navbar extends React.Component<Props, State> {
     logout = () => {
         this.props.logout();
         localStorage.removeItem('user');
-        userLogout().then(console.log).catch(console.error);
+        userLogout().then();
     };
 
     changeSize = () => {

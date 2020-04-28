@@ -69,8 +69,6 @@ class Novel extends React.Component<Props, State> {
         const { match: { params: { novelId } } } = this.props;
         postNovelComment(novelId, text).then((comment: CommentType) => {
             const { comments } = this.state;
-            console.log(comment)
-            console.log(Object.assign({}, comments, { comment }));
             this.setState({ comments: [comment, ...comments] });
         }).catch(console.error);
     };
