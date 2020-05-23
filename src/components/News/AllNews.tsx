@@ -1,6 +1,7 @@
 import React from "react";
 import Loading from "../Loading";
 import {getNews} from "../../api/news";
+import {Link} from "react-router-dom";
 
 type State = {
     news: PostType[]
@@ -33,7 +34,9 @@ class AllNews extends React.Component<{}, State> {
                         <div className="Post__Title">{post.title}</div>
                         <div className="Post__Content">{post.short_post}</div>
                         <div className="Post__Footer">
-                            <div>Автор: {post.author}</div>
+                            <div>
+                                Автор: <Link to={`/user/${post.author_id}`}>{post.author}</Link>
+                            </div>
                             <div>Дата: {post.date.toLocaleDateString()}, {post.date.toLocaleTimeString()}</div>
                         </div>
                     </div>

@@ -3,6 +3,7 @@ import {getPost} from "../../api/news";
 import Loading from "../Loading";
 import NotFoundError from "../NotFoundError";
 import './Post.sass';
+import {Link} from "react-router-dom";
 
 type Props = {
     match: { params: { postId: number } }
@@ -21,7 +22,7 @@ class Post extends React.Component<Props, State> {
     componentDidMount(): void {
         const { match: { params: { postId }} } = this.props;
 
-        getPost(postId).then(post => {
+        getPost(postId).then((post: PostType) => {
             this.setState({ post })
         }).catch((error: ApiError) => {
             this.setState({ code: error.code })
@@ -37,10 +38,10 @@ class Post extends React.Component<Props, State> {
             <div className={'Post'}>
                 <div className={'Post__Title'}>{post.title}</div>
                 <div className="Post__Content">
-                    {post.full_post}
+                    {post.full_post || post.short_post}
                 </div>
                 <div className="Post__Footer">
-                    Автор: {post.author}
+                    Автор: <Link to={`/user/${post.author_id}`}>{post.author}</Link>
                 </div>
             </div>
         )

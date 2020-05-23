@@ -1,7 +1,6 @@
 import React from "react";
 import Modal from "../Modal/Modal";
-// @ts-ignore
-import Recaptcha from 'react-recaptcha'
+import Recaptcha from '../Recaptcha/Recaptcha'
 import './RegisterModal.sass'
 import {registerUser} from "../../api/users";
 import {connect} from "react-redux";
@@ -34,7 +33,7 @@ class RegisterModal extends React.Component<Props, State> {
     handleEmailChange = (event: any) => this.setState({ email: event.target.value });
 
     componentWillUnmount() {
-        this.recaptcha.reset()
+        if(this.recaptcha) this.recaptcha.reset();
     }
 
     submitForm = (e: any) => {
@@ -107,10 +106,8 @@ class RegisterModal extends React.Component<Props, State> {
 
                     <Recaptcha
                         ref={(e: any) => this.recaptcha = e}
-                        className={'RegisterModal__Recaptcha'}
-                        verifyCallback={(res: any) => this.setState({ recaptcha: res })}
+                        onVerify={(res: any) => this.setState({ recaptcha: res })}
                         theme={'dark'}
-                        badge={'inline'}
                         sitekey={'6LfnDsMUAAAAAEDfD5ubCdFQbNUnKxxJlMWeUMzN'}/>
 
                     <button className={'RegisterModal__Submit'} type={"submit"}>Регистрация</button>

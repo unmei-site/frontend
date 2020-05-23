@@ -3,7 +3,7 @@ import React from "react";
 
 const setUser = (userData: UserType) => ({
     type: ActionTypes.SET_USER,
-    payload: { userData }
+    userData
 });
 const logout = () => ({
     type: ActionTypes.LOGOUT
@@ -11,7 +11,7 @@ const logout = () => ({
 
 const addNotification = (notification: React.ReactNode) => ({
     type: ActionTypes.ADD_NOTIFICATION,
-    payload: { notification }
+    notification
 });
 
 export { setUser, logout,

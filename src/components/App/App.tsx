@@ -23,6 +23,9 @@ import ActivateAccount from "../ActivateAccount";
 import AllNews from "../News/AllNews";
 import Post from "../News/Post";
 import AdminPanel from "../AdminPanel/AdminPanel";
+import PasswordRestoreGenerate from "../PasswordRestore/PasswordRestoreGenerate";
+import PasswordRestore from "../PasswordRestore/PasswordRestore";
+import Users from "../Users/Users";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -47,8 +50,8 @@ class App extends React.Component<Props, State> {
         };
 
         const { setUser } = this.props;
-        fetchCurrentUser().then(currentUser => setUser(currentUser)).catch((err: ApiError) => {
-            if(err.code !== 3) console.error(err.text);
+        fetchCurrentUser().then(setUser).catch((err: ApiError) => {
+            if(err.code !== 3 && err.text) console.error(err.text);
         });
 
         const theme = localStorage.getItem('theme');
@@ -66,6 +69,8 @@ class App extends React.Component<Props, State> {
     hideRegisterModal = () => this.setState({ registerModalVisible: false });
 
     render() {
+        const { loginModalVisible, registerModalVisible } = this.state;
+
         return (
             <>
                 <Navbar showLoginModal={this.showLoginModal} showRegisterModal={this.showRegisterModal}/>
@@ -86,6 +91,7 @@ class App extends React.Component<Props, State> {
                         <Route exact path={'/novels'} component={Novels}/>
                         <Route exact path={'/novels/:novelId'} component={Novel}/>
 
+                        <Route exact path={'/users'} component={Users}/>
                         <Route exact path={'/user/:userId'} component={User}/>
                         <Route exact path={'/user/:userId/novels'} component={UserNovels}/>
 
@@ -93,14 +99,20 @@ class App extends React.Component<Props, State> {
 
                         <Route exact path={'/activate/:token'} component={ActivateAccount}/>
 
+                        <Route exact path={'/restore'} component={PasswordRestoreGenerate}/>
+                        <Route exact path={'/restore/:token'} component={PasswordRestore}/>
+
                         <Route path={'/kawaii__neko'} component={AdminPanel}/>
-                        {/*<Route exact path={'/kawaii__neko/users'} component={AdminPanelUsers}/>*/}
 
                         <Route component={NotFoundError}/>
                     </Switch>
 
-                    {this.state.loginModalVisible && <LoginModal hideModal={this.hideLoginModal} openRegisterModal={this.showRegisterModal}/>}
-                    {this.state.registerModalVisible && <RegisterModal hideModal={this.hideRegisterModal}/>}
+                    {loginModalVisible && (
+                        <LoginModal hideModal={this.hideLoginModal} openRegisterModal={this.showRegisterModal}/>
+                    )}
+                    {registerModalVisible && (
+                        <RegisterModal hideModal={this.hideRegisterModal}/>
+                    )}
                 </div>
                 <Footer/>
             </>

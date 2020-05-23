@@ -1,5 +1,5 @@
 import React from "react";
-import {fetchUser, fetchUserNovels} from "../../api/users";
+import {fetchUser, fetchUserNovels, generateActivateLink} from "../../api/users";
 import './User.sass'
 import NotFoundError from "../NotFoundError";
 import {Link} from "react-router-dom";
@@ -37,7 +37,7 @@ class User extends React.Component<Props, State> {
     }
 
     sendActivateLink = () => {
-
+        generateActivateLink().then(console.log).catch(console.error)
     }
 
     render() {

@@ -115,7 +115,14 @@ input
     z-index: 100000
     padding: 1rem
 
-.Error
+.Successful, .Error
   border: var(--link-color) 1px solid
-  padding: 1rem
+  padding: .5rem
   border-radius: 3px
+  margin-bottom: 1rem
+
+.Error
+  background-color: var(--error-bg-color)
+
+.Successful
+  background-color: var(--success-bg-color)

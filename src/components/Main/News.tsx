@@ -34,7 +34,9 @@ class News extends React.Component<{}, State> {
                         <div className="Post__Title"><Link to={`/news/${post.id }`}>{post.title}</Link></div>
                         <div className="Post__Content">{post.short_post}</div>
                         <div className="Post__Footer">
-                            <div>Автор: {post.author}</div>
+                            <div>
+                                Автор: <Link to={`/user/${post.author_id}`}>{post.author}</Link>
+                            </div>
                             <div>Дата: {post.date.toLocaleDateString()}, {post.date.toLocaleTimeString()}</div>
                         </div>
                     </div>

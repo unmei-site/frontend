@@ -64,13 +64,15 @@
     .Novel__Info_Title
       @media (max-width: 600px)
         margin-top: 1rem
+
       font-size: 1.7rem
       font-weight: 600
       margin-bottom: 1rem
 
     .Novel__Info_Description
       margin-top: .5rem
-      margin-left: 1rem
+      @media (min-width: 600px)
+        margin-left: 1rem
       font-size: 1rem
 
     .Novel__Info_Genres

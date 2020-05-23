@@ -1,4 +1,4 @@
-@import "../App/App"
+$hoverColor: #f22
 
 .Minimized
   height: 3rem
@@ -33,9 +33,24 @@
     justify-content: center
     align-items: center
     cursor: pointer
+    position: relative
+
+    &::before
+      content: ""
+      width: 100%
+      position: absolute
+      bottom: 0
+      left: 0
+      height: 0
+      background: $hoverColor
+      transition: heigth .1s ease-in
+      -webkit-transition: height .1s ease-in
 
     &:hover
       background-color: var(--main-bg-color)
+
+      &::before
+        height: 5px
 
   &__User
     justify-content: flex-end
@@ -50,9 +65,24 @@
       border: none
       border-radius: 0
       padding: 0 .5rem
+      position: relative
+
+      &::before
+        content: ""
+        width: 100%
+        position: absolute
+        bottom: 0
+        left: 0
+        height: 0
+        background: $hoverColor
+        transition: heigth .1s ease-in
+        -webkit-transition: height .1s ease-in
 
       &:hover
         background-color: var(--main-bg-color)
+
+        &::before
+          height: 5px
 
     &_Avatar
       background-size: cover

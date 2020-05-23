@@ -2,7 +2,9 @@ import { get, post, put, del } from "./api";
 
 
 export const fetchNovels = (orderBy?: string) => get(orderBy ? `novels?sort=${orderBy}` : 'novels');
+export const createNovel = (novel: NovelType) => post('novels', { ...novel });
 export const fetchNovel = (id: number) => get(`novels/${id}`);
+export const updateNovel = (id: number, novel: NovelType) => put(`novels/${id}`, { ...novel });
 export const fetchNovelCharacters = (id: number) => get(`novels/${id}/characters`);
 export const fetchNovelGenres = (id: number) => get(`novels/${id}/genres`);
 

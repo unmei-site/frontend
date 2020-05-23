@@ -23,6 +23,7 @@
       background-position: center
       background-size: cover
       background-repeat: no-repeat
+      border-radius: $borderRadius $borderRadius 0 0
 
       @media (max-width: 500px)
         height: 10rem !important
@@ -43,7 +44,7 @@
     &_Group
       border: 1px solid #eeeeee
       border-radius: 4px
-      padding: .1rem
+      padding: .2rem
       text-align: center
       font-size: 1rem
       font-weight: 300
@@ -136,9 +137,6 @@
       justify-content: space-between
 
     &_Items
-      padding: $blockPadding * 3
-      background-color: var(--block-sec-color)
-      border-radius: $borderRadius
       display: flex
       flex-wrap: wrap
       justify-content: center

@@ -6,16 +6,14 @@ const initialState = {
 
 type Action = {
     type: string
-    payload: {
-        userData: UserType
-    }
+    userData: UserType
 }
 
 export default (state = initialState, action: Action) => {
     switch (action.type) {
         case ActionTypes.SET_USER:
-            if(action.payload.userData) {
-                state = Object.assign({}, state, action.payload.userData);
+            if(action.userData) {
+                state = Object.assign({}, state, action.userData);
                 state.authorized = true;
             }
             return state;

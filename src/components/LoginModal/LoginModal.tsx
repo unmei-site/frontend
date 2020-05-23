@@ -7,6 +7,8 @@ import './LoginModal.sass'
 import {Link} from "react-router-dom";
 import errors from "../../api/errors";
 import Notification from "../Notification/Notification";
+// @ts-ignore
+import Recaptcha from 'react-recaptcha'
 
 type Props = {
     setUser: (user: UserType) => void
@@ -29,20 +31,19 @@ class LoginModal extends React.Component<Props, State> {
     loginAndFetchToken = (event: FormEvent) => {
         event.preventDefault();
         const { setUser, hideModal, addNotification } = this.props;
-        login(this.state.login, this.state.password)
-            .then(user => {
-                if(user) {
-                    setUser(user);
-                    const successful = (
-                        <Notification level={"success"}>
-                            Ты успешно вошел!
-                        </Notification>
-                    );
-                    addNotification(successful);
-                    hideModal();
-                }
-            })
-            .catch((r: ApiError) => this.setState({ error: errors[r.code] }));
+        login(this.state.login, this.state.password).then(user => {
+            if(!user) return;
+
+            setUser(user);
+            const successful = (
+                <Notification level={"success"}>
+                    Ты успешно вошел!
+                </Notification>
+            );
+            addNotification(successful);
+            hideModal();
+        })
+        .catch((r: ApiError) => this.setState({ error: errors[r.code] }));
     };
 
     handlePasswordChange = (event: ChangeEvent) => this.setState({ password: (event.target as HTMLInputElement).value });
@@ -60,18 +61,20 @@ class LoginModal extends React.Component<Props, State> {
                         placeholder={'Логин'}
                         className={'LoginModal__Field'}
                         onChange={this.handleLoginChange}
-                        value={this.state.login}/>
+                        value={this.state.login}
+                    />
                     <input
                         type="password"
                         name={'password'}
                         placeholder={'Пароль'}
                         className={'LoginModal__Field'}
                         onChange={this.handlePasswordChange}
-                        value={this.state.password}/>
+                        value={this.state.password}
+                    />
                     <button className={'LoginModal__Submit'} type={"submit"}>Войти</button>
                 </form>
                 <div className="LoginModal__Links">
-                    <Link to={'/'}>Забыли пароль?</Link>
+                    <Link to={'/restore'}>Забыли пароль?</Link>
                     <p>|</p>
                     <Link to={''} onClick={this.props.openRegisterModal}>Регистрация</Link>
                 </div>

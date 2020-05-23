@@ -48,6 +48,9 @@ class Navbar extends React.Component<Props, State> {
                 <Link to="/novels" className={'Header_Button'}>
                     Новеллы
                 </Link>
+                <Link to="/users" className={'Header_Button'}>
+                    Пользователи
+                </Link>
                 {expand && isMinimized && (
                     <div onClick={this.changeSize} className={'Header_Button'} style={{ position: "absolute", right: 0, margin: '.5rem' }}>X</div>
                 )}
@@ -64,22 +67,28 @@ class Navbar extends React.Component<Props, State> {
                     </div>
                 )}
                 {currentUser &&
-                <div className={'Header__User'}>
-                    {currentUser.authorized &&
-                    <Link to={`/user/${currentUser.id}`} className="Header__User_Profile">
-                        <div className={'Header__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar})` }}/>
-                        <div>{this.props.currentUser.username}</div>
-                    </Link>}
-                    {currentUser.group && hasAccessToAdminPanel(currentUser) && (
-                        <Link to={'/kawaii__neko'} className={'Header_Button'}>
-                            Админ-панель
-                        </Link>
-                    )}
-                    {!currentUser.authorized && <div className={'Header_Button'} onClick={showRegisterModal}>Регистрация</div>}
-                    {!currentUser.authorized
-                        ? <div className={'Header_Button'} onClick={showLoginModal}>Войти</div>
-                        : <div className={'Header_Button'} onClick={this.logout}>Выйти</div>}
-                </div>}
+                    (<div className={'Header__User'}>
+                        {currentUser.authorized && (
+                            <Link to={`/user/${currentUser.id}`} className="Header__User_Profile">
+                                <div className={'Header__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar})` }}/>
+                                <div>{this.props.currentUser.username}</div>
+                            </Link>
+                        )}
+                        {currentUser.group && hasAccessToAdminPanel(currentUser) && (
+                            <Link to={'/kawaii__neko'} className={'Header_Button'}>
+                                Админ-панель
+                            </Link>
+                        )}
+                        {!currentUser.authorized && (
+                            <div className={'Header_Button'} onClick={showRegisterModal}>Регистрация</div>
+                        )}
+                        {!currentUser.authorized ? (
+                            <div className={'Header_Button'} onClick={showLoginModal}>Войти</div>
+                        ) : (
+                            <div className={'Header_Button'} onClick={this.logout}>Выйти</div>
+                        )}
+                    </div>)
+                }
             </nav>
         )
     }

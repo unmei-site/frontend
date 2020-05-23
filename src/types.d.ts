@@ -3,6 +3,12 @@ type ApiError = {
     text: string
 }
 
+type ApiResponse = {
+    error: boolean
+    data?: any
+    error_data?: ApiError
+}
+
 type NovelType = {
     id: number
     original_name: string
@@ -68,6 +74,7 @@ type PostType = {
     full_post: string
     date: Date
     author: string
+    author_id: number
 }
 
 type StoreState = {
