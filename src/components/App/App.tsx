@@ -62,6 +62,7 @@ class App extends React.Component<Props, State> {
         parser.registerTag('spoiler', SpoilerTag);
         parser.registerTag('color', ColorTag);
 
+        // In future do something normal with this version
         getVersion().then(res => console.debug(`Current back-end version: ${res.version}`))
     }
 
