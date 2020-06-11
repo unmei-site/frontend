@@ -7,7 +7,7 @@ import Loading from "../Loading";
 import {fetchUser} from "../../api/users";
 import {connect} from "react-redux";
 import {addNotification} from "../../store/actions";
-import Notification from "../Notification/Notification";
+import NotificationMessage from "../Notifications/NotificationMessage";
 
 type Props = {
     comments: CommentType[]
@@ -50,9 +50,9 @@ class Comments extends React.Component<Props, State> {
         
         if(commentText === '') {
             const notification = (
-                <Notification level={"error"}>
+                <NotificationMessage level={"error"}>
                     Пустой комментарий
-                </Notification>
+                </NotificationMessage>
             );
             addNotification(notification);
         } else {

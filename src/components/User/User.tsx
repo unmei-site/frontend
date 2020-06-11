@@ -91,7 +91,7 @@ class User extends React.Component<Props, State> {
                     </div>
                     <div className="User__List_Items">
                         {novels.length > 0 ?
-                            novels.slice(0, 4).map((novel) => <NovelItem {...novel} key={novel.id} />
+                            novels.slice(0, 4).map((novel) => <NovelItem {...novel} key={novel.id} viewType={'grid'} />
                         ) : (
                             <div>У этого пользователя нет новелл!</div>
                         )}

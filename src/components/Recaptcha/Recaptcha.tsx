@@ -47,7 +47,7 @@ class Recaptcha extends React.Component<Props, State> {
 
     reset = () => {
         // @ts-ignore
-        if(typeof window?.grecaptcha?.reset === "function")window.grecaptcha.reset(document.getElementById('g-recaptcha'));
+        if(typeof window?.grecaptcha?.reset === "function") window.grecaptcha.reset(document.getElementById('g-recaptcha'));
     }
 
     render() {

@@ -12,8 +12,28 @@
     width: 100%
 
   display: flex
-  flex-direction: column
-  align-items: center
+
+  &.Grid
+    flex-direction: column
+    align-items: center
+
+  &.Table
+    width: 100%
+    padding: .2rem
+    box-sizing: border-box
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+
+    &:not(:last-child)
+      margin: 0 0 .5rem
+
+    &:last-child
+      margin: 0
+
+    .NovelItem__Status
+      white-space: nowrap
+
 
   &__Image
     border-radius: $borderRadius $borderRadius 0 0

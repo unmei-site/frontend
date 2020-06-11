@@ -1,5 +1,5 @@
 import React from "react";
-import './Notification.sass'
+import './NotificationMessage.sass'
 import {capitalize} from "../../utils";
 
 type Props = {
@@ -12,7 +12,7 @@ type State = {
     paused: boolean
 };
 
-class Notification extends React.Component<Props, State> {
+class NotificationMessage extends React.Component<Props, State> {
     timer: NodeJS.Timeout | undefined;
 
     state = {
@@ -68,4 +68,4 @@ class Notification extends React.Component<Props, State> {
     }
 }
 
-export default Notification;
+export default NotificationMessage;

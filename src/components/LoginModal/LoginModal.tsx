@@ -6,9 +6,8 @@ import {addNotification, setUser} from "../../store/actions";
 import './LoginModal.sass'
 import {Link} from "react-router-dom";
 import errors from "../../api/errors";
-import Notification from "../Notification/Notification";
-// @ts-ignore
-import Recaptcha from 'react-recaptcha'
+import NotificationMessage from "../Notifications/NotificationMessage";
+import Recaptcha from '../Recaptcha/Recaptcha'
 
 type Props = {
     setUser: (user: UserType) => void
@@ -21,39 +20,46 @@ type State = {
     error: string
     login: string
     password: string
+    recaptcha: string
+    recaptchaNeeded: boolean
 };
 
 class LoginModal extends React.Component<Props, State> {
     state: State = {
-        error: '', login: '', password: ''
+        error: '', login: '', password: '', recaptcha: '', recaptchaNeeded: false
     };
 
     loginAndFetchToken = (event: FormEvent) => {
         event.preventDefault();
         const { setUser, hideModal, addNotification } = this.props;
-        login(this.state.login, this.state.password).then(user => {
+        const { login: log, password, recaptcha } = this.state;
+        login(log, password, recaptcha).then(user => {
             if(!user) return;
 
             setUser(user);
             const successful = (
-                <Notification level={"success"}>
+                <NotificationMessage level={"success"}>
                     Ты успешно вошел!
-                </Notification>
+                </NotificationMessage>
             );
             addNotification(successful);
             hideModal();
         })
-        .catch((r: ApiError) => this.setState({ error: errors[r.code] }));
+        .catch((r: ApiError) => {
+            this.setState({ error: errors[r.code] });
+            if(r.code === 9) this.setState({ recaptchaNeeded: true });
+        });
     };
 
     handlePasswordChange = (event: ChangeEvent) => this.setState({ password: (event.target as HTMLInputElement).value });
     handleLoginChange = (event: ChangeEvent) => this.setState({ login: (event.target as HTMLInputElement).value });
 
     render() {
+        const { login, password, error, recaptchaNeeded } = this.state;
         return (
             <Modal onCloseRequest={this.props.hideModal} className={'LoginModal'}>
                 <h1>Авторизация</h1>
-                {this.state.error && <div className="LoginModal__Error">{this.state.error}</div>}
+                {error && <div className="LoginModal__Error">{error}</div>}
                 <form className={'LoginModal__Form'} onSubmit={this.loginAndFetchToken}>
                     <input
                         type="text"
@@ -61,7 +67,7 @@ class LoginModal extends React.Component<Props, State> {
                         placeholder={'Логин'}
                         className={'LoginModal__Field'}
                         onChange={this.handleLoginChange}
-                        value={this.state.login}
+                        value={login}
                     />
                     <input
                         type="password"
@@ -69,8 +75,14 @@ class LoginModal extends React.Component<Props, State> {
                         placeholder={'Пароль'}
                         className={'LoginModal__Field'}
                         onChange={this.handlePasswordChange}
-                        value={this.state.password}
+                        value={password}
                     />
+                    {recaptchaNeeded &&
+                    <Recaptcha
+                        onVerify={(res: any) => this.setState({ recaptcha: res })}
+                        theme={'dark'}
+                        sitekey={'6LfnDsMUAAAAAEDfD5ubCdFQbNUnKxxJlMWeUMzN'}
+                    />}
                     <button className={'LoginModal__Submit'} type={"submit"}>Войти</button>
                 </form>
                 <div className="LoginModal__Links">

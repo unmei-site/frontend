@@ -5,7 +5,7 @@ import './RegisterModal.sass'
 import {registerUser} from "../../api/users";
 import {connect} from "react-redux";
 import {addNotification} from "../../store/actions";
-import Notification from "../Notification/Notification";
+import NotificationMessage from "../Notifications/NotificationMessage";
 
 type Props = {
     addNotification: (notification: React.ReactNode) => void
@@ -50,10 +50,10 @@ class RegisterModal extends React.Component<Props, State> {
         else {
             registerUser(login, password1, email, recaptcha).then(() => {
                 const notification = (
-                    <Notification level={"success"}>
+                    <NotificationMessage level={"success"}>
                         Аккаунт успешно создан!
                         Проверьте почту <strong>{email}</strong>. На неё была отправлена ссылка для подтверждения аккаунта.
-                    </Notification>
+                    </NotificationMessage>
                 );
                 const { addNotification, hideModal } = this.props;
                 addNotification(notification);

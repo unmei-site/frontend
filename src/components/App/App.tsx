@@ -26,6 +26,7 @@ import AdminPanel from "../AdminPanel/AdminPanel";
 import PasswordRestoreGenerate from "../PasswordRestore/PasswordRestoreGenerate";
 import PasswordRestore from "../PasswordRestore/PasswordRestore";
 import Users from "../Users/Users";
+import {getVersion} from "../../api/api";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -60,6 +61,8 @@ class App extends React.Component<Props, State> {
 
         parser.registerTag('spoiler', SpoilerTag);
         parser.registerTag('color', ColorTag);
+
+        getVersion().then(res => console.debug(`Current back-end version: ${res.version}`))
     }
 
     showLoginModal = () => this.setState({ loginModalVisible: true, registerModalVisible: false });

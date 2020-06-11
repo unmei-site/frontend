@@ -4,7 +4,7 @@ import {fetchUser, updateUser} from "../../../api/users";
 import Loading from "../../Loading";
 import './APUser.sass';
 import {addNotification} from "../../../store/actions";
-import Notification from "../../Notification/Notification";
+import NotificationMessage from "../../Notifications/NotificationMessage";
 
 type Props = {
     userId: number
@@ -48,9 +48,9 @@ class ModifyUser extends React.Component<Props, State> {
         }
         updateUser(user).then(() => {
             const notification = (
-                <Notification level={"success"}>
+                <NotificationMessage level={"success"}>
                     Пользователь успешно изменен!
-                </Notification>
+                </NotificationMessage>
             )
             addNotification(notification)
         });

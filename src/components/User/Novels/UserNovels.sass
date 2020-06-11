@@ -9,9 +9,17 @@
     font-weight: 600
     text-align: center
 
+    .svg-inline--fa
+      margin: 0 .5rem
+      cursor: pointer
+
+      &:hover
+        color: var(--link-color)
+
   &__List
     display: flex
     flex-direction: column
+    width: 100%
 
     &:not(:last-child)
       border-bottom: var(--link-color) 1px solid
@@ -28,6 +36,12 @@
 
     &_Novels
       display: flex
-      flex-direction: row
-      flex-wrap: wrap
       justify-content: center
+
+      &.Grid
+        flex-direction: row
+        flex-wrap: wrap
+
+      &.Table
+        flex-direction: column
+        width: 100%

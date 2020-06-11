@@ -5,7 +5,7 @@ const initialState: React.ReactNode[] = [];
 
 type Action = {
     type: string
-    notification: React.ReactNode[]
+    notification: React.ReactNode
 }
 
 export default (state = initialState, action: Action) => {

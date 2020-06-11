@@ -15,4 +15,9 @@ const hasPermission = (user: UserType, permission: string) => {
 
 const hasAccessToAdminPanel = (user: UserType) => user.is_superuser || user.group.is_superuser || hasPermission(user, 'admin_panel')
 
-export { capitalize, getRandomInt, hasPermission, hasAccessToAdminPanel };
+const generateClassName = (baseClassName: string, ...classNames: string[]) => {
+    if(classNames.length === 0) return baseClassName;
+    else return `${baseClassName} ${classNames.join(" ")}`
+}
+
+export { capitalize, getRandomInt, hasPermission, hasAccessToAdminPanel, generateClassName };
