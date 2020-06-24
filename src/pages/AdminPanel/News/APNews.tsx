@@ -2,6 +2,7 @@ import React from "react";
 import {fetchNews} from "../../../api/news";
 import Group from "../../../ui/Group/Group";
 import {Link} from "react-router-dom";
+import Button from "../../../ui/Button/Button";
 
 type Props = {
     path: string
@@ -26,6 +27,7 @@ class APNews extends React.Component<Props, State> {
 
         return (
             <Group title={'Новости'}>
+                <Button>Добавить новость</Button>
                 {news.map(post => (
                     <Link to={`${path}/${post.id}`} key={post.id}>
                         <div style={{ display: "flex" }}>

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FormEvent} from "react";
 import Group from "../../../ui/Group/Group";
 import NotFoundError from "../../NotFoundError";
-import {fetchPost, updatePost} from "../../../api/news";
+import {deletePost, fetchPost, updatePost} from "../../../api/news";
 import './APNews.sass';
 import '../../../ui/TextField/TextField.sass'
 import Input from "../../../ui/Input/Input";
@@ -10,10 +10,15 @@ import BBEditor from "../../../ui/BBEditor/BBEditor";
 // @ts-ignore
 import parser from 'bbcode-to-react';
 import Title from "../../../ui/Title/Title";
+import {connect} from "react-redux";
+import {addNotification, setModal} from "../../../store/actions";
+import ConfirmPopout from "../../../ui/ConfirmPopout/ConfirmPopout";
+import NotificationMessage from "../../../ui/Notifications/NotificationMessage";
 
 type Props = {
     postId: number
-    //addNotification: (notification: React.ReactNode) => void
+    setPopout: (modal: React.ReactNode | null) => void
+    addNotification: (notification: React.ReactNode) => void
 };
 
 type State = {
@@ -49,8 +54,16 @@ class APModifyPost extends React.Component<Props, State> {
 
         post.short_post = this.shortPost.current.value;
         post.full_post = this.fullPost.current.value;
+        const { addNotification } = this.props;
 
-        await updatePost(post);
+        updatePost(post).then(() => {
+            const notification = (
+                <NotificationMessage level={"success"}>
+                    Успешно!
+                </NotificationMessage>
+            )
+            addNotification(notification)
+        });
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -76,6 +89,18 @@ class APModifyPost extends React.Component<Props, State> {
         if(!post) return;
         post.title = event.target.value;
         this.setState({ post });
+    }
+
+    deletePost = () => {
+        const { postId, setPopout } = this.props;
+
+        const popout = (
+            <ConfirmPopout onConfirm={() => deletePost(postId)}>
+                Вы уверены?
+            </ConfirmPopout>
+        );
+
+        setPopout(popout);
     }
 
     render() {
@@ -108,8 +133,8 @@ class APModifyPost extends React.Component<Props, State> {
                     </div>
 
                     <div>
-                        <Button>Сохранить</Button>
-                        <Button type={"button"} style={{ color: 'var(--error) '}}>Удалить</Button>
+                        <Button style={{ marginRight: '1rem' }}>Сохранить</Button>
+                        <Button type={"button"} style={{ color: 'var(--error-bg-color)'}} onClick={this.deletePost}>Удалить</Button>
                     </div>
                 </form>
             </Group>
@@ -117,4 +142,9 @@ class APModifyPost extends React.Component<Props, State> {
     }
 }
 
-export default APModifyPost;
+export default connect(null,
+    dispatch => ({
+        setPopout: (modal: React.ReactNode | null) => dispatch(setModal(modal)),
+        addNotification: (notification: React.ReactNode) => dispatch(addNotification(notification))
+    })
+)(APModifyPost);

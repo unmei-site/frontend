@@ -1,8 +1,7 @@
-import {get, put} from './api';
+import {del, get, put} from './api';
 
-const fetchNews = () => get('news');
+export const fetchNews = () => get('news');
 
-const fetchPost = (id: number) => get(`news/${id}`);
-const updatePost = (post: PostType) => put(`news/${post.id}`, post);
-
-export { fetchNews, fetchPost, updatePost }
+export const fetchPost = (id: number) => get(`news/${id}`);
+export const updatePost = (post: PostType) => put(`news/${post.id}`, post);
+export const deletePost = (id: number) => del(`news/${id}`);

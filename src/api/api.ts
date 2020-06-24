@@ -1,7 +1,6 @@
-
 const baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:8080/v1' : 'https://api.unmei.nix13.pw/v1';
 
-export const response = async (url: string, method: string, body?: string | FormData) => {
+const response = async (url: string, method: string, body?: string | FormData) => {
     let bUrl = baseUrl;
     if(baseUrl.endsWith('/')) bUrl = bUrl.slice(0, baseUrl.length-1);
     if(url.startsWith('/')) url = url.slice(1, baseUrl.length);
@@ -40,6 +39,6 @@ const TranslateStatus: { [id: string]: string } = {
 };
 
 export const getVersion = () => get('version');
-export const version = '0.9';
+export const version = '0.10';
 
 export { get, post, put, del, TranslateStatus };

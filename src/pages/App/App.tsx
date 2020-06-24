@@ -55,7 +55,7 @@ class App extends React.Component<Props, State> {
 
         getVersion().then(res => {
             if(version !== res.version) {
-                console.debug(`Current back-end version: ${res.version}. Clearing cache`);
+                console.log(`Current back-end version: ${res.version}. Clearing cache`);
 
                 caches.keys().then(names => {
                     names.forEach(name => caches.delete(name).catch(console.error))
