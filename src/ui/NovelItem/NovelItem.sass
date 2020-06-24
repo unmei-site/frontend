@@ -1,0 +1,58 @@
+@import '../../Constants'
+
+.NovelItem
+  background-color: var(--block-color)
+  padding-bottom: $blockPadding
+  border-radius: $borderRadius
+  margin: .5rem
+
+  @media (min-width: 601px)
+    width: $novelBlockSize
+  @media (max-width: 600px)
+    width: 100%
+
+  display: flex
+
+  &.Grid
+    flex-direction: column
+    align-items: center
+
+  &.Table
+    width: 100%
+    padding: .2rem
+    box-sizing: border-box
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+
+    &:not(:last-child)
+      margin: 0 0 .5rem
+
+    &:last-child
+      margin: 0
+
+    .NovelItem__Status
+      white-space: nowrap
+
+
+  &__Image
+    border-radius: $borderRadius $borderRadius 0 0
+    background-size: cover
+    background-position: center
+    width: 100%
+    height: 130px
+
+  &__Title
+    width: 100%
+    text-align: center
+    display: inline-block
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+    padding: .2rem
+    box-sizing: border-box
+    font-weight: 400
+
+  &__Status
+    font-weight: 300
+    display: flex

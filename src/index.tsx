@@ -7,7 +7,7 @@ import store from "./store/store";
 
 // import * as Sentry from '@sentry/browser';
 
-import App from './components/App/App';
+import App from './pages/App/App';
 import * as serviceWorker from './serviceWorker';
 
 

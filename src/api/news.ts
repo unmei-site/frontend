@@ -1,6 +1,8 @@
-import {get} from './api';
+import {get, put} from './api';
 
-const getNews = () => get('news');
-const getPost = (id: number) => get(`news/${id}`);
+const fetchNews = () => get('news');
 
-export { getNews, getPost }
+const fetchPost = (id: number) => get(`news/${id}`);
+const updatePost = (post: PostType) => put(`news/${post.id}`, post);
+
+export { fetchNews, fetchPost, updatePost }

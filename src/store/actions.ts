@@ -14,5 +14,14 @@ const addNotification = (notification: React.ReactNode) => ({
     notification
 });
 
+const setModal = (modal: React.ReactNode | null) => ({
+    type: ActionTypes.SET_MODAL,
+    modal
+});
+const hideModal = () => ({
+    type: ActionTypes.HIDE_MODAL
+})
+
 export { setUser, logout,
-         addNotification };
+         addNotification,
+         setModal, hideModal };

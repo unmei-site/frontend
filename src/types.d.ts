@@ -79,5 +79,8 @@ type PostType = {
 
 type StoreState = {
     currentUser: UserType
-    notifications: React.Component[]
+    notifications: React.ReactNode[]
+    modal: React.ReactNode
 }
+
+type SetModalType = (modal: React.ReactNode | null) => void

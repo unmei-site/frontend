@@ -1,0 +1,27 @@
+@import "../../Constants"
+
+.Animate-Notification-exit
+  opacity: 0
+
+.Notification
+  background-color: var(--block-color)
+  border: 1px solid var(--link-color)
+  padding: .5rem
+  box-sizing: border-box
+  max-width: 500px
+  width: 500px
+  cursor: pointer
+  margin-top: 1rem
+
+  &--Error
+    background: var(--error-bg-color)
+
+  &--Success
+    background: var(--success-bg-color)
+
+  &:not(:last-child)
+    margin-bottom: .5rem
+
+  .Progress
+    height: 5px
+    background: white

@@ -1,0 +1,38 @@
+.Modal__Overlay
+  display: flex
+  align-items: center
+  justify-content: center
+  position: fixed
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  background-color: #0f0f0fe9
+  z-index: 9999
+  opacity: 1
+  overflow: hidden
+
+  .Modal
+    background-color: var(--main-bg-color)
+    padding: .5rem
+
+    .Modal__Header
+      display: flex
+      justify-content: space-between
+      align-items: center
+      font-size: 1.4rem
+      font-weight: 700
+      margin-bottom: .5rem
+
+    .Modal__CloseButton
+      background: none
+      font-size: 2rem
+      padding: 0
+      height: 2.5rem
+      width: 2.5rem
+      border: none
+      color: var(--main-color)
+      cursor: pointer
+
+      &:hover
+        color: var(--link-color)
