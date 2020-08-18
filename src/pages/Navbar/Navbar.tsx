@@ -1,7 +1,7 @@
 import React from "react";
 import './Navbar.sass'
 import {connect} from "react-redux";
-import {userLogout} from "../../api/users";
+import {userLogout} from "../../api/auth";
 import {Link} from "react-router-dom";
 import {logout, setModal} from "../../store/actions";
 import {hasAccessToAdminPanel} from "../../utils";

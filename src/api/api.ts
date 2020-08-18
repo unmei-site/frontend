@@ -1,4 +1,4 @@
-const baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:8080/v1' : 'https://api.unmei.nix13.pw/v1';
+const baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:8080/v1' : 'https://api.unmei.space/v1';
 
 const response = async (url: string, method: string, body?: string | FormData) => {
     let bUrl = baseUrl;

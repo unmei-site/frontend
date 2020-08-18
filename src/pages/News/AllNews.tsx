@@ -30,6 +30,7 @@ class AllNews extends React.Component<{}, State> {
                 <div className="News__Title">
                     Новости
                 </div>
+                {/*{<ProgressBar progress={50} alternative color={'red'}/>}*/}
                 {news.map(post => (
                     <Link key={post.id} to={`/post/${post.id}`}>
                         <NewsPost {...post} />

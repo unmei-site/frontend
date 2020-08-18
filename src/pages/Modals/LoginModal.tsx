@@ -1,6 +1,6 @@
 import React, {FormEvent, ChangeEvent} from "react";
 import Modal from "../../ui/Modal/Modal";
-import {login} from "../../api/users";
+import {login} from "../../api/auth";
 import {connect} from "react-redux";
 import {addNotification, hideModal, setModal, setUser} from "../../store/actions";
 import './LoginModal.sass'

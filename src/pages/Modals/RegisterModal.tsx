@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "../../ui/Modal/Modal";
 import Recaptcha from '../../ui/Recaptcha/Recaptcha'
 import './RegisterModal.sass'
-import {registerUser} from "../../api/users";
+import {registerUser} from "../../api/auth";
 import {connect} from "react-redux";
 import {addNotification, setModal} from "../../store/actions";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
