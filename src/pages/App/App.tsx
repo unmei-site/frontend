@@ -6,7 +6,7 @@ import Novel from "../Novel/Novel";
 import User from "../User/User";
 import Main from "../Main/Main"
 import NotFoundError from "../NotFoundError";
-import {fetchCurrentUser} from "../../api/users";
+import {fetchCurrentUser, fetchUserSettings} from "../../api/users";
 import {connect} from "react-redux";
 import {setUser} from "../../store/actions";
 import Character from "../Character/Character";
@@ -42,13 +42,14 @@ class App extends React.Component<Props, State> {
         super(props);
 
         const { setUser } = this.props;
-        fetchCurrentUser().then(setUser).catch((err: ApiError) => {
+        fetchCurrentUser().then((user: UserType) => {
+            setUser(user);
+            fetchUserSettings().then((settings: UserSettingsType) => {
+                document.body.setAttribute('theme', settings.theme);
+            });
+        }).catch((err: ApiError) => {
             if(err.code !== 3 && err.text) console.error(err.text);
         });
-
-        const theme = localStorage.getItem('theme');
-        if(theme)
-            document.body.setAttribute('theme', theme);
 
         parser.registerTag('spoiler', SpoilerTag);
         parser.registerTag('color', ColorTag);

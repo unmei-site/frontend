@@ -1,3 +1,5 @@
+type Theme = 'dark' | 'blue' | 'red' | 'green' | 'light'
+
 type ApiError = {
     code: number
     text: string
@@ -39,6 +41,12 @@ type UserType = {
     group: UserGroupType
     is_superuser: boolean
     is_activated: boolean
+}
+
+type UserSettingsType = {
+    avatar: string
+    theme: Theme
+    use_gravatar: boolean
 }
 
 type UserNovelType = {
