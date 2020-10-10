@@ -49,7 +49,6 @@ class App extends React.Component<Props, State> {
         fetchCurrentUser().then((user: UserType) => {
             setUser(user);
             fetchUserSettings().then((settings: UserSettingsType) => {
-                console.log(settings.theme, cachedTheme)
                 if(settings.theme !== cachedTheme) {
                     localStorage.setItem('theme', settings.theme);
                     document.body.setAttribute('theme', settings.theme);
