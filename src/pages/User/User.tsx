@@ -7,10 +7,13 @@ import Loading from "../../ui/Loading";
 import NovelItem from "../../ui/NovelItem/NovelItem";
 import {connect} from "react-redux";
 import Button from "../../ui/Button/Button";
+import {addNotification} from "../../store/actions";
+import NotificationMessage from "../../ui/Notifications/NotificationMessage";
 
 type Props = {
     match: { params: { userId: string } }
     currentUser: UserType
+    addNotification: AddNotification
 }
 
 type State = {
@@ -38,7 +41,22 @@ class User extends React.Component<Props, State> {
     }
 
     sendActivateLink = () => {
-        generateActivateLink().then(console.log).catch(console.error)
+        generateActivateLink().then(() => {
+            const notification = (
+                <NotificationMessage level={"success"}>
+                    Сообщение успешно отправлено!
+                </NotificationMessage>
+            );
+            this.props.addNotification(notification);
+        }).catch(err => {
+            const notification = (
+                <NotificationMessage level={"success"}>
+                    Сообщение успешно отправлено!
+                </NotificationMessage>
+            );
+            this.props.addNotification(notification);
+
+        })
     }
 
     render() {
@@ -62,14 +80,22 @@ class User extends React.Component<Props, State> {
                 )}
 
                 <div className="User__Info" style={style}>
-                    {user.cover && <div className="User__Info_Cover" style={{ backgroundImage: `url(${user.cover})` }}/>}
-                    <div className={'User__Info_Main'}>
+                    {user.cover ? (
+                    <div className="User__Info_Cover User__Info_Main" style={{ backgroundImage: `url(${user.cover})` }}>
                         <div className="User__Info_Avatar" style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }} />
                         <div>
                             <div className='User__Info_Nick'>{user.username}</div>
                             <div className='User__Info_Group' style={{ borderColor: user.group.color, color: user.group.color }}>{user.group.name}</div>
                         </div>
-                    </div>
+                    </div>) : (
+                        <div className={'User__Info_Main'}>
+                            <div className="User__Info_Avatar" style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }} />
+                            <div>
+                                <div className='User__Info_Nick'>{user.username}</div>
+                                <div className='User__Info_Group' style={{ borderColor: user.group.color, color: user.group.color }}>{user.group.name}</div>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="User__Statistic">
@@ -127,5 +153,8 @@ class User extends React.Component<Props, State> {
 export default connect(
     (state: StoreState) => ({
         currentUser: state.currentUser
+    }),
+    dispatch => ({
+        addNotification: (notification: React.ReactNode) => dispatch(addNotification(notification))
     })
 )(User);

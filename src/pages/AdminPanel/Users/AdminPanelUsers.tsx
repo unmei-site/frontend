@@ -17,7 +17,7 @@ class AdminPanelUsers extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        fetchUsers().then(users => this.setState({ users }))
+        fetchUsers().then(users => this.setState({ users }));
     }
 
     render() {

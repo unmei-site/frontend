@@ -5,10 +5,12 @@ type ApiError = {
     text: string
 }
 
+type DataType = NovelType | NovelType[] | CharacterType | CharacterType[] | UserType | UserType[] | UserSettingsType | UserNovelType | UserNovelType[] | UserGroupType | CommentType | CommentType[] | GenreType | GenreType[] | PostType | PostType[];
+
 type ApiResponse = {
     error: boolean
-    data?: any
-    error_data?: ApiError
+    error_data?: ApiError | string
+    data?: DataType
 }
 
 type NovelType = {
@@ -84,11 +86,3 @@ type PostType = {
     author: string
     author_id: number
 }
-
-type StoreState = {
-    currentUser: UserType
-    notifications: React.ReactNode[]
-    modal: React.ReactNode
-}
-
-type SetModalType = (modal: React.ReactNode | null) => void

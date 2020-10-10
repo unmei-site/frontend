@@ -41,11 +41,19 @@ class App extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
+        const cachedTheme = localStorage.getItem('theme');
+        if(cachedTheme)
+            document.body.setAttribute('theme', cachedTheme);
+
         const { setUser } = this.props;
         fetchCurrentUser().then((user: UserType) => {
             setUser(user);
             fetchUserSettings().then((settings: UserSettingsType) => {
-                document.body.setAttribute('theme', settings.theme);
+                console.log(settings.theme, cachedTheme)
+                if(settings.theme !== cachedTheme) {
+                    localStorage.setItem('theme', settings.theme);
+                    document.body.setAttribute('theme', settings.theme);
+                }
             });
         }).catch((err: ApiError) => {
             if(err.code !== 3 && err.text) console.error(err.text);

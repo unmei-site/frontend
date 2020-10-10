@@ -35,6 +35,7 @@ class UserNovels extends React.Component<Props, State> {
 
         fetchUserNovels(userId)
             .then(novels => this.setState({ novels }));
+
         fetchUser(userId)
             .then(user => this.setState({ user }));
 
@@ -53,7 +54,7 @@ class UserNovels extends React.Component<Props, State> {
         this.setState({ viewType: type });
         localStorage.setItem('viewType', type);
     }
-    
+
     render() {
         const { novels, user, viewType } = this.state;
         if(!novels || !user) return <Loading/>;

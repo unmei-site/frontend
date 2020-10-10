@@ -10,7 +10,7 @@ $hoverColor: #f22
     position: relative
     width: 100%
 
-.Header
+.Navbar
   color: var(--main-color)
   background-color: var(--nav-bg-color)
   display: flex
@@ -52,6 +52,21 @@ $hoverColor: #f22
       &::before
         height: 5px
 
+  &__Dropdown
+    cursor: pointer
+
+    &:hover>&_Menu
+      display: block
+
+    &_Menu
+      display: none
+      position: absolute
+      background-color: #fefefe
+      box-sizing: border-box
+      padding: .5rem
+
+    &_Item
+      margin: .2rem 0
   &__User
     justify-content: flex-end
 
