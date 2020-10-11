@@ -27,17 +27,30 @@ class User extends React.Component<Props, State> {
         user: null, novels: [], errorCode: null
     };
 
-    componentDidMount() {
-        const params = this.props.match.params;
-
-        fetchUser(parseInt(params.userId)).then((user: UserType) => {
+    getAndSetUser = (id: number) => {
+        fetchUser(id).then(user => {
             this.setState({ user });
             document.title = `${user.username} / Unmei`;
 
-            fetchUserNovels(parseInt(params.userId)).then((novels: NovelType[]) => {
+            fetchUserNovels(id).then(novels => {
                 this.setState({ novels });
             }).catch((err: ApiError) => console.error(err));
         }).catch((err: ApiError) => this.setState({ errorCode: err.code }));
+    }
+
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, _?: any) {
+        const newUserId = parseInt(this.props.match.params.userId);
+        const prevUserId = parseInt(prevProps.match.params.userId);
+
+        if(newUserId !== prevUserId) {
+            this.getAndSetUser(newUserId);
+        }
+    }
+
+    componentDidMount() {
+        const params = this.props.match.params;
+
+        this.getAndSetUser(parseInt(params.userId))
     }
 
     sendActivateLink = () => {
@@ -48,10 +61,11 @@ class User extends React.Component<Props, State> {
                 </NotificationMessage>
             );
             this.props.addNotification(notification);
-        }).catch(err => {
+        }).catch((err: ApiError) => {
             const notification = (
-                <NotificationMessage level={"success"}>
-                    Сообщение успешно отправлено!
+                <NotificationMessage level={"error"}>
+                    Произошла ошибка! №{err.code} <br/>
+                    {err.text}
                 </NotificationMessage>
             );
             this.props.addNotification(notification);

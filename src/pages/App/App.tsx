@@ -45,7 +45,7 @@ class App extends React.Component<Props, State> {
         if(cachedTheme)
             document.body.setAttribute('theme', cachedTheme);
 
-        const { setUser } = this.props;
+        const { setUser } = props;
         fetchCurrentUser().then((user: UserType) => {
             setUser(user);
             fetchUserSettings().then((settings: UserSettingsType) => {
@@ -55,7 +55,8 @@ class App extends React.Component<Props, State> {
                 }
             });
         }).catch((err: ApiError) => {
-            if(err.code !== 3 && err.text) console.error(err.text);
+            if(err.code !== 3 && err.text)
+                console.error(err.text);
         });
 
         parser.registerTag('spoiler', SpoilerTag);
@@ -67,6 +68,8 @@ class App extends React.Component<Props, State> {
 
                 caches.keys().then(names => {
                     names.forEach(name => caches.delete(name).catch(console.error))
+                }).then(() => {
+                    window.location.reload();
                 });
             }
         });

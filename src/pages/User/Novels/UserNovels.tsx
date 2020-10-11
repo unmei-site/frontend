@@ -6,6 +6,7 @@ import NovelItem from '../../../ui/NovelItem/NovelItem';
 import {capitalize, generateClassName, getRandomInt} from "../../../utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAlignJustify, faThLarge} from "@fortawesome/free-solid-svg-icons";
+import Button from "../../../ui/Button/Button";
 
 type Props = {
     match: { params: { userId: number } }
@@ -73,7 +74,7 @@ class UserNovels extends React.Component<Props, State> {
                 {planned.length > 0 && <div className={'UserNovels__List'}>
                     <div className="UserNovels__List_Title">
                         <div style={{ marginRight: '1rem' }}>Запланированные</div>
-                        <button onClick={this.getRandomNovel}>Рандомная новелла</button>
+                        <Button onClick={this.getRandomNovel}>Рандомная новелла</Button>
                     </div>
                     <div className={generateClassName("UserNovels__List_Novels", capitalize(viewType) || 'Grid')}>
                         {planned.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id+1} viewType={viewType}/>)}

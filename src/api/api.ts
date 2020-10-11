@@ -1,4 +1,4 @@
-const baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:8080/v1' : 'https://api.unmei.space/v1';
+const baseUrl = process.env.NODE_ENV === "development" ? 'http://192.168.0.103:8080/v1' : 'https://api.unmei.space/v1';
 
 const request: ApiRequest = async (url: string, method: string, body?: string | FormData) => {
     let bUrl = baseUrl;

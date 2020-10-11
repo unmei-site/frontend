@@ -5,29 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord, faVk, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
 
 const Footer: React.FC = () => {
-    const secretChangeTheme = () => {
-        const theme = localStorage.getItem('theme');
-        if(theme == null) {
-            localStorage.setItem('theme', 'light');
-            document.body.setAttribute('theme', 'light')
-        } else if(theme === 'light') {
-            localStorage.setItem('theme', 'dark');
-            document.body.setAttribute('theme', 'dark')
-        } else if(theme === 'dark') {
-            localStorage.setItem('theme', 'light');
-            document.body.setAttribute('theme', 'light')
-        }
-        if(theme !== 'light') {
-            console.log('Светлая тема находится в разработке! Не все может корректно отображаться.\nК тому же, эта кнопка секретная. Ты знал, на что шел ;)');
-        }
-    }
-
     return (
         <div className='Footer'>
             <footer className='Footer__Tabs'>
                 <div className="Footer__Tab">
-                    <div className="Footer__Tab_Title" onClick={secretChangeTheme}>Команда</div>
+                    <div className="Footer__Tab_Title">Команда</div>
                     <Link to={'/user/1'} className={'Link'}>Nix13</Link>
+                    <Link to={'/user/6'} className={'Link'}>RonFall</Link>
                 </div>
                 <div className="Footer__Tab">
                     <div className="Footer__Tab_Title">Соцсети</div>
