@@ -4,7 +4,7 @@ import Loader from 'react-loader-spinner'
 
 const Loading: React.FC = () => (
     <div style={{ textAlign: 'center' }}>
-        <Loader color='#aaa' type='Rings' style={{ height: '100%' }} />
+        <Loader color='#aaa' type='Rings'/>
     </div>
 );
 

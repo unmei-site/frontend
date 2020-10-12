@@ -1,16 +1,16 @@
 type Theme = 'dark' | 'blue' | 'red' | 'green' | 'light'
+type ExitStatus = 'came_out'
+type NovelPlatform = 'win'
 
 type ApiError = {
     code: number
     text: string
 }
 
-type DataType = NovelType | NovelType[] | CharacterType | CharacterType[] | UserType | UserType[] | UserSettingsType | UserNovelType | UserNovelType[] | UserGroupType | CommentType | CommentType[] | GenreType | GenreType[] | PostType | PostType[];
-
-type ApiResponse = {
+type ApiResponse<T> = {
     error: boolean
     error_data?: ApiError | string
-    data?: DataType
+    data?: T
 }
 
 type NovelType = {
@@ -22,6 +22,9 @@ type NovelType = {
     status: string
     rating: number
     release_date: Date
+    exit_status: ExitStatus
+    duration: number
+    platform: NovelPlatform
 }
 
 type CharacterType = {

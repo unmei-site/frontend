@@ -13,11 +13,15 @@ import {
 } from "../../api/novels";
 import {Link} from "react-router-dom";
 import Loading from "../../ui/Loading";
-import { TranslateStatus } from "../../api/api";
+import {TranslateExitStatus, TranslatePlatform, TranslateStatus} from "../../api/api";
 import Comments from "../Comments/Comments";
+import {hideModal, setModal} from "../../store/actions";
+import LoadingModal from "../Modals/LoadingModal";
 
 type Props = {
     currentUser: UserType
+    setModal: SetModal
+    hideModal: HideModal
     match: { params: { novelId: number } }
 };
 
@@ -43,25 +47,30 @@ class Novel extends React.Component<Props, State> {
     };
 
     updateNovelStatus = (status: string) => {
-        const { match: { params } , currentUser } = this.props;
+        const { match: { params } , currentUser, setModal, hideModal } = this.props;
         const { userData } = this.state;
 
+        setModal(<LoadingModal/>);
         if(userData) {
             updateUserNovel(currentUser.id, params.novelId, { status }).then(r => {
-                this.setState({ userData: r, statusExpanded: false })
+                this.setState({ userData: r, statusExpanded: false });
+                hideModal();
             }).catch(console.error);
         } else {
             createUserNovel(currentUser.id, params.novelId, status).then(r => {
-                this.setState({ userData: r, statusExpanded: false })
+                this.setState({ userData: r, statusExpanded: false });
+                hideModal();
             }).catch(console.error);
         }
     };
 
     deleteNovelStatus = () => {
-        const { match: { params } , currentUser } = this.props;
+        const { match: { params } , currentUser, setModal, hideModal } = this.props;
 
-        deleteUserNovel(currentUser.id, params.novelId).then(() => {            
+        setModal(<LoadingModal/>);
+        deleteUserNovel(currentUser.id, params.novelId).then(() => {
             this.setState({ userData: null, statusExpanded: false });
+            hideModal();
         });
     };
 
@@ -113,7 +122,7 @@ class Novel extends React.Component<Props, State> {
             }).catch((err: ApiError) => {
                 this.setState({ errorCode: err.code });
             });
-        
+
         if(currentUser.authorized)
             fetchUserNovel(currentUser.id, params.novelId).then((userData: UserNovelType) => {
                 this.setState({ userData });
@@ -123,13 +132,24 @@ class Novel extends React.Component<Props, State> {
     }
 
     updateNovelMark = (mark: number) => {
-        const { match: { params }, currentUser } = this.props;
+        const { match: { params }, currentUser, hideModal, setModal } = this.props;
         const { userData } = this.state;
+
         if(userData?.mark === mark) return;
+        setModal(<LoadingModal/>);
         updateUserNovel(currentUser.id, params.novelId, { mark }).then(res => {
             userData!!.mark = mark;
-            this.setState({ userData })
+            this.setState({ userData: res });
+            hideModal();
         });
+    }
+
+    countNovelDuration = (t: number) => {
+        const h = Math.round(t / 60);
+        const m = t - (t*60);
+
+        if(h === 0) return `${m} мин`;
+        else return `${h} ч`;
     }
 
     render() {
@@ -193,6 +213,12 @@ class Novel extends React.Component<Props, State> {
                         <div>
                             <strong>Год выхода</strong>: {novel.release_date.toLocaleDateString()}
                         </div>
+                        <div>
+                            <strong>Статус</strong>: {TranslateExitStatus[novel.exit_status]}
+                        </div>
+                        <div>
+                            <strong>Продолжительность</strong>: {this.countNovelDuration(novel.duration)}
+                        </div>
                         <div className="Novel__Info_Rating"><strong>Ср. оценка</strong>: {novel.rating.toFixed(2)}</div>
                         <pre className={'Novel__Info_Description'}>{novel.description}</pre>
                     </div>
@@ -215,7 +241,11 @@ class Novel extends React.Component<Props, State> {
 }
 
 export default connect(
-    (state: any) => ({
+    (state: StoreState) => ({
         currentUser: state.currentUser
+    }),
+    dispatch => ({
+        setModal: (modal: React.ReactNode | null) => dispatch(setModal(modal)),
+        hideModal: () => dispatch(hideModal())
     })
 )(Novel);

@@ -5,7 +5,7 @@ import {setModal} from "../../store/actions";
 
 type Props = {
     setModal: (modal: React.ReactNode | null) => void
-    children: any
+    children: React.ReactChild | React.ReactChild[]
     className?: string
     title?: string
 }

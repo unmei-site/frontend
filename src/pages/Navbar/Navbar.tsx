@@ -12,7 +12,7 @@ import LoginModal from "../Modals/LoginModal";
 
 type Props = {
     setModal: SetModal
-    logout: () => void
+    logout: LogoutUser
     currentUser: UserType
 };
 
@@ -63,6 +63,37 @@ class Navbar extends React.Component<Props, State> {
             </div>
         );
 
+        const user = isMinimized ? (
+            <div className={'Navbar__Dropdown'}>
+                <div className="Navbar__Dropdown_Button Navbar__User_Profile">
+                    <div className={'Navbar__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar}?s=40&t=${new Date().getTime()})` }}/>
+                    <div>{this.props.currentUser.username}</div>
+                </div>
+                <div className="Navbar__Dropdown_Menu">
+                    <Link to={`/user/${currentUser.id}`} className="Navbar__Dropdown_Item">Профиль</Link>
+                    {currentUser.group && hasAccessToAdminPanel(currentUser) && (
+                        <Link to={'/kawaii__neko'} className={'Navbar__Dropdown_Item'}>
+                            Админ-панель
+                        </Link>
+                    )}
+                    <Link className="Navbar__Dropdown_Item" to={`/user/${currentUser.id}/settings`}>Настройки</Link>
+                    <div className="Navbar__Dropdown_Item" onClick={this.logout}>Выход</div>
+                </div>
+            </div>
+        ) : (<>
+            <Link to={`/user/${currentUser.id}`} className="Navbar__User_Profile">
+                <div className={'Navbar__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar}?s=40&t=${new Date().getTime()})` }}/>
+                <div>{this.props.currentUser.username}</div>
+            </Link>
+            {currentUser.group && hasAccessToAdminPanel(currentUser) && (
+                <Link to={'/kawaii__neko'} className={'Navbar_Button'}>
+                    Админ-панель
+                </Link>
+            )}
+            <Link className="Navbar_Button" to={`/user/${currentUser.id}/settings`}>Настройки</Link>
+            <div className={'Navbar_Button'} onClick={this.logout}>Выйти</div>
+        </>)
+
         return (
             <nav className={`Navbar ${expand ? 'Expanded' : 'Minimized'}`}>
                 {expand || !isMinimized ? links : (
@@ -74,19 +105,7 @@ class Navbar extends React.Component<Props, State> {
                 )}
                 {currentUser &&
                     (<div className={'Navbar__User'}>
-                        {currentUser.authorized ? (<>
-                            <Link to={`/user/${currentUser.id}`} className="Navbar__User_Profile">
-                                <div className={'Navbar__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar}?s=40&t=${new Date().getTime()})` }}/>
-                                <div>{this.props.currentUser.username}</div>
-                            </Link>
-                            {currentUser.group && hasAccessToAdminPanel(currentUser) && (
-                                <Link to={'/kawaii__neko'} className={'Navbar_Button'}>
-                                    Админ-панель
-                                </Link>
-                            )}
-                            <Link className="Navbar_Button" to={`/user/${currentUser.id}/settings`}>Настройки</Link>
-                            <div className={'Navbar_Button'} onClick={this.logout}>Выйти</div>
-                        </>) : (<>
+                        {currentUser.authorized ? user : (<>
                             <div className={'Navbar_Button'} onClick={() => setModal(<RegisterModal/>)}>Регистрация</div>
                             <div className={'Navbar_Button'} onClick={() => setModal(<LoginModal/>)}>Войти</div>
                         </>)}

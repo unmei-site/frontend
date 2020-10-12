@@ -56,17 +56,25 @@ $hoverColor: #f22
     cursor: pointer
 
     &:hover>&_Menu
-      display: block
+      display: flex
+      flex-direction: column
 
     &_Menu
       display: none
       position: absolute
-      background-color: #fefefe
+      background-color: var(--nav-bg-color)
       box-sizing: border-box
       padding: .5rem
+      max-width: 250px
+      right: 0
 
     &_Item
       margin: .2rem 0
+      color: var(--main-color)
+
+      &:hover
+        color: var(--link-color)
+
   &__User
     justify-content: flex-end
 
