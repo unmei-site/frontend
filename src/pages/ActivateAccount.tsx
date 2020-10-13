@@ -1,14 +1,14 @@
 import React from "react";
 import {activateAccount} from "../api/users";
 import {connect} from "react-redux";
-import {addNotification} from "../store/actions";
 import errors from "../api/errors";
 import Loading from "../ui/Loading";
+import {addNotification} from "../store/ducks/notifications";
 
 type Props = {
     history: { push: (path: string) => void }
     match: { params: { token: string } }
-    addNotification: (notification: React.ReactNode) => void
+    addNotification: AddNotification
 };
 
 type State = {

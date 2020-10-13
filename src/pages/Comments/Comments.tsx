@@ -6,9 +6,9 @@ import './Comments.sass';
 import Loading from "../../ui/Loading";
 import {fetchUser} from "../../api/users";
 import {connect} from "react-redux";
-import {addNotification} from "../../store/actions";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
 import Button from "../../ui/Button/Button";
+import {addNotification} from "../../store/ducks/notifications";
 
 type Props = {
     comments: CommentType[]
@@ -48,7 +48,7 @@ class Comments extends React.Component<Props, State> {
         event.preventDefault();
         const { sendComment, addNotification } = this.props;
         const { commentText } = this.state;
-        
+
         if(commentText === '') {
             const notification = (
                 <NotificationMessage level={"error"}>
@@ -84,7 +84,7 @@ class Comments extends React.Component<Props, State> {
         const { users, commentText } = this.state;
         if(!user) return <Loading/>;
 
-        return (            
+        return (
             <div className="Comments">
             {user.authorized &&
             <form onSubmit={this.sendComment}>
@@ -96,7 +96,7 @@ class Comments extends React.Component<Props, State> {
                     <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'spoiler')} icon={faExclamationTriangle}/>
                     <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'color', 'white')} icon={faTint}/>
                 </div>
-                <textarea 
+                <textarea
                     className={'Comments_TextArea'}
                     placeholder={'Текст комментария'}
                     value={commentText}
@@ -126,8 +126,6 @@ class Comments extends React.Component<Props, State> {
 
 export default connect(null,
     dispatch => ({
-        addNotification: (notification: React.ReactNode) => {
-            dispatch(addNotification(notification))
-        }
+        addNotification: (notification: React.ReactNode) => dispatch(addNotification(notification))
     })
 )(Comments);

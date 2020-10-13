@@ -13,10 +13,10 @@ import {
 } from "../../api/novels";
 import {Link} from "react-router-dom";
 import Loading from "../../ui/Loading";
-import {TranslateExitStatus, TranslatePlatform, TranslateStatus} from "../../api/api";
+import {TranslateExitStatus, TranslateStatus} from "../../api/api";
 import Comments from "../Comments/Comments";
-import {hideModal, setModal} from "../../store/actions";
 import LoadingModal from "../Modals/LoadingModal";
+import {hideModal, setModal} from "../../store/ducks/modal";
 
 type Props = {
     currentUser: UserType

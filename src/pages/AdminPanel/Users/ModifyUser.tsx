@@ -3,9 +3,9 @@ import {connect} from "react-redux";
 import {fetchUser, updateUser} from "../../../api/users";
 import Loading from "../../../ui/Loading";
 import './APUser.sass';
-import {addNotification} from "../../../store/actions";
 import NotificationMessage from "../../../ui/Notifications/NotificationMessage";
 import Button from "../../../ui/Button/Button";
+import {addNotification} from "../../../store/ducks/notifications";
 
 type Props = {
     userId: number

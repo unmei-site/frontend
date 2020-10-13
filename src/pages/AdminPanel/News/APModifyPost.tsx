@@ -11,9 +11,10 @@ import BBEditor from "../../../ui/BBEditor/BBEditor";
 import parser from 'bbcode-to-react';
 import Title from "../../../ui/Title/Title";
 import {connect} from "react-redux";
-import {addNotification, setModal} from "../../../store/actions";
 import ConfirmPopout from "../../../ui/ConfirmPopout/ConfirmPopout";
 import NotificationMessage from "../../../ui/Notifications/NotificationMessage";
+import {setModal} from "../../../store/ducks/modal";
+import {addNotification} from "../../../store/ducks/notifications";
 
 type Props = {
     postId: number

@@ -3,12 +3,12 @@ import Group from "../../../ui/Group/Group";
 import {connect} from "react-redux";
 import NotFoundError from "../../NotFoundError";
 import './Settings.sass';
-import {setUser} from "../../../store/actions";
 import Tabs from "../../../ui/Tabs/Tabs";
 import TabItem from "../../../ui/Tabs/TabItem";
 import Appearance from "./Appearance";
 import General from "./General";
 import Security from "./Security";
+import {setUser} from "../../../store/ducks/currentUser";
 
 enum TabsNames {
     General,
@@ -32,7 +32,7 @@ class Settings extends React.Component<Props, State> {
     }
 
     render() {
-        const { currentUser, match: { params: { userId } } } = this.props;
+        const { currentUser, match: { params: { userId } }, setUser } = this.props;
         const { currentTab } = this.state
 
         if(parseInt(userId) !== currentUser.id) return <NotFoundError/>;

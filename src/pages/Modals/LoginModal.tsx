@@ -2,7 +2,6 @@ import React, {FormEvent, ChangeEvent} from "react";
 import Modal from "../../ui/Modal/Modal";
 import {login} from "../../api/auth";
 import {connect} from "react-redux";
-import {addNotification, hideModal, setModal, setUser} from "../../store/actions";
 import './LoginModal.sass'
 import {Link} from "react-router-dom";
 import errors from "../../api/errors";
@@ -11,6 +10,9 @@ import Recaptcha from '../../ui/Recaptcha/Recaptcha'
 import Button from "../../ui/Button/Button";
 import RegisterModal from "./RegisterModal";
 import Input from "../../ui/Input/Input";
+import {setUser} from "../../store/ducks/currentUser";
+import {addNotification} from "../../store/ducks/notifications";
+import {hideModal, setModal} from "../../store/ducks/modal";
 
 type Props = {
     setUser: (user: UserType) => void

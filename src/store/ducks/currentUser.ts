@@ -1,23 +1,22 @@
-import ActionTypes from "../actionTypes";
+const SET_USER = 'unmei/currentUser/SET_USER';
+const LOGOUT = 'unmei/currentUser/LOGOUT';
 
 const initialState = {
     authorized: false
 };
-
 type Action = {
     type: string
     userData: UserType
-}
-
-export default (state = initialState, action: Action) => {
+};
+const reducer = (state = initialState, action: Action) => {
     switch (action.type) {
-        case ActionTypes.SET_USER:
+        case SET_USER:
             if(action.userData) {
                 state = Object.assign({}, state, action.userData);
                 state.authorized = true;
             }
             return state;
-        case ActionTypes.LOGOUT:
+        case LOGOUT:
             state = {
                 authorized: false
             };
@@ -26,3 +25,14 @@ export default (state = initialState, action: Action) => {
             return state
     }
 }
+
+const setUser = (userData: UserType) => ({
+    type: SET_USER,
+    userData
+});
+const logout = () => ({
+    type: LOGOUT
+});
+
+export default reducer;
+export { setUser, logout }

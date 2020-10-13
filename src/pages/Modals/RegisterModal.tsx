@@ -4,10 +4,11 @@ import Recaptcha from '../../ui/Recaptcha/Recaptcha'
 import './RegisterModal.sass'
 import {registerUser} from "../../api/auth";
 import {connect} from "react-redux";
-import {addNotification, setModal} from "../../store/actions";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
 import Button from "../../ui/Button/Button";
 import Input from "../../ui/Input/Input";
+import {addNotification} from "../../store/ducks/notifications";
+import {setModal} from "../../store/ducks/modal";
 
 type Props = {
     addNotification: (notification: React.ReactNode) => void

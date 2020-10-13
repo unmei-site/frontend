@@ -8,7 +8,6 @@ import Main from "../Main/Main"
 import NotFoundError from "../NotFoundError";
 import {fetchCurrentUser, fetchUserSettings} from "../../api/users";
 import {connect} from "react-redux";
-import {setUser} from "../../store/actions";
 import Character from "../Character/Character";
 // @ts-ignore
 import parser from 'bbcode-to-react';
@@ -26,6 +25,7 @@ import PasswordRestore from "../PasswordRestore/PasswordRestore";
 import Users from "../Users/Users";
 import {getVersion, version} from "../../api/api";
 import Settings from "../User/Settings/Settings";
+import {setUser} from "../../store/ducks/currentUser";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -130,8 +130,6 @@ export default connect(
         modal: state.modal
     }),
     dispatch => ({
-        setUser: (userData: UserType) => {
-            dispatch(setUser(userData))
-        }
+        setUser: (userData: UserType) => dispatch(setUser(userData))
     })
 )(App);

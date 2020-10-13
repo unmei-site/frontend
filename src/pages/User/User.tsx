@@ -7,8 +7,8 @@ import Loading from "../../ui/Loading";
 import NovelItem from "../../ui/NovelItem/NovelItem";
 import {connect} from "react-redux";
 import Button from "../../ui/Button/Button";
-import {addNotification} from "../../store/actions";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
+import {addNotification} from "../../store/ducks/notifications";
 
 type Props = {
     match: { params: { userId: string } }
@@ -69,8 +69,7 @@ class User extends React.Component<Props, State> {
                 </NotificationMessage>
             );
             this.props.addNotification(notification);
-
-        })
+        });
     }
 
     render() {
