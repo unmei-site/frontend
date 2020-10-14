@@ -1,10 +1,12 @@
 import React, {ChangeEvent, FormEvent} from "react";
 import Button from "../../../ui/Button/Button";
 import Group from "../../../ui/Group/Group";
-import {fetchUserSettings, updateUserGeneralSettings, uploadAvatar} from "../../../api/users";
+import {updateUserGeneralSettings, uploadAvatar} from "../../../api/users";
+import {connect} from "react-redux";
 
 type Props = {
-    setUser: (user: UserType) => void
+    setUser: SetUser
+    settings: UserSettingsType
 }
 
 type State = {
@@ -15,13 +17,7 @@ type State = {
 
 class General extends React.Component<Props, State> {
     state: State = {
-        useGravatar: false, avatar: null
-    }
-
-    componentDidMount() {
-        fetchUserSettings().then(settings => {
-            this.setState({ useGravatar: settings.use_gravatar })
-        })
+        useGravatar: this.props.settings.use_gravatar, avatar: null
     }
 
     onChangeAvatar = (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,4 +58,8 @@ class General extends React.Component<Props, State> {
     }
 }
 
-export default General;
+export default connect(
+    (state: StoreState) => ({
+        settings: state.userSettings
+    })
+)(General);

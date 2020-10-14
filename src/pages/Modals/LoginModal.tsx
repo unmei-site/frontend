@@ -13,12 +13,15 @@ import Input from "../../ui/Input/Input";
 import {setUser} from "../../store/ducks/currentUser";
 import {addNotification} from "../../store/ducks/notifications";
 import {hideModal, setModal} from "../../store/ducks/modal";
+import {fetchUserSettings} from "../../api/users";
+import {setSettings} from "../../store/ducks/userSettings";
 
 type Props = {
-    setUser: (user: UserType) => void
-    addNotification: (notification: React.ReactNode) => void
-    setModal: (modal: React.ReactNode | null) => void
-    hideModal: () => void
+    setUser: SetUser
+    addNotification: AddNotification
+    setModal: SetModal
+    hideModal: HideModal
+    setSettings: SetSettings
 };
 
 type State = {
@@ -36,7 +39,7 @@ class LoginModal extends React.Component<Props, State> {
 
     loginAndFetchToken = (event: FormEvent) => {
         event.preventDefault();
-        const { setUser, addNotification, setModal } = this.props;
+        const { setUser, addNotification, setModal, setSettings } = this.props;
         const { login: log, password, recaptcha } = this.state;
 
         login(log, password, recaptcha).then(user => {
@@ -50,8 +53,13 @@ class LoginModal extends React.Component<Props, State> {
             );
             addNotification(successful);
             setModal(null);
-        })
-        .catch((r: ApiError) => {
+
+            fetchUserSettings().then(settings => {
+                localStorage.setItem('theme', settings.theme);
+                document.body.setAttribute('theme', settings.theme);
+                setSettings(settings);
+            });
+        }).catch((r: ApiError) => {
             this.setState({ error: errors[r.code] });
             if(r.code === 9) this.setState({ recaptchaNeeded: true });
         });
@@ -105,6 +113,7 @@ class LoginModal extends React.Component<Props, State> {
 export default connect(null,
     dispatch => ({
         setUser: (user: UserType) => dispatch(setUser(user)),
+        setSettings: (settings: UserSettingsType) => dispatch(setSettings(settings)),
         addNotification: (notification: React.ReactNode) => dispatch(addNotification(notification)),
         setModal: (modal: React.ReactNode | null) => dispatch(setModal(modal)),
         hideModal: () => dispatch(hideModal())

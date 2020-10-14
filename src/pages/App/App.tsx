@@ -26,11 +26,13 @@ import Users from "../Users/Users";
 import {getVersion, version} from "../../api/api";
 import Settings from "../User/Settings/Settings";
 import {setUser} from "../../store/ducks/currentUser";
+import {setSettings} from "../../store/ducks/userSettings";
 
 type Props = {
     notifications: React.ReactNode[]
-    setUser: (user: UserType) => void
     modal: React.ReactNode
+    setUser: SetUser
+    setSettings: SetSettings
 };
 
 type State = {}
@@ -45,10 +47,11 @@ class App extends React.Component<Props, State> {
         if(cachedTheme)
             document.body.setAttribute('theme', cachedTheme);
 
-        const { setUser } = props;
-        fetchCurrentUser().then((user: UserType) => {
+        const { setUser, setSettings } = props;
+        fetchCurrentUser().then(user => {
             setUser(user);
-            fetchUserSettings().then((settings: UserSettingsType) => {
+            fetchUserSettings().then(settings => {
+                setSettings(settings);
                 if(settings.theme !== cachedTheme) {
                     localStorage.setItem('theme', settings.theme);
                     document.body.setAttribute('theme', settings.theme);
@@ -64,7 +67,7 @@ class App extends React.Component<Props, State> {
 
         getVersion().then(res => {
             if(version !== res.version) {
-                console.log(`Current back-end version: ${res.version}. Clearing cache`);
+                console.debug(`Current back-end version: ${res.version}. Clearing cache`);
 
                 caches.keys().then(names => {
                     names.forEach(name => caches.delete(name).catch(console.error))
@@ -130,6 +133,7 @@ export default connect(
         modal: state.modal
     }),
     dispatch => ({
-        setUser: (userData: UserType) => dispatch(setUser(userData))
+        setUser: (userData: UserType) => dispatch(setUser(userData)),
+        setSettings: (settings: UserSettingsType) => dispatch(setSettings(settings))
     })
 )(App);

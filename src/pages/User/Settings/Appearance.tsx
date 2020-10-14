@@ -1,12 +1,13 @@
 import Button from "../../../ui/Button/Button";
 import Group from "../../../ui/Group/Group";
 import React, {FormEvent} from "react";
-import {fetchUserSettings, updateUserAppearanceSettings} from "../../../api/users";
+import {updateUserAppearanceSettings} from "../../../api/users";
 import {connect} from "react-redux";
 import {setUser} from "../../../store/ducks/currentUser";
 
 type Props = {
     setUser: SetUser
+    settings: UserSettingsType
 }
 
 type State = {
@@ -15,13 +16,7 @@ type State = {
 
 class Appearance extends React.Component<Props, State> {
     state: State = {
-        theme: 'dark'
-    }
-
-    componentDidMount() {
-        fetchUserSettings().then(settings => {
-            this.setState({ theme: settings.theme })
-        })
+        theme: this.props.settings.theme
     }
 
     saveTheme = (event: FormEvent) => {
@@ -59,7 +54,10 @@ class Appearance extends React.Component<Props, State> {
     }
 }
 
-export default connect(null,
+export default connect(
+    (state: StoreState) => ({
+        settings: state.userSettings
+    }),
     dispatch => ({
         setUser: (user: UserType) => dispatch(setUser(user))
     })

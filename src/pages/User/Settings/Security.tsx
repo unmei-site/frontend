@@ -55,7 +55,7 @@ class Security extends React.Component<{}, State> {
                         placeholder={'Новый E-mail ещё раз'}
                         type={'email'}
                         value={email2}
-                        onChange={e => this.setState({ email1: e.target.value })}
+                        onChange={e => this.setState({ email2: e.target.value })}
                     />
                     <Button>Сохранить</Button>
                 </form>
