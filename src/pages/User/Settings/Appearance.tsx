@@ -46,7 +46,6 @@ class Appearance extends React.Component<Props, State> {
                         <option value="green">Green</option>
                         <option value="light">Light</option>
                     </select>
-
                     <Button>Сохранить</Button>
                 </form>
             </Group>
