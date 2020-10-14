@@ -10,7 +10,7 @@ type State = {
 }
 
 class Spoiler extends React.Component<Props, State> {
-    state = { 
+    state = {
         expand: false
     };
 
@@ -19,12 +19,12 @@ class Spoiler extends React.Component<Props, State> {
         const { children } = this.props;
 
         return (
-            <div 
+            <div
                 className="Spoiler"
                 onClick={() => this.setState({ expand: !expand })}
                 style={{ fontStyle: expand ? 'normal' : 'italic' }}
             >
-                    {expand ? children : '[Спойлер]'}
+                {expand ? children : '[Спойлер]'}
             </div>
         )
     }

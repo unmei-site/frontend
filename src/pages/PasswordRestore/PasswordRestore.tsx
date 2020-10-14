@@ -1,5 +1,5 @@
 import React from "react";
-import {restore} from "../../api/auth";
+import { restore } from "../../api/auth";
 import errors from "../../api/errors";
 import './PasswordRestore.sass';
 import Button from "../../ui/Button/Button";

@@ -2,13 +2,13 @@ import React from "react";
 import Modal from "../../ui/Modal/Modal";
 import Recaptcha from '../../ui/Recaptcha/Recaptcha'
 import './RegisterModal.sass'
-import {registerUser} from "../../api/auth";
-import {connect} from "react-redux";
+import { registerUser } from "../../api/auth";
+import { connect } from "react-redux";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
 import Button from "../../ui/Button/Button";
 import Input from "../../ui/Input/Input";
-import {addNotification} from "../../store/ducks/notifications";
-import {setModal} from "../../store/ducks/modal";
+import { addNotification } from "../../store/ducks/notifications";
+import { setModal } from "../../store/ducks/modal";
 
 type Props = {
     addNotification: (notification: React.ReactNode) => void
@@ -25,10 +25,10 @@ type State = {
 }
 
 class RegisterModal extends React.Component<Props, State> {
-    private recaptcha: any;
     state = {
         error: '', login: '', password1: '', password2: '', email: '', recaptcha: ''
     };
+    private recaptcha: any;
 
     handlePassword1Change = (event: any) => this.setState({ password1: event.target.value });
     handlePassword2Change = (event: any) => this.setState({ password2: event.target.value });
@@ -55,7 +55,8 @@ class RegisterModal extends React.Component<Props, State> {
                 const notification = (
                     <NotificationMessage level={"success"}>
                         Аккаунт успешно создан!
-                        Проверьте почту <strong>{email}</strong>. На неё была отправлена ссылка для подтверждения аккаунта.
+                        Проверьте почту <strong>{email}</strong>. На неё была отправлена ссылка для подтверждения
+                        аккаунта.
                     </NotificationMessage>
                 );
                 const { addNotification, setModal } = this.props;

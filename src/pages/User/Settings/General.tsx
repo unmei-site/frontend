@@ -1,8 +1,8 @@
-import React, {ChangeEvent, FormEvent} from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import Button from "../../../ui/Button/Button";
 import Group from "../../../ui/Group/Group";
-import {updateUserGeneralSettings, uploadAvatar} from "../../../api/users";
-import {connect} from "react-redux";
+import { updateUserGeneralSettings, uploadAvatar } from "../../../api/users";
+import { connect } from "react-redux";
 
 type Props = {
     setUser: SetUser
@@ -28,7 +28,7 @@ class General extends React.Component<Props, State> {
 
     saveAvatar = (event: FormEvent) => {
         event.preventDefault();
-        const { avatar, useGravatar} = this.state;
+        const { avatar, useGravatar } = this.state;
         const { setUser } = this.props;
 
         if(avatar) {
@@ -49,8 +49,11 @@ class General extends React.Component<Props, State> {
         return (
             <Group title={'Аватар'} className={'Settings_Group'}>
                 <form onSubmit={this.saveAvatar}>
-                    <label>Использовать Gravatar <input type="checkbox" onChange={event => this.setState({ useGravatar: event.target.checked })} checked={useGravatar}/></label>
-                    <label>Загрузить аватар <input type="file" onChange={this.onChangeAvatar} disabled={useGravatar}/></label>
+                    <label>Использовать Gravatar <input type="checkbox"
+                                                        onChange={event => this.setState({ useGravatar: event.target.checked })}
+                                                        checked={useGravatar}/></label>
+                    <label>Загрузить аватар <input type="file" onChange={this.onChangeAvatar}
+                                                   disabled={useGravatar}/></label>
                     <Button>Сохранить</Button>
                 </form>
             </Group>

@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import currentUser from './currentUser'
 import modal from "./modal";
 import notifications from './notifications'

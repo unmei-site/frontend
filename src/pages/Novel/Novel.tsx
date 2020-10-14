@@ -1,22 +1,24 @@
 import React from "react";
 import './Novel.sass'
 import NotFoundError from "../NotFoundError";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
+    createUserNovel,
+    deleteUserNovel,
     fetchNovel,
     fetchNovelCharacters,
     fetchNovelComments,
+    fetchNovelGenres,
     fetchUserNovel,
-    updateUserNovel,
-    deleteUserNovel,
-    fetchNovelGenres, postNovelComment, createUserNovel
+    postNovelComment,
+    updateUserNovel
 } from "../../api/novels";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../ui/Loading";
-import {TranslateExitStatus, TranslateStatus} from "../../api/api";
+import { TranslateExitStatus, TranslateStatus } from "../../api/api";
 import Comments from "../Comments/Comments";
 import LoadingModal from "../Modals/LoadingModal";
-import {hideModal, setModal} from "../../store/ducks/modal";
+import { hideModal, setModal } from "../../store/ducks/modal";
 
 type Props = {
     currentUser: UserType
@@ -47,7 +49,7 @@ class Novel extends React.Component<Props, State> {
     };
 
     updateNovelStatus = (status: string) => {
-        const { match: { params } , currentUser, setModal, hideModal } = this.props;
+        const { match: { params }, currentUser, setModal, hideModal } = this.props;
         const { userData } = this.state;
 
         setModal(<LoadingModal/>);
@@ -65,7 +67,7 @@ class Novel extends React.Component<Props, State> {
     };
 
     deleteNovelStatus = () => {
-        const { match: { params } , currentUser, setModal, hideModal } = this.props;
+        const { match: { params }, currentUser, setModal, hideModal } = this.props;
 
         setModal(<LoadingModal/>);
         deleteUserNovel(currentUser.id, params.novelId).then(() => {
@@ -114,14 +116,14 @@ class Novel extends React.Component<Props, State> {
             document.title = novel.localized_name ? `${novel.original_name} / ${novel.localized_name}` : novel.original_name;
 
             fetchNovelComments(params.novelId).then(r => {
-                    const hasMoreComments = r.count > 5;
-                    this.setState({ comments: r.comments.reverse(), hasMoreComments })
-                });
-                fetchNovelCharacters(params.novelId).then(characters => this.setState({ characters }));
-                fetchNovelGenres(params.novelId).then(genres => this.setState({ genres }));
-            }).catch((err: ApiError) => {
-                this.setState({ errorCode: err.code });
+                const hasMoreComments = r.count > 5;
+                this.setState({ comments: r.comments.reverse(), hasMoreComments })
             });
+            fetchNovelCharacters(params.novelId).then(characters => this.setState({ characters }));
+            fetchNovelGenres(params.novelId).then(genres => this.setState({ genres }));
+        }).catch((err: ApiError) => {
+            this.setState({ errorCode: err.code });
+        });
 
         if(currentUser.authorized)
             fetchUserNovel(currentUser.id, params.novelId).then((userData: UserNovelType) => {
@@ -146,7 +148,7 @@ class Novel extends React.Component<Props, State> {
 
     countNovelDuration = (t: number) => {
         const h = Math.round(t / 60);
-        const m = t - (t*60);
+        const m = t - (t * 60);
 
         if(h === 0) return `${m} мин`;
         else return `${h} ч`;
@@ -169,8 +171,10 @@ class Novel extends React.Component<Props, State> {
                         <div className={'Novel__Main_Status'}>
                             <div className="Novel__Main_Status_Primary">
                                 {!userData
-                                    ? <div className={'Novel__Main_Status_Element'} onClick={() => this.updateNovelStatus('planned')}>Добавить в список</div>
-                                    : <div className={"Novel__Main_Status_Element"}>{TranslateStatus[userData.status]}</div>}
+                                    ? <div className={'Novel__Main_Status_Element'}
+                                           onClick={() => this.updateNovelStatus('planned')}>Добавить в список</div>
+                                    : <div
+                                        className={"Novel__Main_Status_Element"}>{TranslateStatus[userData.status]}</div>}
                                 {userData && (
                                     <div
                                         className={'Novel__Main_Status_Element'}
@@ -184,12 +188,15 @@ class Novel extends React.Component<Props, State> {
                             {statusExpanded &&
                             <div className="Novel__Main_Status_Extended">
                                 {userData && Object.entries(TranslateStatus).filter(([eng]) => eng !== userData.status).map(([eng, rus]) => (
-                                    <div key={eng} className="Novel__Main_Status_Element" onClick={() => this.updateNovelStatus(eng)}>{rus}</div>
+                                    <div key={eng} className="Novel__Main_Status_Element"
+                                         onClick={() => this.updateNovelStatus(eng)}>{rus}</div>
                                 ))}
-                                <div className={"Novel__Main_Status_Element"} style={{ color: 'red' }} onClick={this.deleteNovelStatus}>Удалить из списка</div>
+                                <div className={"Novel__Main_Status_Element"} style={{ color: 'red' }}
+                                     onClick={this.deleteNovelStatus}>Удалить из списка
+                                </div>
                             </div>}
                             <div className={'Novel__Main_Status_Mark'}>
-                                {userData && [0,1,2,3,4,5,6,7,8,9,10].map(mark => (
+                                {userData && [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(mark => (
                                     <div
                                         key={mark}
                                         className={mark === userData.mark && userData.mark !== 0 ? 'Novel__Main_Status_Mark_Element Selected' : 'Novel__Main_Status_Mark_Element'}
@@ -208,7 +215,8 @@ class Novel extends React.Component<Props, State> {
                         </div>}
                         {genres && genres.length > 0 &&
                         <div className="Novel__Info_Genres">
-                            <strong>Жанры</strong>: {genres.map(genre => <div className={'Genre'} key={genre.id}>{genre.localized_name}</div>)}
+                            <strong>Жанры</strong>: {genres.map(genre => <div className={'Genre'}
+                                                                              key={genre.id}>{genre.localized_name}</div>)}
                         </div>}
                         <div>
                             <strong>Год выхода</strong>: {novel.release_date.toLocaleDateString()}
@@ -229,12 +237,15 @@ class Novel extends React.Component<Props, State> {
                     <div className="Novel__Characters_List">
                         {this.state.characters.filter(char => char.main).map(char =>
                             <div className={'Novel__Character'} key={char.id}>
-                                <div className='Character_Image' style={{ backgroundImage: `url(${char.image})`}}/>
-                                <Link to={`/character/${char.id}`}><div className={'Novel__Character_Name'}>{char.localized_name}</div></Link>
+                                <div className='Character_Image' style={{ backgroundImage: `url(${char.image})` }}/>
+                                <Link to={`/character/${char.id}`}>
+                                    <div className={'Novel__Character_Name'}>{char.localized_name}</div>
+                                </Link>
                             </div>)}
                     </div>
                 </div>}
-                <Comments user={currentUser} comments={comments} sendComment={this.sendComment} loadMore={this.loadMoreComments} hasMore={hasMoreComments} />
+                <Comments user={currentUser} comments={comments} sendComment={this.sendComment}
+                          loadMore={this.loadMoreComments} hasMore={hasMoreComments}/>
             </div>
         );
     }

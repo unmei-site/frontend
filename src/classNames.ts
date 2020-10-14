@@ -8,16 +8,16 @@ export default function classNames(...classNames: ClassName[]) {
     let result: string[] = [];
 
     classNames.forEach((item: ClassName): void => {
-        if (!item) {
+        if(!item) {
             return;
         }
-        switch (typeof item) {
+        switch(typeof item) {
             case 'string':
                 result.push(item);
                 break;
             case 'object':
                 Object.keys(item).forEach((key: string) => {
-                    if (item[key]) {
+                    if(item[key]) {
                         result.push(key);
                     }
                 });

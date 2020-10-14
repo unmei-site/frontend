@@ -1,11 +1,11 @@
 import React from 'react';
 import './UserNovels.sass';
-import { fetchUserNovels, fetchUser } from '../../../api/users';
+import { fetchUser, fetchUserNovels } from '../../../api/users';
 import Loading from '../../../ui/Loading';
 import NovelItem from '../../../ui/NovelItem/NovelItem';
-import {capitalize, generateClassName, getRandomInt} from "../../../utils";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAlignJustify, faThLarge} from "@fortawesome/free-solid-svg-icons";
+import { capitalize, generateClassName, getRandomInt } from "../../../utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAlignJustify, faThLarge } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../ui/Button/Button";
 
 type Props = {
@@ -27,7 +27,7 @@ class UserNovels extends React.Component<Props, State> {
         const { history } = this.props;
         const { novels } = this.state;
         const planned = novels.filter(n => n.status === 'planned');
-        const index = getRandomInt(0, planned.length-1);
+        const index = getRandomInt(0, planned.length - 1);
         history.push(`/novels/${planned[index].id}`);
     };
 
@@ -77,7 +77,8 @@ class UserNovels extends React.Component<Props, State> {
                         <Button onClick={this.getRandomNovel}>Рандомная новелла</Button>
                     </div>
                     <div className={generateClassName("UserNovels__List_Novels", capitalize(viewType) || 'Grid')}>
-                        {planned.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id+1} viewType={viewType}/>)}
+                        {planned.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1}
+                                                               viewType={viewType}/>)}
                     </div>
                 </div>}
 
@@ -86,7 +87,8 @@ class UserNovels extends React.Component<Props, State> {
                         Пройденные
                     </div>
                     <div className={generateClassName("UserNovels__List_Novels", capitalize(viewType) || 'Grid')}>
-                        {completed.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id+1} viewType={viewType}/>)}
+                        {completed.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1}
+                                                                 viewType={viewType}/>)}
                     </div>
                 </div>}
             </div>

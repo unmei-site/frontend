@@ -1,7 +1,7 @@
 import React from "react";
 import './Modal.sass'
-import {connect} from "react-redux";
-import {setModal} from "../../store/ducks/modal";
+import { connect } from "react-redux";
+import { setModal } from "../../store/ducks/modal";
 
 type Props = {
     setModal: (modal: React.ReactNode | null) => void

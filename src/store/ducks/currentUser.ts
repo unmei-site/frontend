@@ -9,7 +9,7 @@ type Action = {
     userData: UserType
 };
 const reducer = (state = initialState, action: Action) => {
-    switch (action.type) {
+    switch(action.type) {
         case SET_USER:
             if(action.userData) {
                 state = Object.assign({}, state, action.userData);

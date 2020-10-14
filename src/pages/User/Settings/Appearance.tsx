@@ -1,9 +1,9 @@
 import Button from "../../../ui/Button/Button";
 import Group from "../../../ui/Group/Group";
-import React, {FormEvent} from "react";
-import {updateUserAppearanceSettings} from "../../../api/users";
-import {connect} from "react-redux";
-import {setUser} from "../../../store/ducks/currentUser";
+import React, { FormEvent } from "react";
+import { updateUserAppearanceSettings } from "../../../api/users";
+import { connect } from "react-redux";
+import { setUser } from "../../../store/ducks/currentUser";
 
 type Props = {
     setUser: SetUser

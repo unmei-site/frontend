@@ -1,8 +1,8 @@
 import React from 'react';
 import './Footer.sass';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiscord, faVk, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
+import { faDiscord, faTelegramPlane, faVk } from '@fortawesome/free-brands-svg-icons';
 
 const Footer: React.FC = () => {
     return (

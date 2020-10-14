@@ -1,4 +1,4 @@
-import React, {HTMLAttributes} from "react";
+import React, { HTMLAttributes } from "react";
 import classNames from "../../classNames";
 import './Group.sass'
 

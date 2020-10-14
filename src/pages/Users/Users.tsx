@@ -1,12 +1,10 @@
 import React from "react";
-import {fetchUsers} from "../../api/users";
+import { fetchUsers } from "../../api/users";
 import Loading from "../../ui/Loading";
 import './Users.sass';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-type Props = {
-
-}
+type Props = {}
 
 type State = {
     users: UserType[]
@@ -29,7 +27,8 @@ class Users extends React.Component<Props, State> {
             <div className={'Users'}>
                 {users.map(user => (
                     <Link className={'Users__User'} key={user.id} to={`user/${user.id}`}>
-                        <div className="Users__User_Avatar" style={{ backgroundImage: `url(${user.avatar}?s=96?t=${new Date().getTime()})` }}/>
+                        <div className="Users__User_Avatar"
+                             style={{ backgroundImage: `url(${user.avatar}?s=96?t=${new Date().getTime()})` }}/>
                         {user.username}
                     </Link>
                 ))}

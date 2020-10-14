@@ -1,15 +1,15 @@
 import React from "react";
 import './Navbar.sass'
-import {connect} from "react-redux";
-import {userLogout} from "../../api/auth";
-import {Link} from "react-router-dom";
-import {hasAccessToAdminPanel} from "../../utils";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBars} from '@fortawesome/free-solid-svg-icons';
+import { connect } from "react-redux";
+import { userLogout } from "../../api/auth";
+import { Link } from "react-router-dom";
+import { hasAccessToAdminPanel } from "../../utils";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import RegisterModal from "../Modals/RegisterModal";
 import LoginModal from "../Modals/LoginModal";
-import {logout} from "../../store/ducks/currentUser";
-import {setModal} from "../../store/ducks/modal";
+import { logout } from "../../store/ducks/currentUser";
+import { setModal } from "../../store/ducks/modal";
 
 type Props = {
     setModal: SetModal
@@ -32,7 +32,8 @@ class Navbar extends React.Component<Props, State> {
         localStorage.removeItem('user');
         localStorage.removeItem('theme');
         document.querySelector('body')!!.removeAttribute('theme');
-        userLogout().catch(() => {});
+        userLogout().catch(() => {
+        });
     };
 
     changeSize = () => {
@@ -61,7 +62,8 @@ class Navbar extends React.Component<Props, State> {
                     Новеллы
                 </Link>
                 {expand && isMinimized && (
-                    <div onClick={this.changeSize} className={'Navbar_Button'} style={{ position: "absolute", right: 0, margin: '.5rem' }}>X</div>
+                    <div onClick={this.changeSize} className={'Navbar_Button'}
+                         style={{ position: "absolute", right: 0, margin: '.5rem' }}>X</div>
                 )}
             </div>
         );
@@ -69,7 +71,8 @@ class Navbar extends React.Component<Props, State> {
         const user = isMinimized ? (
             <div className={'Navbar__Dropdown'}>
                 <div className="Navbar__Dropdown_Button Navbar__User_Profile">
-                    <div className={'Navbar__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar}?s=40&t=${new Date().getTime()})` }}/>
+                    <div className={'Navbar__User_Avatar'}
+                         style={{ backgroundImage: `url(${currentUser.avatar}?s=40&t=${new Date().getTime()})` }}/>
                     <div>{this.props.currentUser.username}</div>
                 </div>
                 <div className="Navbar__Dropdown_Menu">
@@ -85,7 +88,8 @@ class Navbar extends React.Component<Props, State> {
             </div>
         ) : (<>
             <Link to={`/user/${currentUser.id}`} className="Navbar__User_Profile">
-                <div className={'Navbar__User_Avatar'} style={{ backgroundImage: `url(${currentUser.avatar}?s=40&t=${new Date().getTime()})` }}/>
+                <div className={'Navbar__User_Avatar'}
+                     style={{ backgroundImage: `url(${currentUser.avatar}?s=40&t=${new Date().getTime()})` }}/>
                 <div>{this.props.currentUser.username}</div>
             </Link>
             {currentUser.group && hasAccessToAdminPanel(currentUser) && (
@@ -107,12 +111,12 @@ class Navbar extends React.Component<Props, State> {
                     </div>
                 )}
                 {currentUser &&
-                    (<div className={'Navbar__User'}>
-                        {currentUser.authorized ? user : (<>
-                            <div className={'Navbar_Button'} onClick={() => setModal(<RegisterModal/>)}>Регистрация</div>
-                            <div className={'Navbar_Button'} onClick={() => setModal(<LoginModal/>)}>Войти</div>
-                        </>)}
-                    </div>)
+                (<div className={'Navbar__User'}>
+                    {currentUser.authorized ? user : (<>
+                        <div className={'Navbar_Button'} onClick={() => setModal(<RegisterModal/>)}>Регистрация</div>
+                        <div className={'Navbar_Button'} onClick={() => setModal(<LoginModal/>)}>Войти</div>
+                    </>)}
+                </div>)
                 }
             </nav>
         )

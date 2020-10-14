@@ -1,11 +1,11 @@
-import React, {ChangeEvent, FormEvent} from "react";
-import {connect} from "react-redux";
-import {fetchUser, updateUser} from "../../../api/users";
+import React, { ChangeEvent, FormEvent } from "react";
+import { connect } from "react-redux";
+import { fetchUser, updateUser } from "../../../api/users";
 import Loading from "../../../ui/Loading";
 import './APUser.sass';
 import NotificationMessage from "../../../ui/Notifications/NotificationMessage";
 import Button from "../../../ui/Button/Button";
-import {addNotification} from "../../../store/ducks/notifications";
+import { addNotification } from "../../../store/ducks/notifications";
 
 type Props = {
     userId: number
@@ -65,12 +65,17 @@ class ModifyUser extends React.Component<Props, State> {
             <div className={'APUser__Modify'}>
                 <div className={'APUser__Modify_Title'}>{username}</div>
                 <form className={'APUser__Modify_Form'} onSubmit={this.onSubmit}>
-                    <label>Имя пользователя: <input type="text" onChange={this.onChange} name={'username'} value={user.username}/></label>
-                    <label>Email: <input type='email' onChange={this.onChange} name={'email'} value={user.email}/></label>
-                    <label>Аватар: <input type='text' onChange={this.onChange} name={'avatar'} value={user.avatar}/></label>
+                    <label>Имя пользователя: <input type="text" onChange={this.onChange} name={'username'}
+                                                    value={user.username}/></label>
+                    <label>Email: <input type='email' onChange={this.onChange} name={'email'}
+                                         value={user.email}/></label>
+                    <label>Аватар: <input type='text' onChange={this.onChange} name={'avatar'}
+                                          value={user.avatar}/></label>
 
-                    <label>Суперюзер: <input type='checkbox' onChange={this.onChange} name={'is_superuser'} checked={user.is_superuser}/></label>
-                    <label>Активирован: <input type='checkbox' onChange={this.onChange} name={'is_activated'} checked={user.is_activated}/></label>
+                    <label>Суперюзер: <input type='checkbox' onChange={this.onChange} name={'is_superuser'}
+                                             checked={user.is_superuser}/></label>
+                    <label>Активирован: <input type='checkbox' onChange={this.onChange} name={'is_activated'}
+                                               checked={user.is_activated}/></label>
 
                     <div style={{ textAlign: "right" }}>
                         <Button>Сохранить!</Button>

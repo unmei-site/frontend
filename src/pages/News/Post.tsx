@@ -1,9 +1,9 @@
 import React from "react";
-import {fetchPost} from "../../api/news";
+import { fetchPost } from "../../api/news";
 import Loading from "../../ui/Loading";
 import NotFoundError from "../NotFoundError";
 import './Post.sass'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 // @ts-ignore
 import parser from 'bbcode-to-react';
 
@@ -22,7 +22,7 @@ class Post extends React.Component<Props, State> {
     };
 
     componentDidMount(): void {
-        const { match: { params: { postId }} } = this.props;
+        const { match: { params: { postId } } } = this.props;
 
         fetchPost(postId).then((post: PostType) => {
             post.date = new Date(post.date);
@@ -34,7 +34,7 @@ class Post extends React.Component<Props, State> {
 
     render() {
         const { post, code } = this.state;
-        
+
         if(code === 100) return <NotFoundError/>;
         if(!post) return <Loading/>;
         return (

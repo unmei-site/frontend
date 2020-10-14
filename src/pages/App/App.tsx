@@ -1,13 +1,13 @@
 import React from 'react';
-import {Switch, Route} from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import './App.sass';
 import Navbar from "../Navbar/Navbar";
 import Novel from "../Novel/Novel";
 import User from "../User/User";
 import Main from "../Main/Main"
 import NotFoundError from "../NotFoundError";
-import {fetchCurrentUser, fetchUserSettings} from "../../api/users";
-import {connect} from "react-redux";
+import { fetchCurrentUser, fetchUserSettings } from "../../api/users";
+import { connect } from "react-redux";
 import Character from "../Character/Character";
 // @ts-ignore
 import parser from 'bbcode-to-react';
@@ -23,10 +23,10 @@ import AdminPanel from "../AdminPanel/AdminPanel";
 import PasswordRestoreGenerate from "../PasswordRestore/PasswordRestoreGenerate";
 import PasswordRestore from "../PasswordRestore/PasswordRestore";
 import Users from "../Users/Users";
-import {getVersion, version} from "../../api/api";
+import { getVersion, version } from "../../api/api";
 import Settings from "../User/Settings/Settings";
-import {setUser} from "../../store/ducks/currentUser";
-import {setSettings} from "../../store/ducks/userSettings";
+import { setUser } from "../../store/ducks/currentUser";
+import { setSettings } from "../../store/ducks/userSettings";
 
 type Props = {
     notifications: React.ReactNode[]

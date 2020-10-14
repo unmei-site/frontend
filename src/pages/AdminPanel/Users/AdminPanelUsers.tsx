@@ -1,7 +1,7 @@
 import React from "react";
-import {connect} from "react-redux";
-import {fetchUsers} from "../../../api/users";
-import {Link} from "react-router-dom";
+import { connect } from "react-redux";
+import { fetchUsers } from "../../../api/users";
+import { Link } from "react-router-dom";
 
 type Props = {
     path: string

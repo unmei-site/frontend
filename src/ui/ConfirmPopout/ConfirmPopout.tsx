@@ -2,8 +2,8 @@ import React from "react";
 import Button from "../Button/Button";
 import './ConfirmPopout.sass'
 import '../Modal/Modal.sass';
-import {connect} from "react-redux";
-import {hideModal} from "../../store/ducks/modal";
+import { connect } from "react-redux";
+import { hideModal } from "../../store/ducks/modal";
 
 type Props = {
     hideModal: () => void

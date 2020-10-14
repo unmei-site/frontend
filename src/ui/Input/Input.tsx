@@ -1,4 +1,4 @@
-import React, {InputHTMLAttributes} from "react";
+import React, { InputHTMLAttributes } from "react";
 import classNames from "../../classNames";
 import './Input.sass';
 

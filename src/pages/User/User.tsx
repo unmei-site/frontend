@@ -1,14 +1,14 @@
 import React from "react";
-import {fetchUser, fetchUserNovels, generateActivateLink} from "../../api/users";
+import { fetchUser, fetchUserNovels, generateActivateLink } from "../../api/users";
 import './User.sass'
 import NotFoundError from "../NotFoundError";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../ui/Loading";
 import NovelItem from "../../ui/NovelItem/NovelItem";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import Button from "../../ui/Button/Button";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
-import {addNotification} from "../../store/ducks/notifications";
+import { addNotification } from "../../store/ducks/notifications";
 
 type Props = {
     match: { params: { userId: string } }
@@ -76,7 +76,7 @@ class User extends React.Component<Props, State> {
         const { currentUser } = this.props;
         const { errorCode, user, novels } = this.state;
         if(errorCode === 100) return <NotFoundError/>;
-        if(!user) return <Loading />;
+        if(!user) return <Loading/>;
 
         const style = !user.is_activated ? { marginTop: '1rem' } : {}
 
@@ -85,27 +85,38 @@ class User extends React.Component<Props, State> {
                 {!user.is_activated && user.id === currentUser.id && (
                     <div className={'User__Activate'}>
                         <h2>Ваш аккаунт не активирован!</h2>
-                        <p>Активируйте аккаунт, для доступа ко многим функциям. Так же актвация аккаунта позволит восстановить пароль.</p>
+                        <p>Активируйте аккаунт, для доступа ко многим функциям. Так же актвация аккаунта позволит
+                            восстановить пароль.</p>
                         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <Button onClick={this.sendActivateLink} style={{ fontSize: '1.2rem' }}>Активировать!</Button>
+                            <Button onClick={this.sendActivateLink}
+                                    style={{ fontSize: '1.2rem' }}>Активировать!</Button>
                         </div>
                     </div>
                 )}
 
                 <div className="User__Info" style={style}>
                     {user.cover ? (
-                    <div className="User__Info_Cover User__Info_Main" style={{ backgroundImage: `url(${user.cover})` }}>
-                        <div className="User__Info_Avatar" style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }} />
-                        <div>
-                            <div className='User__Info_Nick'>{user.username}</div>
-                            <div className='User__Info_Group' style={{ borderColor: user.group.color, color: user.group.color }}>{user.group.name}</div>
-                        </div>
-                    </div>) : (
-                        <div className={'User__Info_Main'}>
-                            <div className="User__Info_Avatar" style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }} />
+                        <div className="User__Info_Cover User__Info_Main"
+                             style={{ backgroundImage: `url(${user.cover})` }}>
+                            <div className="User__Info_Avatar"
+                                 style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }}/>
                             <div>
                                 <div className='User__Info_Nick'>{user.username}</div>
-                                <div className='User__Info_Group' style={{ borderColor: user.group.color, color: user.group.color }}>{user.group.name}</div>
+                                <div className='User__Info_Group' style={{
+                                    borderColor: user.group.color,
+                                    color: user.group.color
+                                }}>{user.group.name}</div>
+                            </div>
+                        </div>) : (
+                        <div className={'User__Info_Main'}>
+                            <div className="User__Info_Avatar"
+                                 style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }}/>
+                            <div>
+                                <div className='User__Info_Nick'>{user.username}</div>
+                                <div className='User__Info_Group' style={{
+                                    borderColor: user.group.color,
+                                    color: user.group.color
+                                }}>{user.group.name}</div>
                             </div>
                         </div>
                     )}
@@ -115,11 +126,21 @@ class User extends React.Component<Props, State> {
                     <div className="User__Statistic_Item">
                         <div className="User__Statistic_Title">Новеллы</div>
                         <div className="User__Statistic_Blocks">
-                            <div className="User__Statistic_Block Planned" data-count={novels.filter(n => n.status === 'planned').length}>Запланированно</div>
-                            <div className="User__Statistic_Block Completed" data-count={novels.filter(n => n.status === 'completed').length}>Пройдено</div>
-                            <div className="User__Statistic_Block InProgress" data-count={novels.filter(n => n.status === 'in_progress').length}>Прохожу</div>
-                            <div className="User__Statistic_Block Deferred" data-count={novels.filter(n => n.status === 'deferred').length}>Отложено</div>
-                            <div className="User__Statistic_Block Dropped" data-count={novels.filter(n => n.status === 'dropped').length}>Брошено</div>
+                            <div className="User__Statistic_Block Planned"
+                                 data-count={novels.filter(n => n.status === 'planned').length}>Запланированно
+                            </div>
+                            <div className="User__Statistic_Block Completed"
+                                 data-count={novels.filter(n => n.status === 'completed').length}>Пройдено
+                            </div>
+                            <div className="User__Statistic_Block InProgress"
+                                 data-count={novels.filter(n => n.status === 'in_progress').length}>Прохожу
+                            </div>
+                            <div className="User__Statistic_Block Deferred"
+                                 data-count={novels.filter(n => n.status === 'deferred').length}>Отложено
+                            </div>
+                            <div className="User__Statistic_Block Dropped"
+                                 data-count={novels.filter(n => n.status === 'dropped').length}>Брошено
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,10 +152,11 @@ class User extends React.Component<Props, State> {
                     </div>
                     <div className="User__List_Items">
                         {novels.length > 0 ?
-                            novels.slice(0, 4).map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id+1} viewType={'grid'} />
-                        ) : (
-                            <div>У этого пользователя нет новелл!</div>
-                        )}
+                            novels.slice(0, 4).map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1}
+                                                                             viewType={'grid'}/>
+                            ) : (
+                                <div>У этого пользователя нет новелл!</div>
+                            )}
                     </div>
                 </div>
 

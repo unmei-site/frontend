@@ -3,7 +3,7 @@ import React from "react";
 // import Recaptcha from "react-recaptcha";
 import Recaptcha from '../../ui/Recaptcha/Recaptcha';
 import './PasswordRestore.sass';
-import {generateRestoreLink} from "../../api/users";
+import { generateRestoreLink } from "../../api/users";
 import Button from "../../ui/Button/Button";
 
 type State = {
@@ -12,11 +12,10 @@ type State = {
 }
 
 class PasswordRestoreGenerate extends React.Component<{}, State> {
-    private recaptcha: any;
-
     state: State = {
         email: '', recaptcha: ''
     }
+    private recaptcha: any;
 
     onSubmit = (event: React.FormEvent) => {
         event.preventDefault();

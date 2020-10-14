@@ -2,7 +2,7 @@ const baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:8080/
 
 async function request<T>(url: string, method: string, body?: string | FormData): Promise<T> {
     let bUrl = baseUrl;
-    if(baseUrl.endsWith('/')) bUrl = bUrl.slice(0, baseUrl.length-1);
+    if(baseUrl.endsWith('/')) bUrl = bUrl.slice(0, baseUrl.length - 1);
     if(url.startsWith('/')) url = url.slice(1, baseUrl.length);
 
     const res = await fetch(`${bUrl}/${url}`, {
@@ -13,7 +13,7 @@ async function request<T>(url: string, method: string, body?: string | FormData)
     let json: ApiResponse<T>;
     try {
         json = await res.json();
-    } catch (e) {
+    } catch(e) {
         json = { error: false };
     }
 
@@ -29,12 +29,15 @@ async function request<T>(url: string, method: string, body?: string | FormData)
 function get<T>(url: string, data?: object): Promise<T> {
     return request<T>(url, 'GET', JSON.stringify(data));
 }
+
 function post<T>(url: string, data?: object | FormData): Promise<T> {
     return request(url, 'POST', data instanceof FormData ? data : JSON.stringify(data));
 }
+
 function put<T>(url: string, data?: object): Promise<T> {
     return request<T>(url, 'PUT', JSON.stringify(data));
 }
+
 function del<T>(url: string, data?: object): Promise<T> {
     return request<T>(url, 'DELETE', JSON.stringify(data));
 }

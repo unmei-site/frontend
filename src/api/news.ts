@@ -1,4 +1,4 @@
-import {del, get, put} from './api';
+import { del, get, put } from './api';
 
 export const fetchNews = () => get<PostType[]>('news');
 

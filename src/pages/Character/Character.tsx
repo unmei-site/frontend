@@ -1,5 +1,5 @@
 import React from "react";
-import {fetchChar, fetchCharNovels} from "../../api/characters";
+import { fetchChar, fetchCharNovels } from "../../api/characters";
 import './Character.sass'
 // @ts-ignore
 import parser from 'bbcode-to-react';
@@ -50,7 +50,7 @@ class Character extends React.Component<Props, State> {
                 </div>
                 {novels.length > 0 &&
                 <div className="Character__Novels">
-                    {novels.map(novel => <NovelItem {...novel} key={novel.id} viewType='grid' />)}
+                    {novels.map(novel => <NovelItem {...novel} key={novel.id} viewType='grid'/>)}
                 </div>}
             </div>
         );

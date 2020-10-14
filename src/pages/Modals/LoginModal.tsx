@@ -1,20 +1,20 @@
-import React, {FormEvent, ChangeEvent} from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import Modal from "../../ui/Modal/Modal";
-import {login} from "../../api/auth";
-import {connect} from "react-redux";
+import { login } from "../../api/auth";
+import { connect } from "react-redux";
 import './LoginModal.sass'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import errors from "../../api/errors";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
 import Recaptcha from '../../ui/Recaptcha/Recaptcha'
 import Button from "../../ui/Button/Button";
 import RegisterModal from "./RegisterModal";
 import Input from "../../ui/Input/Input";
-import {setUser} from "../../store/ducks/currentUser";
-import {addNotification} from "../../store/ducks/notifications";
-import {hideModal, setModal} from "../../store/ducks/modal";
-import {fetchUserSettings} from "../../api/users";
-import {setSettings} from "../../store/ducks/userSettings";
+import { setUser } from "../../store/ducks/currentUser";
+import { addNotification } from "../../store/ducks/notifications";
+import { hideModal, setModal } from "../../store/ducks/modal";
+import { fetchUserSettings } from "../../api/users";
+import { setSettings } from "../../store/ducks/userSettings";
 
 type Props = {
     setUser: SetUser

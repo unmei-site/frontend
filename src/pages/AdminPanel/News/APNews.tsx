@@ -1,7 +1,7 @@
 import React from "react";
-import {fetchNews} from "../../../api/news";
+import { fetchNews } from "../../../api/news";
 import Group from "../../../ui/Group/Group";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../../../ui/Button/Button";
 
 type Props = {

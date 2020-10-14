@@ -1,9 +1,9 @@
 import React from "react";
-import {activateAccount} from "../api/users";
-import {connect} from "react-redux";
+import { activateAccount } from "../api/users";
+import { connect } from "react-redux";
 import errors from "../api/errors";
 import Loading from "../ui/Loading";
-import {addNotification} from "../store/ducks/notifications";
+import { addNotification } from "../store/ducks/notifications";
 
 type Props = {
     history: { push: (path: string) => void }
@@ -35,7 +35,10 @@ class ActivateAccount extends React.Component<Props, State> {
             if(msg) {
                 this.setState({ msg, error: true });
             } else {
-                this.setState({ msg: 'Во время активации произошла ошибка! Сообщите об этом разработчику!', error: true });
+                this.setState({
+                    msg: 'Во время активации произошла ошибка! Сообщите об этом разработчику!',
+                    error: true
+                });
                 console.error(err.text);
             }
             if(err.code === 5) {
@@ -55,7 +58,8 @@ class ActivateAccount extends React.Component<Props, State> {
         const { msg, error } = this.state;
         if(msg.length === 0) return <Loading/>;
         return (
-            <div className={'Error'} style={{ background: error ? 'var(--error-bg-color)' : 'var(--success-bg-color)' }}>{msg}</div>
+            <div className={'Error'}
+                 style={{ background: error ? 'var(--error-bg-color)' : 'var(--success-bg-color)' }}>{msg}</div>
         );
     }
 }

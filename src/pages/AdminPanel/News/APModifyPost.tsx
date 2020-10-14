@@ -1,7 +1,7 @@
-import React, {ChangeEvent, FormEvent} from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import Group from "../../../ui/Group/Group";
 import NotFoundError from "../../NotFoundError";
-import {deletePost, fetchPost, updatePost} from "../../../api/news";
+import { deletePost, fetchPost, updatePost } from "../../../api/news";
 import './APNews.sass';
 import '../../../ui/TextField/TextField.sass'
 import Input from "../../../ui/Input/Input";
@@ -10,11 +10,11 @@ import BBEditor from "../../../ui/BBEditor/BBEditor";
 // @ts-ignore
 import parser from 'bbcode-to-react';
 import Title from "../../../ui/Title/Title";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import ConfirmPopout from "../../../ui/ConfirmPopout/ConfirmPopout";
 import NotificationMessage from "../../../ui/Notifications/NotificationMessage";
-import {setModal} from "../../../store/ducks/modal";
-import {addNotification} from "../../../store/ducks/notifications";
+import { setModal } from "../../../store/ducks/modal";
+import { addNotification } from "../../../store/ducks/notifications";
 
 type Props = {
     postId: number
@@ -31,13 +31,12 @@ type State = {
 };
 
 class APModifyPost extends React.Component<Props, State> {
-    private shortPost = React.createRef<HTMLTextAreaElement>();
-    private fullPost = React.createRef<HTMLTextAreaElement>();
-
     state: State = {
         post: null, title: '',
         previewShort: '', previewFull: ''
     }
+    private shortPost = React.createRef<HTMLTextAreaElement>();
+    private fullPost = React.createRef<HTMLTextAreaElement>();
 
     componentDidMount() {
         const { postId } = this.props;
@@ -46,7 +45,7 @@ class APModifyPost extends React.Component<Props, State> {
         });
     }
 
-    savePost = async (event: FormEvent) => {
+    savePost = async(event: FormEvent) => {
         event.preventDefault();
 
         const post = this.state.post;
@@ -115,7 +114,7 @@ class APModifyPost extends React.Component<Props, State> {
 
                     <div className={'APPost__Short'}>
                         <Title>Короткая новость</Title>
-                        <BBEditor inputRef={this.shortPost} placeholder={'Короткая новость'} />
+                        <BBEditor inputRef={this.shortPost} placeholder={'Короткая новость'}/>
                         {previewShort.length > 0 && (<>
                             <Title>Предпросмотр</Title>
                             <div className={'APPost__Short_Preview TextField'}>{previewShort}</div>
@@ -125,7 +124,7 @@ class APModifyPost extends React.Component<Props, State> {
 
                     <div className={'APPost__Full'}>
                         <Title>Полная новость</Title>
-                        <BBEditor inputRef={this.fullPost} placeholder={'Полная новость'} />
+                        <BBEditor inputRef={this.fullPost} placeholder={'Полная новость'}/>
                         {previewFull.length > 0 && (<>
                             <Title>Предпросмотр</Title>
                             <div className={'APPost__Full_Preview TextField'}>{previewFull}</div>
@@ -135,7 +134,8 @@ class APModifyPost extends React.Component<Props, State> {
 
                     <div>
                         <Button style={{ marginRight: '1rem' }}>Сохранить</Button>
-                        <Button type={"button"} style={{ color: 'var(--error-bg-color)'}} onClick={this.deletePost}>Удалить</Button>
+                        <Button type={"button"} style={{ color: 'var(--error-bg-color)' }}
+                                onClick={this.deletePost}>Удалить</Button>
                     </div>
                 </form>
             </Group>

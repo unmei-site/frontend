@@ -10,13 +10,14 @@ type Action = {
     notification: React.ReactNode
 };
 const reducer = (state = initialState, action: Action) => {
-    switch (action.type) {
+    switch(action.type) {
         case ADD_NOTIFICATION: {
             if(state.length === 3)
                 return [...state.slice(1), action.notification];
             return [...state, action.notification];
         }
-        default: return state;
+        default:
+            return state;
     }
 }
 

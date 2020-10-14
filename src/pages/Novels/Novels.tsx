@@ -1,6 +1,6 @@
 import './Novels.sass'
 import React from "react";
-import {fetchNovels} from "../../api/novels";
+import { fetchNovels } from "../../api/novels";
 import NovelItem from '../../ui/NovelItem/NovelItem';
 import Loading from "../../ui/Loading";
 
@@ -52,7 +52,7 @@ class Novels extends React.Component<{}, State> {
         return (
             <div className={'Novels'}>
                 <div className="Novels__List">
-                    {novels.map((novel: NovelType) => <NovelItem {...novel} key={novel.id} viewType={'grid'} />)}
+                    {novels.map((novel: NovelType) => <NovelItem {...novel} key={novel.id} viewType={'grid'}/>)}
                 </div>
                 {/*<div className="Novels__Filters">
                     <div className="Novels__Filters_Genre">

@@ -1,8 +1,8 @@
 import React from "react";
 import Loading from "../../ui/Loading";
-import {fetchNews} from "../../api/news";
+import { fetchNews } from "../../api/news";
 import NewsPost from "../../ui/NewsPost/NewsPost";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type State = {
     news: PostType[]

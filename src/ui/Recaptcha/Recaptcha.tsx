@@ -13,10 +13,10 @@ type State = {
 }
 
 class Recaptcha extends React.Component<Props, State> {
-    private readonly interval: NodeJS.Timeout;
     state: State = {
         isReady: false
     }
+    private readonly interval: NodeJS.Timeout;
 
     constructor(props: Props) {
         super(props);

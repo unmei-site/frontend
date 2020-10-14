@@ -1,14 +1,21 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBold, faExclamationTriangle, faItalic, faStrikethrough, faUnderline, faTint } from "@fortawesome/free-solid-svg-icons";
+import {
+    faBold,
+    faExclamationTriangle,
+    faItalic,
+    faStrikethrough,
+    faTint,
+    faUnderline
+} from "@fortawesome/free-solid-svg-icons";
 import Comment from '../../ui/Comment/Comment';
 import './Comments.sass';
 import Loading from "../../ui/Loading";
-import {fetchUser} from "../../api/users";
-import {connect} from "react-redux";
+import { fetchUser } from "../../api/users";
+import { connect } from "react-redux";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
 import Button from "../../ui/Button/Button";
-import {addNotification} from "../../store/ducks/notifications";
+import { addNotification } from "../../store/ducks/notifications";
 
 type Props = {
     comments: CommentType[]
@@ -86,40 +93,43 @@ class Comments extends React.Component<Props, State> {
 
         return (
             <div className="Comments">
-            {user.authorized &&
-            <form onSubmit={this.sendComment}>
-                <div className="Comments_BBCodes">
-                    <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'b')} icon={faBold}/>
-                    <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'i')} icon={faItalic}/>
-                    <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'u')} icon={faUnderline}/>
-                    <FontAwesomeIcon onClick={event => this.addTagToComment(event, 's')} icon={faStrikethrough}/>
-                    <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'spoiler')} icon={faExclamationTriangle}/>
-                    <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'color', 'white')} icon={faTint}/>
-                </div>
-                <textarea
-                    className={'Comments_TextArea'}
-                    placeholder={'Текст комментария'}
-                    value={commentText}
-                    onChange={(event) => this.setState({ commentText: event.target.value })}
-                    ref={ref => this.input = ref}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <Button type="submit" className={'Comments_Submit'}>Написать</Button>
-                        <div style={{ marginLeft: '.5rem', color: '#bb3333' }}>Комментарии в разработке!</div>
+                {user.authorized &&
+                <form onSubmit={this.sendComment}>
+                    <div className="Comments_BBCodes">
+                        <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'b')} icon={faBold}/>
+                        <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'i')} icon={faItalic}/>
+                        <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'u')} icon={faUnderline}/>
+                        <FontAwesomeIcon onClick={event => this.addTagToComment(event, 's')} icon={faStrikethrough}/>
+                        <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'spoiler')}
+                                         icon={faExclamationTriangle}/>
+                        <FontAwesomeIcon onClick={event => this.addTagToComment(event, 'color', 'white')}
+                                         icon={faTint}/>
                     </div>
-                    {hasMore && <Button onClick={loadMore}>Загрузить ещё</Button>}
-                </div>
-            </form>}
-            {!comments && (
-                <Loading/>
-            )}
-            {comments && comments.length > 0 ? (
-                comments.map(comment => <Comment text={comment.text} key={comment.id} user={users.get(comment.user_id)} />)
-            ) : (
-                'Никто не оставил комментарий к этой новелле... :c'
-            )}
-        </div>
+                    <textarea
+                        className={'Comments_TextArea'}
+                        placeholder={'Текст комментария'}
+                        value={commentText}
+                        onChange={(event) => this.setState({ commentText: event.target.value })}
+                        ref={ref => this.input = ref}
+                    />
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <Button type="submit" className={'Comments_Submit'}>Написать</Button>
+                            <div style={{ marginLeft: '.5rem', color: '#bb3333' }}>Комментарии в разработке!</div>
+                        </div>
+                        {hasMore && <Button onClick={loadMore}>Загрузить ещё</Button>}
+                    </div>
+                </form>}
+                {!comments && (
+                    <Loading/>
+                )}
+                {comments && comments.length > 0 ? (
+                    comments.map(comment => <Comment text={comment.text} key={comment.id}
+                                                     user={users.get(comment.user_id)}/>)
+                ) : (
+                    'Никто не оставил комментарий к этой новелле... :c'
+                )}
+            </div>
         )
     }
 }

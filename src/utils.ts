@@ -23,7 +23,7 @@ const generateClassName = (baseClassName: string, ...classNames: string[]) => {
 const getImage: (path: string) => string = (path: string) => {
     let cdnUrl = process.env['CDN_URL'];
     if(!cdnUrl) return path;
-    if(cdnUrl.endsWith('/')) cdnUrl = cdnUrl.slice(cdnUrl.length-1);
+    if(cdnUrl.endsWith('/')) cdnUrl = cdnUrl.slice(cdnUrl.length - 1);
     if(path.startsWith('/')) path = path.slice(1, path.length);
     return `${cdnUrl}/${path}`;
 }

@@ -10,15 +10,16 @@ type Action = {
     type: string
     modal: React.ReactNode | null
 }
-const reducer = (state=initialState, action: Action) => {
-    switch (action.type) {
+const reducer = (state = initialState, action: Action) => {
+    switch(action.type) {
         case SET_MODAL: {
             return action.modal;
         }
         case HIDE_MODAL: {
             return null;
         }
-        default: return state;
+        default:
+            return state;
     }
 }
 

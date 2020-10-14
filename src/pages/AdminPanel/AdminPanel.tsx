@@ -1,9 +1,9 @@
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import React from "react";
 import NotFoundError from "../NotFoundError";
-import {hasAccessToAdminPanel} from "../../utils";
+import { hasAccessToAdminPanel } from "../../utils";
 import './AdminPanel.sass';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import AdminPanelUsers from "./Users/AdminPanelUsers";
 import AdminPanelNovels from "./Novels/AdminPanelNovels";
 import ModifyUser from "./Users/ModifyUser";
@@ -23,12 +23,18 @@ class AdminPanel extends React.Component<Props, State> {
         const { user, match: { path }, location: { pathname } } = this.props;
         if(!user || !user.group) return <NotFoundError/>;
         if(!hasAccessToAdminPanel(user)) return <NotFoundError/>;
-        const subPath = pathname.slice(path.length+1);
+        const subPath = pathname.slice(path.length + 1);
         let component;
         switch(subPath) {
-            case 'users': component = <AdminPanelUsers path={`${path}/${subPath}`}/>; break;
-            case 'novels': component = <AdminPanelNovels/>; break;
-            case 'news': component = <APNews path={`${path}/${subPath}`}/>; break;
+            case 'users':
+                component = <AdminPanelUsers path={`${path}/${subPath}`}/>;
+                break;
+            case 'novels':
+                component = <AdminPanelNovels/>;
+                break;
+            case 'news':
+                component = <APNews path={`${path}/${subPath}`}/>;
+                break;
             default: {
                 const users = /users\/(\d+)/;
                 const news = /news\/(\d+)/;
@@ -43,7 +49,8 @@ class AdminPanel extends React.Component<Props, State> {
 
         return (
             <div className={'AdminPanel'}>
-                <div className="AdminPanel__Title">Админ панель <span style={{ color: 'var(--error-bg-color)' }}>(в разработке)</span></div>
+                <div className="AdminPanel__Title">Админ панель <span style={{ color: 'var(--error-bg-color)' }}>(в разработке)</span>
+                </div>
                 <div className="AdminPanel__Router">
                     <Link to={path}>Главная</Link>
                     <Link to={`${path}/users`}>Пользователи</Link>

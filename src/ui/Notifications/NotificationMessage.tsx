@@ -1,6 +1,6 @@
 import React from "react";
 import './NotificationMessage.sass'
-import {capitalize} from "../../utils";
+import { capitalize } from "../../utils";
 
 type Props = {
     children: React.ReactNode
@@ -32,10 +32,10 @@ class NotificationMessage extends React.Component<Props, State> {
         this.setState({ paused: false });
     };
 
-    interval = (step=50) => {
+    interval = (step = 50) => {
         const { time, paused } = this.state;
         if(time <= 0 && this.timer) clearInterval(this.timer);
-        if(!paused) this.setState({ time: time-step });
+        if(!paused) this.setState({ time: time - step });
     };
 
     componentDidMount(): void {

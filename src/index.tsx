@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from 'react-redux';
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from 'react-redux';
 import store from "./store/store";
 import * as Sentry from '@sentry/browser';
 import App from './pages/App/App';
@@ -13,7 +13,7 @@ if(process.env.NODE_ENV === 'production')
 ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
-            <App />
+            <App/>
         </Provider>
     </BrowserRouter>,
     document.getElementById('root'));

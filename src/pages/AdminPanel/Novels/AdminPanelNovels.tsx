@@ -1,13 +1,9 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-type Props = {
+type Props = {};
 
-};
-
-type State = {
-
-};
+type State = {};
 
 class AdminPanelNovels extends React.Component<Props, State> {
     render() {

@@ -1,4 +1,4 @@
-import React, {ButtonHTMLAttributes} from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import './Button.sass';
 import classNames from "../../classNames";
 

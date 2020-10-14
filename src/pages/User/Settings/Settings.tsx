@@ -1,6 +1,6 @@
 import React from "react";
 import Group from "../../../ui/Group/Group";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import NotFoundError from "../../NotFoundError";
 import './Settings.sass';
 import Tabs from "../../../ui/Tabs/Tabs";
@@ -8,7 +8,7 @@ import TabItem from "../../../ui/Tabs/TabItem";
 import Appearance from "./Appearance";
 import General from "./General";
 import Security from "./Security";
-import {setUser} from "../../../store/ducks/currentUser";
+import { setUser } from "../../../store/ducks/currentUser";
 
 enum TabsNames {
     General,
@@ -38,37 +38,37 @@ class Settings extends React.Component<Props, State> {
         if(parseInt(userId) !== currentUser.id) return <NotFoundError/>;
 
         return (
-             <Group title={''}>
-                 <Tabs>
-                     <TabItem
+            <Group title={''}>
+                <Tabs>
+                    <TabItem
                         selected={currentTab === TabsNames.General}
                         onClick={() => this.setState({ currentTab: TabsNames.General })}
-                     >
-                         Главное
-                     </TabItem>
-                     <TabItem
-                         selected={currentTab === TabsNames.Security}
-                         onClick={() => this.setState({ currentTab: TabsNames.Security })}
-                     >
-                         Безопастность
-                     </TabItem>
-                     <TabItem
-                         selected={currentTab === TabsNames.Appearance}
-                         onClick={() => this.setState({ currentTab: TabsNames.Appearance })}
-                     >
-                         Внешний вид
-                     </TabItem>
-                 </Tabs>
-                 {currentTab === TabsNames.General && (
-                     <General setUser={setUser}/>
-                 )}
-                 {currentTab === TabsNames.Security && (
-                     <Security/>
-                 )}
-                 {currentTab === TabsNames.Appearance && (
-                     <Appearance/>
-                 )}
-             </Group>
+                    >
+                        Главное
+                    </TabItem>
+                    <TabItem
+                        selected={currentTab === TabsNames.Security}
+                        onClick={() => this.setState({ currentTab: TabsNames.Security })}
+                    >
+                        Безопастность
+                    </TabItem>
+                    <TabItem
+                        selected={currentTab === TabsNames.Appearance}
+                        onClick={() => this.setState({ currentTab: TabsNames.Appearance })}
+                    >
+                        Внешний вид
+                    </TabItem>
+                </Tabs>
+                {currentTab === TabsNames.General && (
+                    <General setUser={setUser}/>
+                )}
+                {currentTab === TabsNames.Security && (
+                    <Security/>
+                )}
+                {currentTab === TabsNames.Appearance && (
+                    <Appearance/>
+                )}
+            </Group>
         );
     }
 }
