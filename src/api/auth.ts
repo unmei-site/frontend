@@ -13,3 +13,11 @@ export const login = (login: string, password: string, recaptcha: string) => pos
     recaptcha
 });
 export const userLogout = () => post<string>('auth/logout');
+export const changeEmail = (old_email: string, new_email: string) => post<string>('auth/changeEmail', {
+    old_email,
+    new_email
+});
+export const changePassword = (old_password: string, new_password: string) => post<string>('auth/changePassword', {
+    old_password,
+    new_password
+});

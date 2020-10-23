@@ -43,11 +43,17 @@ class App extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
+        parser.registerTag('spoiler', SpoilerTag);
+        parser.registerTag('color', ColorTag);
+    }
+
+    componentDidMount() {
+        const { setUser, setSettings } = this.props;
+
         const cachedTheme = localStorage.getItem('theme');
         if(cachedTheme)
             document.body.setAttribute('theme', cachedTheme);
 
-        const { setUser, setSettings } = props;
         fetchCurrentUser().then(user => {
             setUser(user);
             fetchUserSettings().then(settings => {
@@ -61,9 +67,6 @@ class App extends React.Component<Props, State> {
             if(err.code !== 3 && err.text)
                 console.error(err.text);
         });
-
-        parser.registerTag('spoiler', SpoilerTag);
-        parser.registerTag('color', ColorTag);
 
         getVersion().then(res => {
             if(version !== res.version) {
@@ -80,13 +83,12 @@ class App extends React.Component<Props, State> {
 
     render() {
         const { modal } = this.props;
-        const notificationWidth = window.screen.width >= 500 ? 500 : window.screen.width;
 
         return (
             <>
                 <Navbar/>
                 <div className={'Container'}>
-                    <div className="Notifications" style={{ width: notificationWidth }}>
+                    <div className="Notifications">
                         {this.props.notifications.map((n, i) => (
                             <React.Fragment key={i}>
                                 {n}

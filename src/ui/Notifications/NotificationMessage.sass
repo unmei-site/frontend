@@ -1,17 +1,20 @@
-@import "../../Constants"
-
-.Animate-Notification-exit
-  opacity: 0
-
 .Notification
   background-color: var(--block-color)
   border: 1px solid var(--link-color)
+  border-radius: 5px
   padding: .5rem
   box-sizing: border-box
-  max-width: 500px
-  width: 500px
+  min-width: 288px
   cursor: pointer
-  margin-top: 1rem
+  margin: 1rem
+  position: fixed
+  z-index: 100000
+
+  @media (max-width: 500px)
+    width: 100%
+
+  @media (min-width: 501px)
+    width: 500px
 
   &--Error
     background: var(--error-bg-color)
