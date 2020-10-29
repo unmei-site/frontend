@@ -31,13 +31,12 @@ class Navbar extends React.Component<Props, State> {
         this.props.logout();
         localStorage.removeItem('user');
         localStorage.removeItem('theme');
-        document.querySelector('body')!!.removeAttribute('theme');
-        userLogout().catch(() => {
-        });
+        document.body.removeAttribute('theme');
+        userLogout().catch(() => {});
     };
 
     changeSize = () => {
-        this.setState({ expand: !this.state.expand })
+        this.setState({ expand: !this.state.expand });
     }
 
     componentDidMount() {

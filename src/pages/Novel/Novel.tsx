@@ -125,12 +125,13 @@ class Novel extends React.Component<Props, State> {
             this.setState({ errorCode: err.code });
         });
 
-        if(currentUser.authorized)
+        if(currentUser.authorized) {
             fetchUserNovel(currentUser.id, params.novelId).then((userData: UserNovelType) => {
                 this.setState({ userData });
             }).catch((err: ApiError) => {
                 if(err.code !== 100) console.error(err.text);
             });
+        }
     }
 
     updateNovelMark = (mark: number) => {

@@ -47,7 +47,7 @@ class LoginModal extends React.Component<Props, State> {
 
             setUser(user);
             const successful = (
-                <NotificationMessage level={"success"}>
+                <NotificationMessage level={"success"} position={"center"}>
                     Ты успешно вошел!
                 </NotificationMessage>
             );

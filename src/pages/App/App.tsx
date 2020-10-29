@@ -27,6 +27,7 @@ import { getVersion, version } from "../../api/api";
 import Settings from "../User/Settings/Settings";
 import { setUser } from "../../store/ducks/currentUser";
 import { setSettings } from "../../store/ducks/userSettings";
+import { withProfiler } from "@sentry/react";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -138,4 +139,4 @@ export default connect(
         setUser: (userData: UserType) => dispatch(setUser(userData)),
         setSettings: (settings: UserSettingsType) => dispatch(setSettings(settings))
     })
-)(App);
+)(withProfiler(App));

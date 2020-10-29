@@ -6,7 +6,7 @@ type Props = {
     children: React.ReactNode
     level?: 'info' | 'success' | 'error'
     hideTime?: number
-    position?: 'left' | 'bottom' | 'right'
+    position?: 'left' | 'center' | 'right'
 } & React.DetailedHTMLProps<React.AllHTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
 type State = {
@@ -77,7 +77,7 @@ class NotificationMessage extends React.Component<Props, State> {
             case "left":
                 Object.assign(style, { bottom: 0, left: 0 });
                 break;
-            case "bottom":
+            case "center":
                 Object.assign(style, { bottom: 0, left: '50%', transform: 'translateX(-50%)' });
                 break;
             case "right":
