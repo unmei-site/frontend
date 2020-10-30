@@ -30,7 +30,7 @@ class News extends React.Component<{}, State> {
                     <div>Новости</div>
                     <Link to={'/news'}>Все новости</Link>
                 </div>
-                {news.slice(0, 3).map(post => (
+                {news.slice(0, 3).sort((a, b) => b.id-a.id).map(post => (
                     <Link key={post.id} to={`/news/${post.id}`}>
                         <NewsPost {...post} />
                     </Link>

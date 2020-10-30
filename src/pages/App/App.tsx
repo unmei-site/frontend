@@ -28,6 +28,9 @@ import Settings from "../User/Settings/Settings";
 import { setUser } from "../../store/ducks/currentUser";
 import { setSettings } from "../../store/ducks/userSettings";
 import { withProfiler } from "@sentry/react";
+// @ts-ignore
+import eruda from 'eruda';
+import { hasPermission } from "../../utils";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -64,6 +67,8 @@ class App extends React.Component<Props, State> {
                     document.body.setAttribute('theme', settings.theme);
                 }
             });
+            if(hasPermission(user, 'mobile_debug'))
+                eruda.init();
         }).catch((err: ApiError) => {
             if(err.code !== 3 && err.text)
                 console.error(err.text);
