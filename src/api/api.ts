@@ -56,6 +56,6 @@ const TranslateExitStatus: { [id: string]: string } = {
 }
 
 export const getVersion = () => get<VersionResponse>('version');
-export const version = '0.10b';
+export const version = '1.0';
 
 export { get, post, put, del, TranslateStatus, TranslatePlatform, TranslateExitStatus };
