@@ -41,16 +41,30 @@
       font-weight: 600
 
     &_Group
-      background-color: #0008
       border-color: #eeeeee
-      border-width: 1px 1px 1px 4px
+      border-width: 1px
       border-style: solid
+      color: var(--main-color)
 
-      border-radius: 4px
+      border-radius: 2px
       padding: .2rem
       text-align: center
       font-size: 1.1rem
       font-weight: 300
+      position: relative
+      z-index: 1
+
+      &::before
+        content: ''
+        width: 100%
+        border-top-color: inherit
+        border-top-width: 27px
+        border-top-style: solid
+        opacity: 0.5
+        position: absolute
+        z-index: -1
+        top: 0
+        left: 0
 
     &_Avatar
       background-size: cover
@@ -79,7 +93,6 @@
         width: calc(100% / 2 - 1rem)
       @media (max-width: 460px)
         width: calc(100% - 1rem)
-
 
       padding: .5rem 0
       margin: 0 .5rem

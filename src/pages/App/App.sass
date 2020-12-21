@@ -65,8 +65,17 @@ body[theme='light']
   --block-sec-color: #{$blockSecondaryBackgroundColorLight}
   --nav-bg-color: #{$navbarBackgroundColorLight}
 
-  color: var(--main-color)
-  background: var(--main-bg-color)
+body[theme='win95']
+  --main-color: #{$mainColorLight}
+  --link-color: #{$linkHoverColorLight}
+  --sec-color: #{$secondaryColorLight}
+
+  --main-bg-color: #008083
+  --sec-bg-color: #c0c0c0
+  --nav-bg-color: #c0c0c0
+
+  .Navbar
+    box-shadow: 0 1px 1px 1px white
 
 a
   color: var(--main-color)
@@ -96,7 +105,9 @@ a
   margin-bottom: 1rem
 
 .Error
+  color: #{mainColor}
   background-color: var(--error-bg-color)
 
 .Successful
+  color: #{mainColor}
   background-color: var(--success-bg-color)

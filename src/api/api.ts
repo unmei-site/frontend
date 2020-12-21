@@ -2,12 +2,17 @@ const baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:8080/
 
 async function request<T>(url: string, method: string, body?: string | FormData): Promise<T> {
     let bUrl = baseUrl;
-    if(baseUrl.endsWith('/')) bUrl = bUrl.slice(0, baseUrl.length - 1);
-    if(url.startsWith('/')) url = url.slice(1, baseUrl.length);
+    if(baseUrl.endsWith('/'))
+        bUrl = bUrl.slice(0, baseUrl.length - 1);
+    if(url.startsWith('/'))
+        url = url.slice(1, baseUrl.length);
 
     const res = await fetch(`${bUrl}/${url}`, {
         method, body,
-        credentials: "include"
+        credentials: "include",
+        headers: new Headers({
+            'Dev': /dev.(.+)/.test(window.location.href) ? '1' : '0'
+        })
     });
 
     let json: ApiResponse<T>;
@@ -26,18 +31,10 @@ async function request<T>(url: string, method: string, body?: string | FormData)
     return Promise.resolve(json.data);
 }
 
-function get<T>(url: string, data?: object): Promise<T> {
-    return request<T>(url, 'GET', JSON.stringify(data));
-}
-function post<T>(url: string, data?: object | FormData): Promise<T> {
-    return request(url, 'POST', data instanceof FormData ? data : JSON.stringify(data));
-}
-function put<T>(url: string, data?: object): Promise<T> {
-    return request<T>(url, 'PUT', JSON.stringify(data));
-}
-function del<T>(url: string, data?: object): Promise<T> {
-    return request<T>(url, 'DELETE', JSON.stringify(data));
-}
+const get = <T>(url: string, data?: object): Promise<T> => request<T>(url, 'GET', JSON.stringify(data));
+const post = <T>(url: string, data?: object | FormData): Promise<T> => request(url, 'POST', data instanceof FormData ? data : JSON.stringify(data));
+const put = <T>(url: string, data?: object): Promise<T> => request<T>(url, 'PUT', JSON.stringify(data));
+const del = <T>(url: string, data?: object): Promise<T> => request<T>(url, 'DELETE', JSON.stringify(data));
 
 const TranslateStatus: { [id: string]: string } = {
     planned: 'Запланировано',

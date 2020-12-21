@@ -9,8 +9,6 @@ import NotFoundError from "../NotFoundError";
 import { fetchCurrentUser, fetchUserSettings } from "../../api/users";
 import { connect } from "react-redux";
 import Character from "../Character/Character";
-// @ts-ignore
-import parser from 'bbcode-to-react';
 import SpoilerTag from "../../ui/Spoiler/SpoilerTag";
 import Novels from "../Novels/Novels";
 import Footer from '../Footer/Footer';
@@ -28,21 +26,30 @@ import Settings from "../User/Settings/Settings";
 import { setUser } from "../../store/ducks/currentUser";
 import { setSettings } from "../../store/ducks/userSettings";
 import { withProfiler } from "@sentry/react";
+import { hasPermission } from "../../utils";
+import Club from "../Club/Club";
+import Snowfall from "react-snowfall";
 // @ts-ignore
 import eruda from 'eruda';
-import { hasPermission } from "../../utils";
+// @ts-ignore
+import parser from 'bbcode-to-react';
 
 type Props = {
     notifications: React.ReactNode[]
     modal: React.ReactNode
     setUser: SetUser
     setSettings: SetSettings
+    snowfall: Snowfall
 };
 
-type State = {}
+type State = {
+    user: UserType | null
+};
 
 class App extends React.Component<Props, State> {
-    state: State = {}
+    state: State = {
+        user: null
+    };
 
     constructor(props: Props) {
         super(props);
@@ -60,6 +67,9 @@ class App extends React.Component<Props, State> {
 
         fetchCurrentUser().then(user => {
             setUser(user);
+            this.setState({ user });
+            localStorage.setItem('banned', JSON.stringify(user.is_banned));
+
             fetchUserSettings().then(settings => {
                 setSettings(settings);
                 if(settings.theme !== cachedTheme) {
@@ -70,6 +80,7 @@ class App extends React.Component<Props, State> {
             if(hasPermission(user, 'mobile_debug'))
                 eruda.init();
         }).catch((err: ApiError) => {
+            console.log(err)
             if(err.code !== 3 && err.text)
                 console.error(err.text);
         });
@@ -88,10 +99,22 @@ class App extends React.Component<Props, State> {
     }
 
     render() {
-        const { modal } = this.props;
+        const { modal, snowfall } = this.props;
+        const { user } = this.state;
+        const isBanned = user?.is_banned || JSON.parse(localStorage.getItem('banned') || 'false');
 
+        if(isBanned) {
+            return (
+                <div style={{ display: 'flex', height: '100%', justifyContent: "center", alignItems: "center", fontSize: '2rem' }}>
+                    Вы были забанены!
+                </div>
+            );
+        }
         return (
             <>
+                {snowfall.snowfallStatus && (
+                    <Snowfall color={'white'} snowflakeCount={snowfall.snowflakeCount} style={{ zIndex: 1000 }}/>
+                )}
                 <Navbar/>
                 <div className={'Container'}>
                     <div className="Notifications">
@@ -109,6 +132,8 @@ class App extends React.Component<Props, State> {
 
                         <Route exact path={'/novels'} component={Novels}/>
                         <Route exact path={'/novels/:novelId'} component={Novel}/>
+
+                        <Route exact path={'/clubs/:clubId'} component={Club}/>
 
                         <Route exact path={'/users'} component={Users}/>
                         <Route exact path={'/user/:userId'} component={User}/>
@@ -138,7 +163,8 @@ class App extends React.Component<Props, State> {
 export default connect(
     (state: StoreState) => ({
         notifications: state.notifications,
-        modal: state.modal
+        modal: state.modal,
+        snowfall: state.snowfall
     }),
     dispatch => ({
         setUser: (userData: UserType) => dispatch(setUser(userData)),

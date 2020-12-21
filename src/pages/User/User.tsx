@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import { fetchUser, fetchUserNovels, generateActivateLink } from "../../api/users";
 import './User.sass'
 import NotFoundError from "../NotFoundError";
@@ -78,7 +78,9 @@ class User extends React.Component<Props, State> {
         if(errorCode === 100) return <NotFoundError/>;
         if(!user) return <Loading/>;
 
-        const style = !user.is_activated ? { marginTop: '1rem' } : {}
+        const style: CSSProperties = !user.is_activated ? { marginTop: '1rem' } : {};
+        const userNameStyle: CSSProperties = JSON.parse(localStorage.getItem('color-name') || 'false') && user.group.id !== 0 ? { color: user.group.color } : {};
+        console.log(userNameStyle, localStorage.getItem('color-name'));
 
         return (
             <div className={'User'}>
@@ -88,8 +90,12 @@ class User extends React.Component<Props, State> {
                         <p>Активируйте аккаунт, для доступа ко многим функциям. Так же актвация аккаунта позволит
                             восстановить пароль.</p>
                         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <Button onClick={this.sendActivateLink}
-                                    style={{ fontSize: '1.2rem' }}>Активировать!</Button>
+                            <Button
+                                onClick={this.sendActivateLink}
+                                style={{ fontSize: '1.2rem' }}
+                            >
+                                Активировать!
+                            </Button>
                         </div>
                     </div>
                 )}
@@ -101,22 +107,24 @@ class User extends React.Component<Props, State> {
                             <div className="User__Info_Avatar"
                                  style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }}/>
                             <div>
-                                <div className='User__Info_Nick'>{user.username}</div>
+                                <div className='User__Info_Nick' style={userNameStyle}>{user.username}</div>
                                 <div className='User__Info_Group' style={{
-                                    borderColor: user.group.color,
-                                    color: user.group.color
-                                }}>{user.group.name}</div>
+                                    borderColor: user.group.color
+                                }}>
+                                    {user.group.name}
+                                </div>
                             </div>
                         </div>) : (
                         <div className={'User__Info_Main'}>
                             <div className="User__Info_Avatar"
                                  style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }}/>
                             <div>
-                                <div className='User__Info_Nick'>{user.username}</div>
+                                <div className='User__Info_Nick' style={userNameStyle}>{user.username}</div>
                                 <div className='User__Info_Group' style={{
-                                    borderColor: user.group.color,
-                                    color: user.group.color
-                                }}>{user.group.name}</div>
+                                    borderColor: user.group.color
+                                }}>
+                                    {user.group.name}
+                                </div>
                             </div>
                         </div>
                     )}

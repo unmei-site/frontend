@@ -1,16 +1,14 @@
-type Theme = 'dark' | 'blue' | 'red' | 'green' | 'light'
-type ExitStatus = 'came_out'
-type NovelPlatform = 'win'
-
-type ApiError = {
-    code: number
-    text: string
-}
-
-type ApiResponse<T> = {
-    error: boolean
-    error_data?: ApiError | string
-    data?: T
+type UserType = {
+    authorized: boolean
+    id: number
+    username: string
+    email?: string
+    avatar: string
+    cover: string
+    group: UserGroupType
+    is_superuser: boolean
+    is_activated: boolean
+    is_banned: boolean
 }
 
 type NovelType = {
@@ -34,18 +32,6 @@ type CharacterType = {
     description: string
     image: string
     main: boolean
-}
-
-type UserType = {
-    authorized: boolean
-    id: number
-    username: string
-    email?: string
-    avatar: string
-    cover: string
-    group: UserGroupType
-    is_superuser: boolean
-    is_activated: boolean
 }
 
 type UserSettingsType = {
@@ -88,4 +74,11 @@ type PostType = {
     date: Date
     author: string
     author_id: number
+}
+
+type ClubType = {
+    id: number
+    name: string
+    avatar: string
+    ownerId: number
 }

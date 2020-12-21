@@ -38,7 +38,7 @@ class Character extends React.Component<Props, State> {
         return (
             <div className={'Character'}>
                 <div className="Character__Main">
-                    <div style={{ backgroundImage: `url(${char.image})` }} className="Character__Image"/>
+                    <img src={char.image} alt={char.original_name} className="Character__Image" />
                     <div className="Character__Info">
                         <div className="Character__Info_Name">
                             {char.original_name !== char.localized_name ? (

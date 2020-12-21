@@ -43,8 +43,6 @@ class LoginModal extends React.Component<Props, State> {
         const { login: log, password, recaptcha } = this.state;
 
         login(log, password, recaptcha).then(user => {
-            if(!user) return;
-
             setUser(user);
             const successful = (
                 <NotificationMessage level={"success"} position={"center"}>
