@@ -80,7 +80,6 @@ class App extends React.Component<Props, State> {
             if(hasPermission(user, 'mobile_debug'))
                 eruda.init();
         }).catch((err: ApiError) => {
-            console.log(err)
             if(err.code !== 3 && err.text)
                 console.error(err.text);
         });
@@ -113,7 +112,7 @@ class App extends React.Component<Props, State> {
         return (
             <>
                 {snowfall.snowfallStatus && (
-                    <Snowfall color={'white'} snowflakeCount={snowfall.snowflakeCount} style={{ zIndex: 1000 }}/>
+                    <Snowfall color={'white'} snowflakeCount={snowfall.snowflakeCount} style={{ zIndex: 1000, position: "fixed" }}/>
                 )}
                 <Navbar/>
                 <div className={'Container'}>

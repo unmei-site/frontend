@@ -80,7 +80,6 @@ class User extends React.Component<Props, State> {
 
         const style: CSSProperties = !user.is_activated ? { marginTop: '1rem' } : {};
         const userNameStyle: CSSProperties = JSON.parse(localStorage.getItem('color-name') || 'false') && user.group.id !== 0 ? { color: user.group.color } : {};
-        console.log(userNameStyle, localStorage.getItem('color-name'));
 
         return (
             <div className={'User'}>
@@ -114,7 +113,8 @@ class User extends React.Component<Props, State> {
                                     {user.group.name}
                                 </div>
                             </div>
-                        </div>) : (
+                        </div>
+                    ) : (
                         <div className={'User__Info_Main'}>
                             <div className="User__Info_Avatar"
                                  style={{ backgroundImage: `url(${user.avatar}?s=96&t=${new Date().getTime()})` }}/>
