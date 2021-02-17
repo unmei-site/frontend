@@ -3,7 +3,7 @@ const SET_SNOWFALL_STATUS = 'unmei/snowfall/SET_SNOWFALL_STATUS';
 
 const initialState: Snowfall = {
     snowflakeCount: JSON.parse(localStorage.getItem('snowflakeCount') ?? '250'),
-    snowfallStatus: true
+    snowfallStatus: false
 };
 
 const reducer = (state = initialState, action: Action<Snowfall>) => {

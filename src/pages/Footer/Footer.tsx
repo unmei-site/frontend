@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
                 </div>
             </footer>
             <div className="Footer__Bottom">
-                Unmei © 2019-2020
+                Unmei © 2019-2021
             </div>
         </div>
     );

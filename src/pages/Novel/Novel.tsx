@@ -15,10 +15,12 @@ import {
 } from "../../api/novels";
 import { Link } from "react-router-dom";
 import Loading from "../../ui/Loading";
-import { TranslateExitStatus, TranslateStatus } from "../../api/api";
+import { TranslateExitStatus, TranslatePlatform, TranslateStatus } from "../../api/api";
 import Comments from "../Comments/Comments";
 import LoadingModal from "../Modals/LoadingModal";
 import { hideModal, setModal } from "../../store/ducks/modal";
+import { hasPermission } from "../../utils";
+import ConfirmModal from "../Modals/ConfirmModal";
 
 type Props = {
     currentUser: UserType
@@ -157,7 +159,7 @@ class Novel extends React.Component<Props, State> {
 
     render() {
         const { errorCode, novel, comments, characters, genres, userData, statusExpanded, hasMoreComments } = this.state;
-        const { currentUser } = this.props;
+        const { currentUser, setModal } = this.props;
 
         if(errorCode === 100) return <NotFoundError/>;
         if(!novel) return <Loading/>;
@@ -207,6 +209,13 @@ class Novel extends React.Component<Props, State> {
                                     </div>
                                 ))}
                             </div>
+
+                            {hasPermission(currentUser, 'novel') && (
+                                <div className="Novel__Main_Status_Mark">
+                                    <div className="Novel__Main_Status_Mark_Element">Изменить</div>
+                                    <div className="Novel__Main_Status_Mark_Element" onClick={() => setModal(<ConfirmModal onConfirm={() => console.log(123)}/>)}>Удалить</div>
+                                </div>
+                            )}
                         </div>}
                     </div>
                     <div className={'Novel__Info'}>
@@ -225,10 +234,18 @@ class Novel extends React.Component<Props, State> {
                         <div>
                             <strong>Статус</strong>: {TranslateExitStatus[novel.exit_status]}
                         </div>
-                        <div>
+                        {novel.duration > 0 && <div>
                             <strong>Продолжительность</strong>: {this.countNovelDuration(novel.duration)}
+                        </div>}
+                        {novel.platforms && <div>
+                            <strong>Платформы</strong>: {novel.platforms.split(',').map(platform => TranslatePlatform[platform]).join(', ')}
+                        </div>}
+                        {novel.links.length > 0 && <div>
+                            <strong>Ссылки</strong>: {novel.links.map(link => <a key={`${novel.id}_${link.name}`} style={{ margin: '0 .2rem' }} target='_blank' rel="noopener noreferrer" href={link.link}>{link.name}</a>)}
+                        </div>}
+                        <div className="Novel__Info_Rating">
+                            <strong>Ср. оценка</strong>: {novel.rating.toFixed(2)}
                         </div>
-                        <div className="Novel__Info_Rating"><strong>Ср. оценка</strong>: {novel.rating.toFixed(2)}</div>
                         <pre className={'Novel__Info_Description'}>{novel.description}</pre>
                     </div>
                 </div>

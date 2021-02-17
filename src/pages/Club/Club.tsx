@@ -17,20 +17,22 @@ class Club extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        getClub(this.props.match.params.clubId).then(club => {
+        const { match } = this.props;
+
+        getClub(match.params.clubId).then(club => {
             this.setState({ club });
         });
     }
 
     render() {
-        if(!this.state.club) return <Loading/>;
-        return (
-            <div>
-                <Group title={this.state.club.name}>
+        const { club } = this.state;
+        if(!club) return <Loading/>;
 
-                </Group>
-            </div>
-        )
+        return (
+            <Group title={club.name}>
+                <img src={club.avatar} width={96} height={96} style={{ borderRadius: '50%' }} alt=""/>
+            </Group>
+        );
     }
 }
 

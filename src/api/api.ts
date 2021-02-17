@@ -11,7 +11,7 @@ async function request<T>(url: string, method: string, body?: string | FormData)
         method, body,
         credentials: "include",
         headers: new Headers({
-            'Dev': /dev.(.+)/.test(window.location.href) ? '1' : '0'
+            'Dev': /(dev\..+)/.test(window.location.href) ? '1' : '0'
         })
     });
 
@@ -45,14 +45,18 @@ const TranslateStatus: { [id: string]: string } = {
 };
 
 const TranslatePlatform: { [id: string]: string } = {
-    win: 'Windows'
+    win: 'Windows',
+    mac: 'macOS',
+    linux: 'Linux',
+    ios: 'IOS',
+    android: 'Andriod'
 };
 
 const TranslateExitStatus: { [id: string]: string } = {
     came_out: 'Вышла'
-}
+};
 
 export const getVersion = () => get<VersionResponse>('version');
-export const version = '1.1.1';
+export const version = '1.2';
 
 export { get, post, put, del, TranslateStatus, TranslatePlatform, TranslateExitStatus };

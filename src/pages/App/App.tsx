@@ -33,6 +33,7 @@ import Snowfall from "react-snowfall";
 import eruda from 'eruda';
 // @ts-ignore
 import parser from 'bbcode-to-react';
+import Clubs from "../Clubs/Clubs";
 
 type Props = {
     notifications: React.ReactNode[]
@@ -62,8 +63,21 @@ class App extends React.Component<Props, State> {
         const { setUser, setSettings } = this.props;
 
         const cachedTheme = localStorage.getItem('theme');
-        if(cachedTheme)
-            document.body.setAttribute('theme', cachedTheme);
+        if(cachedTheme) {
+            if(cachedTheme === 'custom') {
+                const customTheme = localStorage.getItem('customTheme') ?? '';
+
+                customTheme.split('\n').forEach(line => {
+                    const [name, value] = line.split(':');
+                    document.body.style.setProperty(name, value);
+                });
+            } else
+                document.body.setAttribute('theme', cachedTheme);
+        }
+
+        const accentColor = localStorage.getItem('accentColor');
+        if(accentColor)
+            document.body.style.setProperty('--accent-color', accentColor);
 
         fetchCurrentUser().then(user => {
             setUser(user);
@@ -85,13 +99,17 @@ class App extends React.Component<Props, State> {
         });
 
         getVersion().then(res => {
-            if(version !== res.version) {
+            if(version !== res.version && !/(dev\..+)/.test(window.location.href)) {
                 console.debug(`Current back-end version: ${res.version}. Clearing cache`);
 
                 caches.keys().then(names => {
                     names.forEach(name => caches.delete(name).catch(console.error))
                 }).then(() => {
                     window.location.reload();
+                });
+            } else if(/(dev\..+)/.test(window.location.href)) {
+                caches.keys().then(names => {
+                    names.forEach(name => caches.delete(name).catch(console.error))
                 });
             }
         });
@@ -100,7 +118,7 @@ class App extends React.Component<Props, State> {
     render() {
         const { modal, snowfall } = this.props;
         const { user } = this.state;
-        const isBanned = user?.is_banned || JSON.parse(localStorage.getItem('banned') || 'false');
+        const isBanned = user?.is_banned || JSON.parse(localStorage.getItem('banned') ?? 'false');
 
         if(isBanned) {
             return (
@@ -109,12 +127,13 @@ class App extends React.Component<Props, State> {
                 </div>
             );
         }
+
         return (
             <>
+                <Navbar/>
                 {snowfall.snowfallStatus && (
                     <Snowfall color={'white'} snowflakeCount={snowfall.snowflakeCount} style={{ zIndex: 1000, position: "fixed" }}/>
                 )}
-                <Navbar/>
                 <div className={'Container'}>
                     <div className="Notifications">
                         {this.props.notifications.map((n, i) => (
@@ -132,6 +151,7 @@ class App extends React.Component<Props, State> {
                         <Route exact path={'/novels'} component={Novels}/>
                         <Route exact path={'/novels/:novelId'} component={Novel}/>
 
+                        <Route exact path={'/clubs'} component={Clubs}/>
                         <Route exact path={'/clubs/:clubId'} component={Club}/>
 
                         <Route exact path={'/users'} component={Users}/>

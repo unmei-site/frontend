@@ -28,11 +28,12 @@ class Navbar extends React.Component<Props, State> {
     }
 
     logout = () => {
-        this.props.logout();
+        const { logout } = this.props;
+        logout();
         localStorage.removeItem('user');
         localStorage.removeItem('theme');
         document.body.removeAttribute('theme');
-        userLogout().catch(() => {});
+        userLogout().catch();
     };
 
     changeSize = () => {
@@ -60,6 +61,9 @@ class Navbar extends React.Component<Props, State> {
                 <Link to="/novels" className={'Navbar_Button'}>
                     Новеллы
                 </Link>
+                {/*<Link to="/clubs" className={'Navbar_Button'}>*/}
+                {/*    Клубы*/}
+                {/*</Link>*/}
                 {expand && isMinimized && (
                     <div onClick={this.changeSize} className={'Navbar_Button'}
                          style={{ position: "absolute", right: 0, margin: '.5rem' }}>X</div>

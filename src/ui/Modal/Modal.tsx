@@ -25,8 +25,8 @@ class Modal extends React.Component<Props> {
 
     handleKeyUp = (e: KeyboardEvent) => {
         if(e.code === 'Escape') {
-            const { setModal } = this.props;
             e.preventDefault();
+            const { setModal } = this.props;
             setModal(null);
         }
     };

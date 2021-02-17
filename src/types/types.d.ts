@@ -1,3 +1,10 @@
+type NovelLinkType = {
+    novel_id: number
+    link: string
+    name: string
+}
+
+
 type UserType = {
     authorized: boolean
     id: number
@@ -22,7 +29,8 @@ type NovelType = {
     release_date: Date
     exit_status: ExitStatus
     duration: number
-    platform: NovelPlatform
+    platforms: string
+    links: NovelLinkType[]
 }
 
 type CharacterType = {
