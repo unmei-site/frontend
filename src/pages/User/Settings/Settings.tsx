@@ -1,7 +1,7 @@
 import React from "react";
 import Group from "../../../ui/Group/Group";
 import { connect } from "react-redux";
-import NotFoundError from "../../NotFoundError";
+import NotFoundError from "../../../components/NotFoundError";
 import './Settings.sass';
 import Tabs from "../../../ui/Tabs/Tabs";
 import TabItem from "../../../ui/Tabs/TabItem";

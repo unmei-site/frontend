@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import Group from "../../../ui/Group/Group";
-import NotFoundError from "../../../components/NotFoundError";
-import { deletePost, fetchPost, updatePost } from "../../../api/news";
+import { createPost } from "../../../api/news";
 import './APNews.sass';
+import '../../../ui/TextField/TextField.sass'
 import Input from "../../../ui/Input/Input";
 import Button from "../../../ui/Button/Button";
 import BBEditor from "../../../ui/BBEditor/BBEditor";
@@ -10,20 +10,19 @@ import BBEditor from "../../../ui/BBEditor/BBEditor";
 import parser from 'bbcode-to-react';
 import Title from "../../../ui/Title/Title";
 import { connect } from "react-redux";
-import ConfirmPopout from "../../../ui/ConfirmPopout/ConfirmPopout";
 import NotificationMessage from "../../../ui/Notifications/NotificationMessage";
 import { setModal } from "../../../store/ducks/modal";
 import { addNotification } from "../../../store/ducks/notifications";
 
 type Props = {
-    match: { params: { id: number }, path: string }
+    match: { path: string }
     history: { push: (path: string) => void }
     setPopout: (modal: React.ReactNode | null) => void
     addNotification: (notification: React.ReactNode) => void
 };
 
 type State = {
-    post: PostType | null
+    post: PostType
     title: string
 
     previewShort: string
@@ -32,47 +31,33 @@ type State = {
 
 class APModifyPost extends React.Component<Props, State> {
     state: State = {
-        post: null, title: '',
+        post: {} as PostType, title: '',
         previewShort: '', previewFull: ''
     }
     private shortPost = React.createRef<HTMLTextAreaElement>();
     private fullPost = React.createRef<HTMLTextAreaElement>();
 
-    componentDidMount() {
-        const { match } = this.props;
-
-        fetchPost(match.params.id).then((post: PostType) => {
-            this.setState({ post, title: post.title });
-        });
-    }
-
     savePost = async(event: FormEvent) => {
         event.preventDefault();
 
-        const post = this.state.post;
-        if(!post) return;
-        if(!this.shortPost.current || !this.fullPost.current) return;
+        const { post } = this.state;
+        if(!this.shortPost.current || !this.fullPost.current)
+            return;
 
         post.short_post = this.shortPost.current.value;
         post.full_post = this.fullPost.current.value;
         const { addNotification } = this.props;
 
-        updatePost(post).then(() => {
+        createPost(post).then(createdPost => {
             const notification = (
                 <NotificationMessage level={"success"}>
-                    Успешно!
+                    Успешно создана новость с ID {createdPost.id}!
                 </NotificationMessage>
             );
-            addNotification(notification)
+            addNotification(notification);
+            const path = this.props.match.path.split('/');
+            this.props.history.push(`/${path[1]}/${path[2]}`);
         });
-    }
-
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if(prevState.post) return;
-        if(!this.state.post) return;
-        if(!this.shortPost.current || !this.fullPost.current) return;
-        this.shortPost.current.value = this.state.post.short_post;
-        this.fullPost.current.value = this.state.post.full_post;
     }
 
     previewShort = () => {
@@ -86,39 +71,19 @@ class APModifyPost extends React.Component<Props, State> {
     }
 
     changeTitle = (event: ChangeEvent<HTMLInputElement>) => {
-        const post = this.state.post;
-        if(!post) return;
+        const { post } = this.state;
         post.title = event.target.value;
         document.title = event.target.value || 'Unmei';
         this.setState({ post });
     }
 
-    deletePost = async (postId: number) => {
-        await deletePost(postId);
-        const path = this.props.match.path.split('/')
-        this.props.history.push(`/${path[1]}/${path[2]}`);
-    }
-
-    _deletePost = () => {
-        const { match: { params: { id} }, setPopout } = this.props;
-
-        const popout = (
-            <ConfirmPopout onConfirm={() => this.deletePost(id)}>
-                Вы уверены?
-            </ConfirmPopout>
-        );
-
-        setPopout(popout);
-    }
-
     render() {
         const { post, title, previewShort, previewFull } = this.state;
 
-        if(!post) return <NotFoundError/>;
         return (
             <Group title={title}>
                 <form onSubmit={this.savePost} className={'APPost'}>
-                    <Input type="text" placeholder={'Заголовок'} value={post.title} onChange={this.changeTitle}/>
+                    <Input type="text" placeholder={'Заголовок'} value={post.title ?? ''} onChange={this.changeTitle}/>
 
                     <div className={'APPost__Short'}>
                         <Title>Короткая новость</Title>
@@ -142,8 +107,6 @@ class APModifyPost extends React.Component<Props, State> {
 
                     <div>
                         <Button style={{ marginRight: '1rem' }}>Сохранить</Button>
-                        <Button type={"button"} style={{ color: 'var(--error-bg-color)' }}
-                                onClick={this._deletePost}>Удалить</Button>
                     </div>
                 </form>
             </Group>

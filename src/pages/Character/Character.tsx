@@ -4,8 +4,8 @@ import './Character.sass'
 // @ts-ignore
 import parser from 'bbcode-to-react';
 import NovelItem from "../../ui/NovelItem/NovelItem";
-import Loading from "../../ui/Loading";
-import NotFoundError from "../NotFoundError";
+import Loading from "../../components/Loading";
+import NotFoundError from "../../components/NotFoundError";
 
 type Props = {
     match: { params: { charId: number } }

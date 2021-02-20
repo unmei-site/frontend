@@ -1,6 +1,6 @@
 import React from "react";
 import './Novel.sass'
-import NotFoundError from "../NotFoundError";
+import NotFoundError from "../../components/NotFoundError";
 import { connect } from "react-redux";
 import {
     createUserNovel,
@@ -14,7 +14,7 @@ import {
     updateUserNovel
 } from "../../api/novels";
 import { Link } from "react-router-dom";
-import Loading from "../../ui/Loading";
+import Loading from "../../components/Loading";
 import { TranslateExitStatus, TranslatePlatform, TranslateStatus } from "../../api/api";
 import Comments from "../Comments/Comments";
 import LoadingModal from "../Modals/LoadingModal";

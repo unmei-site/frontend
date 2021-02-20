@@ -1,6 +1,6 @@
 import React from "react";
 import { getClub } from "../../api/clubs";
-import Loading from "../../ui/Loading";
+import Loading from "../../components/Loading";
 import Group from "../../ui/Group/Group";
 
 type Props = {

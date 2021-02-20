@@ -1,7 +1,7 @@
 import React from 'react';
 import './UserNovels.sass';
 import { fetchUser, fetchUserNovels } from '../../../api/users';
-import Loading from '../../../ui/Loading';
+import Loading from '../../../components/Loading';
 import NovelItem from '../../../ui/NovelItem/NovelItem';
 import { capitalize, generateClassName, getRandomInt } from "../../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

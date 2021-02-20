@@ -1,7 +1,7 @@
 import React from "react";
 import { fetchPost } from "../../api/news";
-import Loading from "../../ui/Loading";
-import NotFoundError from "../NotFoundError";
+import Loading from "../../components/Loading";
+import NotFoundError from "../../components/NotFoundError";
 import './Post.sass'
 import { Link } from "react-router-dom";
 // @ts-ignore

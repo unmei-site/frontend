@@ -1,11 +1,23 @@
 const baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:8080/v1' : 'https://api.unmei.space/v1';
 
+// function loadRequestFromCache<T>(url: string): T | null {
+//     let cached = sessionStorage.getItem(url);
+//     if(!cached) return null;
+//     return JSON.parse(cached) as T;
+// }
+
 async function request<T>(url: string, method: string, body?: string | FormData): Promise<T> {
     let bUrl = baseUrl;
     if(baseUrl.endsWith('/'))
         bUrl = bUrl.slice(0, baseUrl.length - 1);
     if(url.startsWith('/'))
         url = url.slice(1, baseUrl.length);
+
+    // const cached = method.toLowerCase() === 'get' ? loadRequestFromCache<T>(url) : null;
+    // if(cached) {
+    //     console.debug(`${baseUrl}/${url} loaded from session cache!`);
+    //     return Promise.resolve(cached);
+    // }
 
     const res = await fetch(`${bUrl}/${url}`, {
         method, body,
@@ -28,6 +40,7 @@ async function request<T>(url: string, method: string, body?: string | FormData)
     if(json?.error) return Promise.reject(json.error_data);
     if(!res.ok) return Promise.reject(res.statusText);
     if(!json.data) return Promise.reject(null);
+    sessionStorage.setItem(url, JSON.stringify(json.data));
     return Promise.resolve(json.data);
 }
 

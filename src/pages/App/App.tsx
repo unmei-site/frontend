@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
 import './App.sass';
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import Novel from "../Novel/Novel";
 import User from "../User/User";
 import Main from "../Main/Main"
-import NotFoundError from "../NotFoundError";
+import NotFoundError from "../../components/NotFoundError";
 import { fetchCurrentUser, fetchUserSettings } from "../../api/users";
 import { connect } from "react-redux";
 import Character from "../Character/Character";
 import SpoilerTag from "../../ui/Spoiler/SpoilerTag";
 import Novels from "../Novels/Novels";
-import Footer from '../Footer/Footer';
+import Footer from '../../components/Footer/Footer';
 import UserNovels from '../User/Novels/UserNovels';
 import ColorTag from "../../ui/Tags/ColorTag";
 import ActivateAccount from "../ActivateAccount";

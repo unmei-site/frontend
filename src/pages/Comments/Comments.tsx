@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Comment from '../../ui/Comment/Comment';
 import './Comments.sass';
-import Loading from "../../ui/Loading";
+import Loading from "../../components/Loading";
 import { fetchUser } from "../../api/users";
 import { connect } from "react-redux";
 import NotificationMessage from "../../ui/Notifications/NotificationMessage";
@@ -71,9 +71,8 @@ class Comments extends React.Component<Props, State> {
 
     componentDidUpdate(prevProps: Readonly<Props>) {
         const { comments } = this.props;
-        const { comments: prevComments } = prevProps;
 
-        if(prevComments.length !== comments.length) {
+        if(prevProps.comments.length !== comments.length) {
             let { users } = this.state;
 
             comments.forEach(async comment => {
@@ -89,7 +88,8 @@ class Comments extends React.Component<Props, State> {
     render() {
         const { user, comments, hasMore, loadMore } = this.props;
         const { users, commentText } = this.state;
-        if(!user) return <Loading/>;
+        if(!user)
+            return <Loading/>;
 
         return (
             <div className="Comments">
@@ -120,12 +120,13 @@ class Comments extends React.Component<Props, State> {
                         {hasMore && <Button onClick={loadMore}>Загрузить ещё</Button>}
                     </div>
                 </form>}
-                {!comments && (
+                {comments.length === 0 && (
                     <Loading/>
                 )}
-                {comments && comments.length > 0 ? (
-                    comments.map(comment => <Comment text={comment.text} key={comment.id}
-                                                     user={users.get(comment.user_id)}/>)
+                {comments.length > 0 ? (
+                    comments.map(comment => (
+                        <Comment text={comment.text} key={comment.id} user={users.get(comment.user_id)}/>
+                    ))
                 ) : (
                     'Никто не оставил комментарий к этой новелле... :c'
                 )}

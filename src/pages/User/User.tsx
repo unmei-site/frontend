@@ -1,9 +1,9 @@
 import React, { CSSProperties } from "react";
 import { fetchUser, fetchUserNovels, generateActivateLink } from "../../api/users";
 import './User.sass'
-import NotFoundError from "../NotFoundError";
+import NotFoundError from "../../components/NotFoundError";
 import { Link } from "react-router-dom";
-import Loading from "../../ui/Loading";
+import Loading from "../../components/Loading";
 import NovelItem from "../../ui/NovelItem/NovelItem";
 import { connect } from "react-redux";
 import Button from "../../ui/Button/Button";

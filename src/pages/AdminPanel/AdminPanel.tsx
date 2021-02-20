@@ -1,51 +1,28 @@
 import { connect } from "react-redux";
 import React from "react";
-import NotFoundError from "../NotFoundError";
+import NotFoundError from "../../components/NotFoundError";
 import { hasAccessToAdminPanel } from "../../utils";
 import './AdminPanel.sass';
-import { Link } from "react-router-dom";
-import AdminPanelUsers from "./Users/AdminPanelUsers";
-import AdminPanelNovels from "./Novels/AdminPanelNovels";
-import ModifyUser from "./Users/ModifyUser";
+import { Link, Route, Switch } from "react-router-dom";
 import APNews from "./News/APNews";
 import APModifyPost from "./News/APModifyPost";
+import APAddPost from "./News/APAddPost";
+import APNovels from "./Novels/APNovels";
+import APUsers from "./Users/APUsers";
+import APModifyUser from "./Users/APModifyUser";
 
 type Props = {
     user: UserType
     match: { path: string }
-    location: { pathname: string }
 }
 
 type State = {}
 
 class AdminPanel extends React.Component<Props, State> {
     render() {
-        const { user, match: { path }, location: { pathname } } = this.props;
+        const { user, match: { path } } = this.props;
         if(!user || !user.group) return <NotFoundError/>;
         if(!hasAccessToAdminPanel(user)) return <NotFoundError/>;
-        const subPath = pathname.slice(path.length + 1);
-        let component;
-        switch(subPath) {
-            case 'users':
-                component = <AdminPanelUsers path={`${path}/${subPath}`}/>;
-                break;
-            case 'novels':
-                component = <AdminPanelNovels/>;
-                break;
-            case 'news':
-                component = <APNews path={`${path}/${subPath}`}/>;
-                break;
-            default: {
-                const users = /users\/(\d+)/;
-                const news = /news\/(\d+)/;
-
-                const userMatch = subPath.match(users);
-                const newsMatch = subPath.match(news);
-
-                if(userMatch) component = <ModifyUser userId={parseInt(userMatch[1])}/>;
-                if(newsMatch) component = <APModifyPost postId={parseInt(newsMatch[1])}/>;
-            }
-        }
 
         return (
             <div className={'AdminPanel'}>
@@ -57,7 +34,20 @@ class AdminPanel extends React.Component<Props, State> {
                     <Link to={`${path}/novels`}>Новелы</Link>
                     <Link to={`${path}/news`}>Новости</Link>
                 </div>
-                {component}
+
+                <Switch>
+                    <Route exact path={`${path}/news`} component={APNews}/>
+                    <Route exact path={`${path}/news/new`} component={APAddPost}/>
+                    <Route exact path={`${path}/news/:id`} component={APModifyPost}/>
+
+                    <Route exact path={`${path}/novels`} component={APNovels}/>
+                    <Route exact path={`${path}/novels/new`} component={NotFoundError}/>
+                    <Route exact path={`${path}/novels/:id`} component={NotFoundError}/>
+
+                    <Route exact path={`${path}/users`} component={APUsers}/>
+                    <Route exact path={`${path}/users/new`} component={NotFoundError}/>
+                    <Route exact path={`${path}/users/:id`} component={APModifyUser}/>
+                </Switch>
             </div>
         );
     }

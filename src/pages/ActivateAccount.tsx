@@ -2,7 +2,7 @@ import React from "react";
 import { activateAccount } from "../api/users";
 import { connect } from "react-redux";
 import errors from "../api/errors";
-import Loading from "../ui/Loading";
+import Loading from "../components/Loading";
 import { addNotification } from "../store/ducks/notifications";
 
 type Props = {

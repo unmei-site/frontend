@@ -2,7 +2,7 @@ import './Novels.sass'
 import React from "react";
 import { fetchNovels } from "../../api/novels";
 import NovelItem from '../../ui/NovelItem/NovelItem';
-import Loading from "../../ui/Loading";
+import Loading from "../../components/Loading";
 
 type State = {
     novels: NovelType[] | null

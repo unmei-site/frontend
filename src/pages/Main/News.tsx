@@ -1,6 +1,6 @@
 import React from "react";
 import { fetchNews } from "../../api/news";
-import Loading from "../../ui/Loading";
+import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 import NewsPost from "../../ui/NewsPost/NewsPost";
 

@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { hasAccessToAdminPanel } from "../../utils";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import RegisterModal from "../Modals/RegisterModal";
-import LoginModal from "../Modals/LoginModal";
+import RegisterModal from "../../pages/Modals/RegisterModal";
+import LoginModal from "../../pages/Modals/LoginModal";
 import { logout } from "../../store/ducks/currentUser";
 import { setModal } from "../../store/ducks/modal";
 

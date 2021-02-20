@@ -1,6 +1,6 @@
 import React from "react";
 import { fetchUsers } from "../../api/users";
-import Loading from "../../ui/Loading";
+import Loading from "../../components/Loading";
 import './Users.sass';
 import { Link } from "react-router-dom";
 

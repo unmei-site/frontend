@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Button from "../../../ui/Button/Button";
 
 type Props = {
-    path: string
+    match: { path: string }
 };
 
 type State = {
@@ -23,11 +23,13 @@ class APNews extends React.Component<Props, State> {
 
     render() {
         const { news } = this.state;
-        const { path } = this.props;
+        const { match: { path } } = this.props;
 
         return (
             <Group title={'Новости'}>
-                <Button>Добавить новость</Button>
+                <Link to={`${path}/new`}>
+                    <Button>Добавить новость</Button>
+                </Link>
                 {news.map(post => (
                     <Link to={`${path}/${post.id}`} key={post.id}>
                         <div style={{ display: "flex" }}>

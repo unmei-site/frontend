@@ -3,7 +3,7 @@ import './Comment.sass'
 import { Link } from "react-router-dom";
 // @ts-ignore
 import parser from 'bbcode-to-react';
-import Loading from "../Loading";
+import Loading from "../../components/Loading";
 
 type Props = {
     user: UserType | undefined
