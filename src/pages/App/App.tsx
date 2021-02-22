@@ -21,12 +21,12 @@ import AdminPanel from "../AdminPanel/AdminPanel";
 import PasswordRestoreGenerate from "../PasswordRestore/PasswordRestoreGenerate";
 import PasswordRestore from "../PasswordRestore/PasswordRestore";
 import Users from "../Users/Users";
-import { getVersion, version } from "../../api/api";
+import { build, getVersion, version } from "../../api/api";
 import Settings from "../User/Settings/Settings";
 import { setUser } from "../../store/ducks/currentUser";
 import { setSettings } from "../../store/ducks/userSettings";
 import { withProfiler } from "@sentry/react";
-import { hasPermission } from "../../utils";
+import { hasPermission, isMobile } from "../../utils";
 import Club from "../Club/Club";
 import Snowfall from "react-snowfall";
 // @ts-ignore
@@ -91,7 +91,7 @@ class App extends React.Component<Props, State> {
                     document.body.setAttribute('theme', settings.theme);
                 }
             });
-            if(hasPermission(user, 'mobile_debug'))
+            if(hasPermission(user, 'mobile_debug') && isMobile())
                 eruda.init();
         }).catch((err: ApiError) => {
             if(err.code !== 3 && err.text)
@@ -99,8 +99,8 @@ class App extends React.Component<Props, State> {
         });
 
         getVersion().then(res => {
-            if(version !== res.version && !/(dev\..+)/.test(window.location.href)) {
-                console.debug(`Current back-end version: ${res.version}. Clearing cache`);
+            if(build != res.build && !/(dev\..+)/.test(window.location.href)) {
+                console.debug(`Current back-end version: ${res.version} (${res.build}). Clearing cache...`);
 
                 caches.keys().then(names => {
                     names.forEach(name => caches.delete(name).catch(console.error))

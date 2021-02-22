@@ -62,6 +62,7 @@ class UserNovels extends React.Component<Props, State> {
 
         const planned = novels.filter(n => n.status === 'planned');
         const completed = novels.filter(n => n.status === 'completed');
+        const in_progress = novels.filter(n => n.status === 'in_progress');
 
         return (
             <div className='UserNovels'>
@@ -77,8 +78,7 @@ class UserNovels extends React.Component<Props, State> {
                         <Button onClick={this.getRandomNovel}>Рандомная новелла</Button>
                     </div>
                     <div className={generateClassName("UserNovels__List_Novels", capitalize(viewType) || 'Grid')}>
-                        {planned.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1}
-                                                               viewType={viewType}/>)}
+                        {planned.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1} viewType={viewType}/>)}
                     </div>
                 </div>}
 
@@ -87,8 +87,16 @@ class UserNovels extends React.Component<Props, State> {
                         Пройденные
                     </div>
                     <div className={generateClassName("UserNovels__List_Novels", capitalize(viewType) || 'Grid')}>
-                        {completed.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1}
-                                                                 viewType={viewType}/>)}
+                        {completed.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1} viewType={viewType}/>)}
+                    </div>
+                </div>}
+
+                {in_progress.length > 0 && <div className={'UserNovels__List'}>
+                    <div className="UserNovels__List_Title">
+                        Прохожу
+                    </div>
+                    <div className={generateClassName("UserNovels__List_Novels", capitalize(viewType) || 'Grid')}>
+                        {in_progress.map((novel, id) => <NovelItem {...novel} key={novel.id} novelId={id + 1} viewType={viewType}/>)}
                     </div>
                 </div>}
             </div>

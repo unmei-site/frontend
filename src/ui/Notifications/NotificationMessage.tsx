@@ -95,7 +95,7 @@ class NotificationMessage extends React.Component<Props, State> {
                 {...props}
             >
                 {children}
-                <div className="Progress" style={{ width: `${time / (5000 || hideTime) * 100}%` }}/>
+                <div className={'Progress'} style={{ width: `${time / (5000 || hideTime) * 100}%` }}/>
             </div>
         );
     }

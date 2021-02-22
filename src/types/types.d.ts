@@ -31,6 +31,7 @@ type NovelType = {
     duration: number
     platforms: string
     links: NovelLinkType[]
+    genres: GenreType[]
 }
 
 type CharacterType = {

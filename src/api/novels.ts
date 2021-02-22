@@ -5,10 +5,11 @@ export const fetchNovels = (orderBy?: string) => get<NovelType[]>(orderBy ? `nov
 export const createNovel = (novel: NovelType) => post<NovelType>('novels', { ...novel });
 
 export const fetchNovel = (id: number) => get<NovelType>(`novels/${id}`);
-export const updateNovel = (id: number, novel: NovelType) => put<NovelType>(`novels/${id}`, { ...novel });
+export const updateNovel = (novel: NovelType) => put<NovelType>(`novels/${novel.id}`, novel);
 
 export const fetchNovelCharacters = (id: number) => get<CharacterType[]>(`novels/${id}/characters`);
 
+export const fetchGenres = () => get<GenreType[]>('genres');
 export const fetchNovelGenres = (id: number) => get<GenreType[]>(`novels/${id}/genres`);
 
 export const fetchNovelComments = (id: number, offset = 0, count = 5) => get<CommentsResponse>(`novels/${id}/comments?offset=${offset}&count=${count}`);

@@ -212,7 +212,7 @@ class Novel extends React.Component<Props, State> {
 
                             {hasPermission(currentUser, 'novel') && (
                                 <div className="Novel__Main_Status_Mark">
-                                    <div className="Novel__Main_Status_Mark_Element">Изменить</div>
+                                    <Link to={`/kawaii__neko/novels/${novel.id}`} className="Novel__Main_Status_Mark_Element">Изменить</Link>
                                     <div className="Novel__Main_Status_Mark_Element" onClick={() => setModal(<ConfirmModal onConfirm={() => console.log(123)}/>)}>Удалить</div>
                                 </div>
                             )}

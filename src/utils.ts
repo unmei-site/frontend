@@ -30,4 +30,11 @@ const getImage: (path: string) => string = (path: string) => {
     return `${cdnUrl}/${path}`;
 }
 
-export { capitalize, getRandomInt, hasPermission, hasAccessToAdminPanel, generateClassName, getImage };
+const isMobile = () => {
+    const ua = window.navigator.userAgent;
+
+    return ua.indexOf('Android') !== -1 || ua.indexOf('iPhone') !== -1 || ua.indexOf('iPad') !== -1;
+
+}
+
+export { capitalize, getRandomInt, hasPermission, hasAccessToAdminPanel, generateClassName, getImage, isMobile };

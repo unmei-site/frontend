@@ -61,7 +61,7 @@ const TranslatePlatform: { [id: string]: string } = {
     win: 'Windows',
     mac: 'macOS',
     linux: 'Linux',
-    ios: 'IOS',
+    ios: 'iOS',
     android: 'Andriod'
 };
 
@@ -70,6 +70,7 @@ const TranslateExitStatus: { [id: string]: string } = {
 };
 
 export const getVersion = () => get<VersionResponse>('version');
-export const version = '1.2';
+export const version = '1.2.2';
+export const build = 121;
 
 export { get, post, put, del, TranslateStatus, TranslatePlatform, TranslateExitStatus };

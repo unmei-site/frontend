@@ -10,13 +10,15 @@ import APAddPost from "./News/APAddPost";
 import APNovels from "./Novels/APNovels";
 import APUsers from "./Users/APUsers";
 import APModifyUser from "./Users/APModifyUser";
+import APModifyNovel from "./Novels/APModifyNovel";
+import APMain from "./Main/APMain";
 
 type Props = {
     user: UserType
     match: { path: string }
 }
 
-type State = {}
+type State = {};
 
 class AdminPanel extends React.Component<Props, State> {
     render() {
@@ -26,8 +28,7 @@ class AdminPanel extends React.Component<Props, State> {
 
         return (
             <div className={'AdminPanel'}>
-                <div className="AdminPanel__Title">Админ панель <span style={{ color: 'var(--error-bg-color)' }}>(в разработке)</span>
-                </div>
+                <div className="AdminPanel__Title">Админ панель</div>
                 <div className="AdminPanel__Router">
                     <Link to={path}>Главная</Link>
                     <Link to={`${path}/users`}>Пользователи</Link>
@@ -36,13 +37,15 @@ class AdminPanel extends React.Component<Props, State> {
                 </div>
 
                 <Switch>
+                    <Route exact path={path} component={APMain}/>
+
                     <Route exact path={`${path}/news`} component={APNews}/>
                     <Route exact path={`${path}/news/new`} component={APAddPost}/>
                     <Route exact path={`${path}/news/:id`} component={APModifyPost}/>
 
                     <Route exact path={`${path}/novels`} component={APNovels}/>
                     <Route exact path={`${path}/novels/new`} component={NotFoundError}/>
-                    <Route exact path={`${path}/novels/:id`} component={NotFoundError}/>
+                    <Route exact path={`${path}/novels/:id`} component={APModifyNovel}/>
 
                     <Route exact path={`${path}/users`} component={APUsers}/>
                     <Route exact path={`${path}/users/new`} component={NotFoundError}/>

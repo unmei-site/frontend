@@ -8,7 +8,7 @@ const Button = (restProps: ButtonHTMLAttributes<HTMLElement>) => {
         <button className={classNames('Button', className)} {...props}>
             {children}
         </button>
-    )
+    );
 }
 
 export default Button;

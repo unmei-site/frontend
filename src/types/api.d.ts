@@ -22,6 +22,7 @@ type ApiResponse<T> = {
 
 type VersionResponse = {
     version: string
+    build: number
 }
 
 type CommentsResponse = {
