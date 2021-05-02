@@ -1,0 +1,21 @@
+.APCharacter
+  display: flex
+  flex-direction: column
+
+  .Input, .TextField, .Button
+    font-size: 1.2rem
+
+  .Input, .TextField
+    margin-bottom: 1rem
+
+  &__Description
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    margin-bottom: 1rem
+
+    &_Preview, .TextField
+      color: var(--main-color) !important
+      width: 100%
+      height: 10rem
+      resize: vertical

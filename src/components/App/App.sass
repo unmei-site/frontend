@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@100;200;300;400;500;600;700;800;900&display=swap')
+@import "../../Constants"
+
+html, body, #root
+  width: 100%
+  height: 100%
+
+body, pre, textarea
+  font-family: var(--font-family), sans-serif
+  font-weight: var(--font-weight)
+
+h1, h2, h3, h4, h5, h6, p, body, pre
+  margin: 0
+
+body
+  padding: 0
+
+  --main-color: #{$mainColor}
+  --sec-color: #{$secondaryColor}
+  --link-color: #{$linkHoverColor}
+
+  --main-bg-color: #{$primaryBackgroundColor}
+  --sec-bg-color: #{$secondaryBackgroundColor}
+  --block-color: #{$blockBackgroundColor}
+  --block-sec-color: #{$blockSecondaryBackgroundColor}
+  --nav-bg-color: #{$navbarBackgroundColor}
+
+  --error-bg-color: #{$errorBackgroundColor}
+  --success-bg-color: #{$successBackgroundColor}
+
+  --planned-bg-color: #399
+  --completed-bg-color: #393
+  --dropped-bg-color: #933
+  --in_progress-bg-color: #939
+  --deferred-bg-color: #333
+
+  --accent-color: #f22
+
+  --site-width: 1200px
+  --sidebar-width: 350px
+
+  --font-family: 'Rubik'
+  --font-weight: 400
+
+  color: var(--main-color)
+  background: var(--main-bg-color)
+
+pre
+  white-space: pre-wrap
+
+body[theme='red']
+  --main-bg-color: #{$primaryBackgroundColorRed}
+  --sec-bg-color: #{$secondaryBackgroundColorRed}
+  --block-color: #{$blockBackgroundColorRed}
+  --block-sec-color: #{$blockSecondaryBackgroundColorRed}
+  --nav-bg-color: #{$navbarBackgroundColorRed}
+
+body[theme='blue']
+  --main-bg-color: #{$primaryBackgroundColorBlue}
+  --sec-bg-color: #{$secondaryBackgroundColorBlue}
+  --block-color: #{$blockBackgroundColorBlue}
+  --block-sec-color: #{$blockSecondaryBackgroundColorBlue}
+  --nav-bg-color: #{$navbarBackgroundColorBlue}
+
+body[theme='green']
+  --main-bg-color: #{$primaryBackgroundColorGreen}
+  --sec-bg-color: #{$secondaryBackgroundColorGreen}
+  --block-color: #{$blockBackgroundColorGreen}
+  --block-sec-color: #{$blockSecondaryBackgroundColorGreen}
+  --nav-bg-color: #{$navbarBackgroundColorGreen}
+
+body[theme='light']
+  --main-color: #{$mainColorLight}
+  --link-color: #{$linkHoverColorLight}
+  --sec-color: #{$secondaryColorLight}
+
+  --main-bg-color: #{$primaryBackgroundColorLight}
+  --sec-bg-color: #{$secondaryBackgroundColorLight}
+  --block-color: #{$blockBackgroundColorLight}
+  --block-sec-color: #{$blockSecondaryBackgroundColorLight}
+  --nav-bg-color: #{$navbarBackgroundColorLight}
+
+*::-webkit-scrollbar
+  width: 6px
+
+*::-webkit-scrollbar-track
+  background-color: var(--nav-bg-color)
+
+*::-webkit-scrollbar-thumb
+  background-color: var(--link-color)
+  outline: none
+
+a
+  color: var(--main-color)
+  text-decoration: none
+
+  &:hover
+    color: var(--link-color)
+
+.Container
+  position: relative
+  max-width: var(--site-width)
+  min-height: calc(100vh - 240px - 48px)
+  padding: 8px 0
+  margin: 0 auto
+  box-sizing: border-box
+
+  .Notifications
+    width: 100%
+    position: fixed
+    bottom: 0
+    left: 0
+    z-index: 100000
+
+    @media (min-width: 500px)
+      padding: 1rem
+      box-sizing: border-box
+
+.Successful, .Error
+  border: var(--link-color) 1px solid
+  padding: .5rem
+  border-radius: 3px
+  margin-bottom: 1rem
+
+.Error
+  color: #{mainColor}
+  background-color: var(--error-bg-color)
+
+.Successful
+  color: #{mainColor}
+  background-color: var(--success-bg-color)

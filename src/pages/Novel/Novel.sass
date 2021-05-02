@@ -1,0 +1,173 @@
+@import "../../Constants"
+
+@keyframes growDown
+  0%
+    transform: scaleY(0)
+
+  80%
+    transform: scaleY(1.1)
+
+  100%
+    transform: scaleY(1)
+
+.Novel
+  .Novel__Main
+    display: flex
+    padding: $primaryPadding
+    background-color: var(--sec-bg-color)
+    border-radius: $borderRadius
+
+    @media (max-width: 600px)
+      flex-direction: column
+
+    &_Left
+      display: flex
+      flex-direction: column
+
+      .Novel__Main_Image
+        max-width: 350px
+        max-height: 200px
+        margin-right: .5rem
+        border-radius: $borderRadius
+
+      .Novel__Main_Status
+        max-width: 350px
+
+        &_Mark
+          margin-top: .5rem
+          width: 100%
+          display: flex
+          justify-content: space-between
+
+          .Selected
+            background-color: var(--block-sec-color)
+
+          &_Element
+            padding: .5rem
+            background-color: var(--block-color)
+            width: 100%
+            text-align: center
+            cursor: pointer
+
+            &:hover
+              background-color: var(--sec-bg-color)
+
+        &_Primary
+          display: flex
+          justify-content: space-between
+          background-color: var(--block-color)
+          font-size: 1rem
+          margin-top: .5rem
+          padding: .25rem
+
+        &_Extended
+          background-color: var(--block-color)
+          font-size: 1rem
+          overflow: hidden
+          animation: growDown 300ms ease-in-out forwards
+          transform-origin: top center
+
+          .Novel__Main_Status_Element
+            padding: .25rem
+            border-top: var(--sec-bg-color) 2px solid
+
+        .Novel__Main_Status_Element
+          cursor: pointer
+
+    &_Info
+      width: 100%
+
+      &_Title
+        @media (max-width: 600px)
+          margin-top: 1rem
+
+        font-size: 1.7rem
+        font-weight: 600
+        margin-bottom: 4px
+        display: flex
+        align-items: center
+
+      &_Demo
+        margin: .2rem
+        border: var(--accent-color) 1px solid
+        padding: .1rem
+        border-radius: 3px
+        font-weight: 300
+
+      &_Description
+        margin-top: 8px
+        font-size: 1rem
+
+      &_Genres
+        display: flex
+        align-items: center
+        font-size: 1rem
+
+        .Genre
+          margin: 2px
+          border: #992222 1px solid
+          padding: .1rem
+          border-radius: 3px
+          font-weight: 300
+          box-sizing: border-box
+
+    &_Rating
+
+      &_All
+        width: 250px
+
+        @media (max-width: 600px)
+          width: 100%
+
+        &_Mark
+          display: flex
+          justify-content: space-between
+          padding: 2px 4px
+          margin: 4px 0
+          box-sizing: border-box
+          background-color: var(--block-color)
+          border-radius: 2px
+
+  .Novel__Comments
+    margin-top: 1rem
+    padding: $primaryPadding
+    background-color: var(--sec-bg-color)
+    border-radius: $borderRadius
+
+  .Novel__Characters
+    margin-top: 1rem
+    padding: $primaryPadding 0
+    background-color: var(--sec-bg-color)
+    border-radius: $borderRadius
+
+    .Novel__Characters_Title
+      margin-left: .5rem
+      font-size: 1.2rem
+      font-weight: bold
+
+    .Novel__Characters_List
+      width: 100%
+      display: flex
+      flex-wrap: wrap
+
+      @media (max-width: 600px)
+        justify-content: center
+
+      .Novel__Character
+        box-sizing: border-box
+        width: 150px
+        border-radius: $borderRadius
+        background-color: var(--block-color)
+        margin: 0 .5rem
+        padding-bottom: .2rem
+
+        .Novel__Character_Name
+          text-align: center
+
+        .Character_Image
+          border-radius: $borderRadius $borderRadius 0 0
+          width: 150px
+          height: 250px
+          background-size: cover
+          background-position: center
+          margin-bottom: .2rem

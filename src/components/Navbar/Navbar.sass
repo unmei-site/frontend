@@ -1,0 +1,118 @@
+.Minimized
+  height: 48px
+
+.Expanded
+  min-height: 48px
+
+  &__Links
+    position: relative
+    width: 100%
+
+.Navbar
+  color: var(--main-color)
+  background-color: var(--nav-bg-color)
+  display: flex
+  justify-content: space-between
+  align-items: flex-start
+  flex-wrap: wrap
+  padding: 0 8px
+
+  &__Links, &__User
+    min-height: 48px
+    display: flex
+    flex-wrap: wrap
+
+  &_Button
+    font-size: 1rem
+    padding: 4px
+    color: var(--main-color)
+    background-color: var(--nav-bg-color)
+    border: none
+    display: flex
+    justify-content: center
+    align-items: center
+    cursor: pointer
+    position: relative
+    font-weight: 300
+
+    &::before
+      content: ""
+      width: 100%
+      position: absolute
+      bottom: 0
+      left: 0
+      height: 0
+      background: var(--accent-color)
+      transition: heigth .1s ease-in
+      -webkit-transition: height .1s ease-in
+
+    &:hover
+      background-color: var(--main-bg-color)
+
+      &::before
+        height: 5px
+
+  &__Dropdown
+    cursor: pointer
+
+    &:hover > &_Menu
+      display: flex
+      flex-direction: column
+
+    &_Menu
+      display: none
+      position: absolute
+      background-color: var(--nav-bg-color)
+      box-sizing: border-box
+      padding: 4px
+      max-width: 250px
+      right: 0
+      z-index: 100000
+
+    &_Item
+      margin: .2rem 0
+      color: var(--main-color)
+
+      &:hover
+        color: var(--link-color)
+
+  &__User
+    justify-content: flex-end
+
+    &_Profile
+      display: flex
+      align-items: center
+      font-size: 1rem
+      height: 3rem
+      color: var(--main-color)
+      background-color: var(--nav-bg-color)
+      border: none
+      border-radius: 0
+      padding: 0 .5rem
+      position: relative
+      font-weight: 500
+
+      &::before
+        content: ""
+        width: 100%
+        position: absolute
+        bottom: 0
+        left: 0
+        height: 0
+        background: var(--accent-color)
+        transition: heigth .1s linear
+        -webkit-transition: height .1s linear
+
+      &:hover
+        background-color: var(--main-bg-color)
+
+        &::before
+          height: 5px
+
+    &_Avatar
+      background-size: cover
+      background-position: center
+      width: 40px
+      height: 40px
+      border-radius: 50%
+      margin-right: .2rem

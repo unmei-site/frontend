@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /kawaii__neko
+
+Sitemap: sitemap.xml

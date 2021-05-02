@@ -1,0 +1,165 @@
+@keyframes slideOut
+  0%
+    left: -350px
+  100%
+    left: 0
+
+@keyframes slideIn
+  0%
+    left: 0
+  100%
+    left: -350px
+
+.OpenSidebar, .CloseSidebar
+  position: fixed
+  width: 32px
+  height: 32px
+  top: 8px
+  z-index: 1000
+  background-color: var(--nav-bg-color)
+  padding: 8px
+  box-sizing: border-box
+
+.OpenSidebar
+  left: 8px
+
+.CloseSidebar
+  @media screen and (max-width: 400px)
+    left: calc(100vw - 32px)
+
+  left: calc(var(--sidebar-width) - 32px)
+  animation: slideOut 500ms linear
+
+.Sidebar
+  box-sizing: border-box
+  position: fixed
+  top: 0
+  left: 0
+  height: 100%
+  background-color: var(--nav-bg-color)
+  z-index: 10
+  animation: slideOut 500ms linear
+  width: 100%
+
+  @media (min-width: 400px)
+    width: var(--sidebar-width)
+
+  &_Hide
+    animation: slideIn 500ms linear
+
+  &__Close
+    font-size: 20px
+    position: absolute
+    top: 8px
+    right: 8px
+
+  &__Button
+    padding: .5rem
+    color: var(--main-color)
+    background-color: var(--block-color)
+    width: 100%
+    text-align: center
+    cursor: pointer
+    border: none
+
+    &:hover
+      background-color: var(--sec-bg-color)
+
+  &__Auth, &__User
+    border-bottom: var(--block-color) 1px solid
+    padding: 8px
+    box-sizing: border-box
+
+  &__Auth
+    width: 100%
+    display: flex
+    flex-direction: column
+
+    .Sidebar__Button
+      font-size: 1.2rem !important
+
+  &__User
+    display: flex
+
+    &_Buttons
+      display: flex
+
+    &_Info
+      margin-left: 8px
+      width: 100%
+
+      &_Name
+        font-size: 1.5rem
+        font-weight: 900
+
+      &_Group
+        border-color: #eeeeee
+        border-width: 1px
+        border-style: solid
+        color: var(--main-color)
+
+        border-radius: 2px
+        padding: .2rem
+        text-align: center
+        font-size: 1rem
+        font-weight: 300
+        position: relative
+        z-index: 1
+        margin: 4px 0
+
+        &::before
+          content: ''
+          width: 100%
+          border-top-color: inherit
+          border-top-width: 27px
+          border-top-style: solid
+          opacity: 0.5
+          position: absolute
+          z-index: -1
+          top: 0
+          left: 0
+
+      .Button
+        margin-top: 8px
+        font-size: 1rem
+
+    &_Avatar
+      width: 80px
+      height: 80px
+      max-width: 80px
+      max-height: 80px
+      border-radius: 50%
+
+  &__Links
+    display: flex
+    flex-direction: column
+
+  &__Link
+    cursor: pointer
+    font-size: 1.5rem
+    width: 100%
+    background-color: var(--main-bg-color)
+    box-sizing: border-box
+    padding: 4px 4px 4px 16px
+    position: relative
+    transition: background-color 200ms
+
+    &::before
+      content: ""
+      width: 100%
+      position: absolute
+      bottom: 0
+      left: 0
+      height: 0
+      background: var(--accent-color)
+      transition: heigth 200ms linear
+      -webkit-transition: height .1s linear
+
+    &:hover
+      background-color: var(--main-bg-color)
+
+      &::before
+        height: 2px
+
+    &:hover
+      background-color: var(--sec-bg-color)

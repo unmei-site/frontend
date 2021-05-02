@@ -1,0 +1,29 @@
+.APNovel
+  display: flex
+  flex-direction: column
+
+  .Input, .TextField, .Button
+    font-size: 1.2rem
+
+  .Input, .TextField
+    margin-bottom: 1rem
+
+  .TextField
+    width: 100%
+    min-height: 4rem
+    resize: none
+
+  &_Title
+    text-align: center
+    font-weight: 600
+    font-size: 1.5rem
+
+  &_Description
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    margin-bottom: 1rem
+
+    .TextField
+      height: 10rem
+      resize: vertical
